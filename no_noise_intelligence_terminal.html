@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="de" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#090a0f">
+    <title>08:00 Intelligence Terminal • 5Y+ Buy & Hold</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        zinc: {
+                            850: '#161923',
+                            925: '#10131c',
+                            950: '#090a0f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #090a0f;
+            color: #f1f5f9;
+            -webkit-tap-highlight-color: transparent;
+            background-image: 
+                radial-gradient(at 10% 0%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
+                radial-gradient(at 90% 10%, rgba(59, 130, 246, 0.04) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #090a0f; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        .bento-card {
+            background: linear-gradient(145deg, rgba(22, 25, 35, 0.85) 0%, rgba(13, 15, 22, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(16, 185, 129, 0.35);
+            box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.7);
+        }
+        .glass-nav {
+            background: rgba(9, 10, 15, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .pulse-dot {
+            animation: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+
+    <!-- ========================================== -->
+    <!-- STICKY TOP NAVIGATION BAR                  -->
+    <!-- ========================================== -->
+    <header class="glass-nav sticky top-0 z-30 border-b border-white/[0.06] px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Brand & Friday Weekly Indicator -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-zinc-900 to-blue-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-inner">
+                    <i class="fa-solid fa-radar text-base"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-sm sm:text-base tracking-tight text-white">08:00 INTELLIGENCE</h1>
+                        <span id="fridayBadge" class="hidden text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                            <i class="fa-solid fa-calendar-week mr-1"></i> Freitags-Wochenrückblick
+                        </span>
+                    </div>
+                    <p id="dateDisplay" class="text-[11px] text-slate-400 font-mono">Lade Systemdatum...</p>
+                </div>
+            </div>
+
+            <!-- Central Mode Switcher (Market vs 08:00 Global World Briefing) -->
+            <div class="hidden sm:flex items-center bg-zinc-900/90 p-1 rounded-xl border border-white/[0.06]">
+                <button onclick="switchTab('market')" id="tabBtnMarket" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                    <i class="fa-solid fa-layer-group"></i> Markt & 5Y-Radar
+                </button>
+                <button onclick="switchTab('world')" id="tabBtnWorld" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-compass"></i> 08:00 Welt-Briefing
+                </button>
+            </div>
+
+            <!-- Actions Right -->
+            <div class="flex items-center gap-2">
+                <button onclick="openArchiveModal()" class="relative p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-slate-300 border border-white/[0.06] transition" title="Archiv">
+                    <i class="fa-solid fa-box-archive text-sm"></i>
+                    <span id="archiveBadge" class="hidden absolute -top-1 -right-1 w-4 h-4 text-[9px] font-mono font-bold bg-emerald-500 text-zinc-950 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button onclick="openSettingsModal()" class="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-slate-300 border border-white/[0.06] transition" title="API & Prompt">
+                    <i class="fa-solid fa-sliders text-emerald-400 text-sm"></i>
+                </button>
+                <button onclick="triggerLiveScan()" id="scanBtn" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold text-xs shadow-lg shadow-emerald-500/15 transition active:scale-95">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span class="hidden sm:inline">Live-Scan starten</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Segmented Navigation -->
+        <div class="sm:hidden grid grid-cols-2 gap-1 p-1 bg-zinc-900/90 border border-white/[0.06] rounded-xl mt-3">
+            <button onclick="switchTab('market')" id="tabBtnMarketMob" class="py-2 rounded-lg text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-center">
+                Markt & 5Y-Radar
+            </button>
+            <button onclick="switchTab('world')" id="tabBtnWorldMob" class="py-2 rounded-lg text-xs font-semibold text-slate-400 text-center">
+                08:00 Welt-Briefing
+            </button>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- SUB-FILTER PILLS BAR (MARKET VIEW)         -->
+    <!-- ========================================== -->
+    <div id="sectorFilterBar" class="border-b border-white/[0.05] bg-[#0c0e14] px-4 py-2.5 overflow-x-auto">
+        <div class="max-w-7xl mx-auto flex items-center gap-2 text-xs whitespace-nowrap">
+            <span class="text-slate-500 font-mono text-[10px] uppercase tracking-wider mr-1">5Y-Module:</span>
+            <button onclick="filterSector('all')" class="sector-pill active px-3 py-1 rounded-lg bg-white/15 text-white font-medium transition" data-sec="all">Alle Kacheln</button>
+            <button onclick="filterSector('equities')" class="sector-pill px-3 py-1 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 transition" data-sec="equities">Globale Aktien (5Y+ Compounder)</button>
+            <button onclick="filterSector('commodities')" class="sector-pill px-3 py-1 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 transition" data-sec="commodities">Gold · Silber · Kupfer · Uran</button>
+            <button onclick="filterSector('crypto')" class="sector-pill px-3 py-1 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 transition" data-sec="crypto">Krypto</button>
+            <button onclick="filterSector('bonds')" class="sector-pill px-3 py-1 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 transition" data-sec="bonds">Staatsanleihen & Intermarket</button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MAIN CONTENT CONTAINER                     -->
+    <!-- ========================================== -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+
+        <!-- Loading Banner Overlay -->
+        <div id="loadingBanner" class="hidden mb-6 p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 flex items-center justify-between shadow-xl">
+            <div class="flex items-center gap-3">
+                <div class="w-5 h-5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"></div>
+                <div>
+                    <h4 class="text-xs font-bold text-emerald-200">Gemini Live-Scan aktiv (Google Search Grounding)</h4>
+                    <p class="text-[11px] text-slate-400">Prüfe globale Unternehmens-News, Burggraben-Entwicklungen, Rohstoffe & Anleihen...</p>
+                </div>
+            </div>
+            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">5Y+ Filter aktiv</span>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: MARKET & 5Y-RADAR (BENTO GRID)     -->
+        <!-- ========================================== -->
+        <section id="viewMarket" class="space-y-6">
+
+            <!-- Top Row: Intermarket & Macro Calendar Bento Strip -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                <!-- Intermarket & Bonds Tile -->
+                <div onclick="openIntermarketModal()" class="bento-card rounded-3xl p-5 lg:col-span-7 flex flex-col justify-between cursor-pointer group">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/25">
+                                Staatsanleihen (Bonds) & Intermarket
+                            </span>
+                            <span class="text-xs text-slate-400 group-hover:text-emerald-400 transition flex items-center gap-1">Details & Chart <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></span>
+                        </div>
+                        <h2 id="imTitle" class="text-base sm:text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition"></h2>
+                        <p id="imSummary" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+                    </div>
+                    <div id="imTags" class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-white/[0.06] text-xs font-mono"></div>
+                </div>
+
+                <!-- Macro Calendar Tile -->
+                <div class="bento-card rounded-3xl p-5 lg:col-span-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-zinc-800 text-slate-300 border border-zinc-700">
+                                <i class="fa-regular fa-calendar-check mr-1 text-emerald-400"></i> Makro-Termine & Ausblick
+                            </span>
+                            <span class="text-[10px] font-mono text-slate-500">Struktureller Horizont</span>
+                        </div>
+                        <div id="macroList" class="space-y-2.5 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Bento Grid for Equities, Commodities & Crypto -->
+            <div>
+                <div class="flex items-center justify-between mb-3.5 px-1">
+                    <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400">
+                        Globale Qualitätsunternehmen, Rohstoffe & Krypto (Klick für Detail & TradingView Wochenchart)
+                    </h3>
+                    <span class="text-[11px] font-mono text-slate-500">Null Rauschen · Nur Burggraben & Bilanz</span>
+                </div>
+                <div id="bentoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: 08:00 GLOBAL WORLD BRIEFING        -->
+        <!-- ========================================== -->
+        <section id="viewWorld" class="hidden space-y-4">
+            <div class="bento-card rounded-3xl p-5 sm:p-6 mb-4">
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> 08:00 Uhr • Zero-Noise Weltlage
+                    </span>
+                    <span class="text-[11px] font-mono text-slate-500">Streng faktenbasiert</span>
+                </div>
+                <h2 class="text-base sm:text-lg font-bold text-white mt-1">Globale geopolitische & makroökonomische Weichenstellungen</h2>
+                <p class="text-xs text-slate-400">Vollständig auf das Wesentliche reduziert – ohne Meinungsartikel oder Clickbait.</p>
+            </div>
+            <div id="worldGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- DETAIL MODAL (WITH TRADINGVIEW WEEKLY CHART)-->
+    <!-- ========================================== -->
+    <div id="detailModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-zinc-925 border-t sm:border border-white/10 rounded-t-3xl sm:rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            
+            <!-- Modal Header -->
+            <div class="px-5 py-4 border-b border-white/[0.07] flex items-start justify-between gap-3 bg-zinc-900/80">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span id="modalCategoryBadge" class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300"></span>
+                        <span id="modalTickerBadge" class="text-xs font-mono font-semibold text-slate-300 bg-white/[0.06] px-2 py-0.5 rounded"></span>
+                    </div>
+                    <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-white leading-snug"></h3>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-white/[0.05] hover:bg-white/10 text-slate-300 flex items-center justify-center shrink-0 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1">
+                <!-- Thesis / Long-term Verdict -->
+                <div class="p-4 rounded-2xl bg-zinc-950 border border-white/[0.06] space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400">5+ Jahre Fundamentale Einschätzung (Moat & Bilanz)</span>
+                        <span id="modalVerdictDirection" class="text-xs font-semibold font-mono"></span>
+                    </div>
+                    <p id="modalThesisText" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
+                </div>
+
+                <!-- Bullets -->
+                <div>
+                    <h4 class="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2">Kernfakten & Katalysatoren</h4>
+                    <ul id="modalBulletsList" class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc pl-4"></ul>
+                </div>
+
+                <!-- TradingView Weekly Chart Container -->
+                <div id="chartSectionModal">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-candlestick text-emerald-400"></i> Langfrist-Chart (TradingView Weekly)
+                        </span>
+                        <span class="text-[10px] font-mono text-slate-500">Horizont: Mehrere Jahre</span>
+                    </div>
+                    <div id="tvContainer" class="w-full h-72 sm:h-80 rounded-2xl overflow-hidden border border-white/[0.07] bg-[#090a0f]"></div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-5 py-3 border-t border-white/[0.07] bg-zinc-950 flex items-center justify-between">
+                <span class="text-[11px] font-mono text-slate-500">Tipp: ESC oder Klick auf X zum Schließen</span>
+                <button onclick="closeModal()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-white">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SETTINGS & API MODAL                       -->
+    <!-- ========================================== -->
+    <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-zinc-925 border border-white/10 rounded-3xl max-w-xl w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-white/[0.07]">
+                <h3 class="font-bold text-white text-sm sm:text-base flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-emerald-400"></i> API-Verknüpfung & 5Y-Direktive
+                </h3>
+                <button onclick="toggleModal('settingsModal', false)" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1">Google Gemini API-Key (im Canvas optional, auf dem Handy erforderlich)</label>
+                    <input id="apiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-white/10 text-white font-mono focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1">Globale Aktien & Sektoren Direktive (Dein geplanter Prompt)</label>
+                    <textarea id="customPromptInput" rows="5" class="w-full p-3 rounded-xl bg-zinc-950 border border-white/10 text-slate-200 leading-relaxed focus:outline-none focus:border-emerald-500 text-xs">Scanne ALLE global relevanten, börsennotierten Unternehmen weltweit. Filter: Nur Nachrichten, die die Wettbewerbsposition, Margen, Bilanz oder den Burggraben auf Sicht von 5+ Jahren strukturell verbessern oder verschlechtern (keine kurzfristigen Daytrading-Trigger). Pflicht-Sektoren neben globalen Aktien: Krypto, Staatsanleihen (Bonds), Gold, Silber, Kupfer und Uran sowie Intermarket-Korrelationen.</textarea>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="saveSettings()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold text-xs">Speichern & Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ARCHIVE MODAL                              -->
+    <!-- ========================================== -->
+    <div id="archiveModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-zinc-925 border border-white/10 rounded-3xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl">
+            <div class="flex items-center justify-between px-5 py-4 border-b border-white/[0.07]">
+                <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-box-archive text-emerald-400"></i> Lokales Briefing-Archiv
+                </h3>
+                <button onclick="toggleModal('archiveModal', false)" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="archiveList" class="p-4 overflow-y-auto space-y-2 flex-1 text-xs"></div>
+            <div class="px-5 py-3 border-t border-white/[0.07] bg-zinc-950 flex justify-between items-center text-xs">
+                <button onclick="clearArchive()" class="text-rose-400 hover:text-rose-300">Verlauf leeren</button>
+                <button onclick="toggleModal('archiveModal', false)" class="px-3.5 py-1.5 rounded-lg bg-zinc-800 text-white">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- APPLICATION LOGIC & DEFAULT DATA           -->
+    <!-- ========================================== -->
+    <script>
+        const DEFAULT_APP_STATE = {
+            id: "state-v3-default",
+            timestamp: "Bereit • Klicke auf Kacheln für TradingView Charts",
+            intermarket: {
+                title: "US-Staatsanleihen (4,0 % Yield) vs. Rohstoff-Zyklus & Qualitätsaktien",
+                summary: "Höhere Anleiherenditen trennen hochverschuldete Unternehmen von soliden Cashflow-Compoundern. Gleichzeitig treibt der weltweite Infrastruktur- und Rechenzentrumsausbau die Nachfrage nach Rohstoffen und Halbleitern.",
+                tags: [
+                    { label: "10Y US-Bond", val: "~4,02% (Restriktiv)" },
+                    { label: "USD / Liquidität", val: "Stabil · Selektiv" },
+                    { label: "5Y-Implikation", val: "Fokus auf Moat & Cash" }
+                ],
+                bullets: [
+                    "10-jährige US-Treasuries stabilisieren sich auf dem erhöhten Zinsniveau; Anleger fordern echte Risikoprämien.",
+                    "Unternehmensanleihen mit schwachen Bilanzen stehen vor teuren Refinanzierungen in den kommenden Quartalen.",
+                    "Strategische Sachwerte und globale Qualitätskonzerne mit Nettoliquidität dienen als sicherer Hafen."
+                ],
+                tvSymbol: "TVC:US10Y"
+            },
+            macroCalendar: [
+                { date: "Laufendes Quartal", event: "Globale Capex-Zyklen: KI-Infrastruktur & Stromnetze", impact: "5Y-Treiber (Kupfer, Uran, Halbleiter)" },
+                { date: "Zins-Ausblick", event: "Zentralbank-Bilanzpolitik & Refinanzierungs-Kosten", impact: "Bewertungs-Filter für Aktien" },
+                { date: "Global / EU", event: "Lokale Wertschöpfungsquoten & Handelskorridore", impact: "Vorteil für globale Marktführer" }
+            ],
+            cards: [
+                {
+                    id: "c1",
+                    category: "equities",
+                    sectorLabel: "Globale Aktien · Halbleiter-Monopol",
+                    ticker: "NASDAQ:ASML",
+                    company: "ASML Holding / Halbleiter-Ausrüster",
+                    direction: "VERBESSERT (5Y+)",
+                    directionColor: "text-emerald-400",
+                    moatScore: 96,
+                    headline: "High-NA-EUV-Maschinen sichern technologischen Burggraben für die 2nm-Chipgeneration bis 2030.",
+                    thesis: "Ohne die lithografischen Systeme von ASML kann weltweit kein einziger modernster Hochleistungschip gefertigt werden. Die Abnahmeverträge mit führenden Halbleiter-Herstellern reichen weit in das kommende Jahrzehnt.",
+                    bullets: [
+                        "100 % Marktanteil bei extrem ultravioletter Lithografie (EUV).",
+                        "Hohe wiederkehrende Service- und Upgrade-Erlöse auf installierte Maschinen.",
+                        "Bruttomargen über 50 % trotz hoher F&E-Budgets."
+                    ],
+                    sparkline: [40, 45, 48, 55, 62, 70, 78, 88]
+                },
+                {
+                    id: "c2",
+                    category: "equities",
+                    sectorLabel: "Globale Aktien · Industrie & Netze",
+                    ticker: "XETR:SIE",
+                    company: "Siemens / Schneider Electric",
+                    direction: "VERBESSERT (5Y+)",
+                    directionColor: "text-emerald-400",
+                    moatScore: 88,
+                    headline: "Rekord-Auftragsbestand bei Hochspannungs-Netztechnik und industrieller Automatisierung.",
+                    thesis: "Die weltweite Elektrifizierung und der Bau von Rechenzentren sorgen für eine strukturell hohe Auslastung. Die Kombination aus industrieller Software und robuster Hardware schützt vor konjunkturellen Dellen.",
+                    bullets: [
+                        "Lieferzeiten für Großtransformatoren und Schaltanlagen stabil auf hohem Niveau.",
+                        "Starke Bilanz und verlässlicher Cashflow für kontinuierliche Dividendenzahlungen.",
+                        "Führende Marktposition im Bereich digitaler Zwillinge und Fabrik-Automatisierung."
+                    ],
+                    sparkline: [35, 40, 44, 50, 58, 66, 72, 80]
+                },
+                {
+                    id: "c3",
+                    category: "equities",
+                    sectorLabel: "Globale Aktien · Konsumgüter",
+                    ticker: "NYSE:NKE",
+                    company: "Traditionelle Marken ohne Moat-Ausbau",
+                    direction: "VERSCHLECHTERT (5Y+)",
+                    directionColor: "text-rose-400",
+                    moatScore: 56,
+                    headline: "Struktureller Margendruck durch aggressive Konkurrenz und nachlassende Preissetzungsmacht.",
+                    thesis: "Unternehmen im Konsumsektor, die sich zu lange auf etablierte Markennamen verlassen haben, verlieren Marktanteile an innovative Nischenplayer. Hohe Marketingausgaben sind nötig, um das Umsatzwachstum zu verteidigen.",
+                    bullets: [
+                        "Steigender Rabatt- und Promotionsdruck im globalen Online- und Filialhandel.",
+                        "Kapitalrendite (ROIC) sinkt unter den historischen Durchschnitt der letzten Jahre.",
+                        "Höherer Investitionsbedarf in direkte digitale Vertriebskanäle."
+                    ],
+                    sparkline: [82, 78, 72, 65, 60, 53, 48, 43]
+                },
+                {
+                    id: "c4",
+                    category: "commodities",
+                    sectorLabel: "Rohstoffe · Kupfer & Uran",
+                    ticker: "COMEX:HG1!",
+                    company: "Kupfer & Uran (Strukturelles Defizit)",
+                    direction: "BULLISCH (5Y+)",
+                    directionColor: "text-emerald-400",
+                    moatScore: 91,
+                    headline: "Sinkende Erzgehalte und steigender Strombedarf der KI-Infrastruktur verschärfen das Angebotsdefizit.",
+                    thesis: "Neue Kupferminen benötigen über ein Jahrzehnt bis zur Förderung. Gleichzeitig treiben Rechenzentren und Kernkraft-Laufzeitverlängerungen die Urannachfrage langfristig nach oben.",
+                    bullets: [
+                        "Kupfernachfrage wächst durch E-Mobilität und Netzausbau schneller als das Minenangebot.",
+                        "Uran: Direkte Langfristverträge zwischen Energieversorgern und Produzenten stützen den Preis.",
+                        "Hohe Eintrittsbarrieren für neue Bergbauprojekte."
+                    ],
+                    sparkline: [42, 47, 51, 56, 62, 69, 75, 84]
+                },
+                {
+                    id: "c5",
+                    category: "commodities",
+                    sectorLabel: "Edelmetalle · Monetäre Reserve",
+                    ticker: "OANDA:XAUUSD",
+                    company: "Gold & Silber",
+                    direction: "STABIL / AUFWÄRTS",
+                    directionColor: "text-emerald-400",
+                    moatScore: 89,
+                    headline: "Zentralbankkäufe und wachsende Staatsverschuldung stützen physische Edelmetalle.",
+                    thesis: "Als neutrale Reserve ohne Schuldner-Risiko bleiben Gold und Silber ein wichtiger Anker gegen fiskalische Dominanz und Inflation.",
+                    bullets: [
+                        "Anhaltende Netto-Käufe durch Notenbanken in Schwellenländern.",
+                        "Silber profitiert zusätzlich von industrieller Photovoltaik-Nachfrage.",
+                        "Dient als langfristiger Kaufkraftschutz im Gesamtportfolio."
+                    ],
+                    sparkline: [52, 56, 60, 64, 68, 73, 77, 85]
+                },
+                {
+                    id: "c6",
+                    category: "crypto",
+                    sectorLabel: "Krypto · Institutionelle Adoption",
+                    ticker: "BITSTAMP:BTCUSD",
+                    company: "Bitcoin (BTC) & Netzwerkinfrastruktur",
+                    direction: "STRUKTURELL INTAKT",
+                    directionColor: "text-emerald-400",
+                    moatScore: 87,
+                    headline: "Regulierte ETFs und Bilanzintegration stärken die Rolle als digitales Anlagegut.",
+                    thesis: "Die mathematische Angebotsknappheit (Halving-Zyklen) trifft auf institutionelle Nachfrage über regulierte Finanzprodukte.",
+                    bullets: [
+                        "Langfrist-Halter kontrollieren den Großteil des zirkulierenden Angebots.",
+                        "Sinkende Börsenbestände unterstreichen den Halte-Charakter.",
+                        "Zunehmende Integration in professionelle Vermögensverwaltungen."
+                    ],
+                    sparkline: [38, 45, 52, 49, 61, 69, 76, 83]
+                }
+            ],
+            worldNews: [
+                {
+                    region: "EU / Binnenmarkt",
+                    title: "EU-Kommission treibt Gesetzgebung für strategische Technologie-Souveränität voran",
+                    summary: "Verbindliche Quoten für europäische Komponenten in kritischen Industriezweigen sollen Lieferkettenkrisen vorbeugen.",
+                    bullets: [
+                        "Förderung für heimische Halbleiter- und Rohstoffverarbeitung wird bis 2030 aufgestockt.",
+                        "Bürokratische Hürden für industrielle Großprojekte sollen halbiert werden."
+                    ]
+                },
+                {
+                    region: "Weltwirtschaft / IWF",
+                    title: "IWF mahnt strengere Haushaltsdisziplin angesichts globaler Zinslasten an",
+                    summary: "Steigende Staatsschulden in den Industrienationen erfordern strukturelle Reformen zur Stärkung der Produktivität.",
+                    bullets: [
+                        "Globale Inflation verharrt in moderaten Bahnen, bleibt jedoch energieabhängig.",
+                        "Produktivitätswachstum durch Automatisierung kompensiert demografische Bremsspuren."
+                    ]
+                },
+                {
+                    region: "Energie & Rohstoffe",
+                    title: "Globale Energie-Investitionen verlagern sich verstärkt in Netzinfrastruktur",
+                    summary: "Netzstabilität wird zum entscheidenden Standortfaktor für Industrieunternehmen und Rechenzentren.",
+                    bullets: [
+                        "Investitionen in intelligente Stromnetze steigen zweistellig.",
+                        "Speichertechnologien entlasten regionale Strommärkte zusehends."
+                    ]
+                }
+            ]
+        };
+
+        let appState = JSON.parse(localStorage.getItem('terminal_state_v3')) || DEFAULT_APP_STATE;
+        let archiveList = JSON.parse(localStorage.getItem('terminal_archive_v3')) || [];
+        let activeFilter = 'all';
+
+        function initApp() {
+            const now = new Date();
+            document.getElementById('dateDisplay').textContent = now.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' }) + " · Global 5Y+ Scan";
+            
+            if (now.getDay() === 5) {
+                document.getElementById('fridayBadge').classList.remove('hidden');
+            }
+
+            const savedKey = localStorage.getItem('gemini_api_key') || '';
+            document.getElementById('apiKeyInput').value = savedKey;
+
+            renderDashboard();
+            updateArchiveBadge();
+        }
+
+        function createSparkline(points, isPositive) {
+            const w = 110, h = 32;
+            const min = Math.min(...points), max = Math.max(...points);
+            const range = max - min || 1;
+            const coords = points.map((p, i) => {
+                const x = (i / (points.length - 1)) * w;
+                const y = h - ((p - min) / range) * (h - 8) - 4;
+                return `${x.toFixed(1)},${y.toFixed(1)}`;
+            }).join(' ');
+            const stroke = isPositive ? '#34d399' : '#fb7185';
+            return `<svg width="${w}" height="${h}" class="overflow-visible"><polyline fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${coords}"/></svg>`;
+        }
+
+        function renderDashboard() {
+            // Intermarket
+            const im = appState.intermarket;
+            document.getElementById('imTitle').textContent = im.title;
+            document.getElementById('imSummary').textContent = im.summary;
+            document.getElementById('imTags').innerHTML = im.tags.map(t => `
+                <div class="bg-black/30 rounded-xl p-2.5 border border-white/[0.04]">
+                    <span class="text-[10px] text-slate-400 block">${t.label}</span>
+                    <span class="text-emerald-300 font-medium">${t.val}</span>
+                </div>
+            `).join('');
+
+            // Macro Calendar
+            document.getElementById('macroList').innerHTML = appState.macroCalendar.map(m => `
+                <div class="p-2.5 rounded-xl bg-black/30 border border-white/[0.04] flex items-start justify-between gap-2">
+                    <div>
+                        <span class="font-mono text-[10px] text-emerald-400 block">${m.date}</span>
+                        <p class="text-slate-200 font-medium">${m.event}</p>
+                    </div>
+                    <span class="font-mono text-[9px] px-2 py-0.5 rounded bg-white/[0.05] text-slate-300 shrink-0">${m.impact}</span>
+                </div>
+            `).join('');
+
+            // Bento Cards
+            const grid = document.getElementById('bentoGrid');
+            const filtered = activeFilter === 'all' ? appState.cards : appState.cards.filter(c => c.category === activeFilter);
+
+            grid.innerHTML = filtered.map(card => {
+                const isPos = !card.direction.includes('VERSCHLECHTERT');
+                return `
+                    <div onclick="openCardModal('${card.id}')" class="bento-card rounded-3xl p-5 cursor-pointer flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-white/[0.06] text-slate-300">${card.sectorLabel}</span>
+                                <span class="text-[10px] font-mono font-semibold ${card.directionColor}">${card.direction}</span>
+                            </div>
+                            <div class="flex items-baseline justify-between mb-1.5">
+                                <h4 class="text-base font-bold text-white group-hover:text-emerald-300 transition">${card.company}</h4>
+                                <span class="text-xs font-mono text-slate-400">${card.ticker}</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed line-clamp-3">${card.headline}</p>
+                        </div>
+                        <div class="mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+                            <div class="flex-1 mr-4">
+                                <div class="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
+                                    <span>5Y Burggraben / Stärke</span>
+                                    <span class="text-slate-200">${card.moatScore}/100</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                    <div class="h-full ${isPos ? 'bg-emerald-400' : 'bg-rose-400'} rounded-full" style="width: ${card.moatScore}%"></div>
+                                </div>
+                            </div>
+                            <div>${createSparkline(card.sparkline || [50,55,60,65,70], isPos)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // World News
+            const wGrid = document.getElementById('worldGrid');
+            wGrid.innerHTML = appState.worldNews.map(wn => `
+                <div class="bento-card rounded-3xl p-5 flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/25">${wn.region}</span>
+                        <h4 class="text-base font-bold text-white mt-2.5 mb-1.5">${wn.title}</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">${wn.summary}</p>
+                    </div>
+                    <ul class="mt-4 pt-3 border-t border-white/[0.06] space-y-1.5 text-xs text-slate-400 list-disc pl-4">
+                        ${wn.bullets.map(b => `<li>${b}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+
+        function filterSector(sec) {
+            activeFilter = sec;
+            document.querySelectorAll('.sector-pill').forEach(btn => {
+                if (btn.dataset.sec === sec) {
+                    btn.className = "sector-pill active px-3 py-1 rounded-lg bg-white/15 text-white font-medium transition";
+                } else {
+                    btn.className = "sector-pill px-3 py-1 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 transition";
+                }
+            });
+            renderDashboard();
+        }
+
+        function switchTab(tab) {
+            const isMarket = tab === 'market';
+            document.getElementById('viewMarket').classList.toggle('hidden', !isMarket);
+            document.getElementById('sectorFilterBar').classList.toggle('hidden', !isMarket);
+            document.getElementById('viewWorld').classList.toggle('hidden', isMarket);
+
+            document.getElementById('tabBtnMarket').className = isMarket ? "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" : "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-white";
+            document.getElementById('tabBtnWorld').className = !isMarket ? "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" : "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-white";
+            document.getElementById('tabBtnMarketMob').className = isMarket ? "py-2 rounded-lg text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-center" : "py-2 rounded-lg text-xs font-semibold text-slate-400 text-center";
+            document.getElementById('tabBtnWorldMob').className = !isMarket ? "py-2 rounded-lg text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-center" : "py-2 rounded-lg text-xs font-semibold text-slate-400 text-center";
+        }
+
+        function loadTradingViewWidget(symbol) {
+            const container = document.getElementById('tvContainer');
+            container.innerHTML = '';
+            const iframe = document.createElement('iframe');
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.border = "0";
+            iframe.src = `https://s.tradingview.com/widgetembed/?frameElementId=tv_embed&symbol=${encodeURIComponent(symbol)}&interval=W&hidesidetoolbar=1&symboledit=1&saveimage=0&toolbarbg=090a0f&theme=dark&style=1&timezone=Europe%2FBerlin`;
+            container.appendChild(iframe);
+        }
+
+        function openCardModal(id) {
+            const card = appState.cards.find(c => c.id === id);
+            if (!card) return;
+            document.getElementById('modalCategoryBadge').textContent = card.sectorLabel;
+            document.getElementById('modalTickerBadge').textContent = card.ticker;
+            document.getElementById('modalTitle').textContent = `${card.company} – ${card.headline}`;
+            document.getElementById('modalVerdictDirection').textContent = card.direction;
+            document.getElementById('modalVerdictDirection').className = `text-xs font-semibold font-mono ${card.directionColor}`;
+            document.getElementById('modalThesisText').textContent = card.thesis;
+            document.getElementById('modalBulletsList').innerHTML = card.bullets.map(b => `<li>${b}</li>`).join('');
+            document.getElementById('chartSectionModal').classList.remove('hidden');
+            loadTradingViewWidget(card.ticker);
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function openIntermarketModal() {
+            const im = appState.intermarket;
+            document.getElementById('modalCategoryBadge').textContent = "Staatsanleihen & Intermarket";
+            document.getElementById('modalTickerBadge').textContent = im.tvSymbol;
+            document.getElementById('modalTitle').textContent = im.title;
+            document.getElementById('modalVerdictDirection').textContent = "MAKRO-ANALYSE";
+            document.getElementById('modalVerdictDirection').className = "text-xs font-semibold font-mono text-indigo-300";
+            document.getElementById('modalThesisText').textContent = im.summary;
+            document.getElementById('modalBulletsList').innerHTML = im.bullets.map(b => `<li>${b}</li>`).join('');
+            document.getElementById('chartSectionModal').classList.remove('hidden');
+            loadTradingViewWidget(im.tvSymbol);
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+            document.getElementById('tvContainer').innerHTML = '';
+        }
+
+        function toggleModal(id, show) {
+            const el = document.getElementById(id);
+            if (show) el.classList.remove('hidden');
+            else el.classList.add('hidden');
+        }
+
+        function openSettingsModal() { toggleModal('settingsModal', true); }
+        function openArchiveModal() { renderArchiveList(); toggleModal('archiveModal', true); }
+
+        function saveSettings() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            localStorage.setItem('gemini_api_key', key);
+            toggleModal('settingsModal', false);
+        }
+
+        function renderArchiveList() {
+            const list = document.getElementById('archiveList');
+            if (archiveList.length === 0) {
+                list.innerHTML = `<p class="text-center text-slate-500 py-6">Keine archivierten Briefings vorhanden.</p>`;
+                return;
+            }
+            list.innerHTML = archiveList.map((item, idx) => `
+                <div class="p-3 rounded-xl bg-zinc-950 border border-white/[0.04] flex items-center justify-between gap-3">
+                    <div>
+                        <span class="font-mono text-emerald-400 text-[10px]">${item.timestamp}</span>
+                        <p class="text-slate-200 font-medium truncate max-w-[280px]">${item.intermarket.title}</p>
+                    </div>
+                    <button onclick="loadArchiveItem(${idx})" class="px-3 py-1 rounded bg-zinc-800 text-white text-xs">Laden</button>
+                </div>
+            `).join('');
+        }
+
+        function loadArchiveItem(idx) {
+            appState = archiveList[idx];
+            renderDashboard();
+            toggleModal('archiveModal', false);
+        }
+
+        function clearArchive() {
+            archiveList = [];
+            localStorage.removeItem('terminal_archive_v3');
+            renderArchiveList();
+            updateArchiveBadge();
+        }
+
+        function updateArchiveBadge() {
+            const badge = document.getElementById('archiveBadge');
+            if (archiveList.length > 0) {
+                badge.textContent = archiveList.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        async function triggerLiveScan() {
+            const key = document.getElementById('apiKeyInput').value.trim() || localStorage.getItem('gemini_api_key') || '';
+            if (!key) {
+                openSettingsModal();
+                return;
+            }
+
+            const banner = document.getElementById('loadingBanner');
+            banner.classList.remove('hidden');
+
+            const directive = document.getElementById('customPromptInput').value;
+            const systemPrompt = `Du bist ein präzises Financial & Global Intelligence Terminal.
+Erstelle ein tagesaktuelles Briefing als valides JSON-Objekt (ohne Markdown-Backticks).
+Regeln:
+1. Aktien (category: "equities"): Scanne ALLE global relevanten, börsennotierten Unternehmen weltweit. Filter: Nur Nachrichten, die Bilanz, Margen, Burggraben auf Sicht von 5+ Jahren verbessern oder verschlechtern (kein Daytrading).
+2. Rohstoffe (category: "commodities"): Gold, Silber, Kupfer, Uran.
+3. Krypto (category: "crypto"): Bitcoin & Netzwerkinfrastruktur.
+4. Bonds & Intermarket.
+5. Welt-Nachrichten (worldNews): Streng objektiv, ohne Noise.
+Direktive: ${directive}
+JSON-Struktur muss exakt DEMO_APP_STATE entsprechen: {intermarket: {title, summary, tags: [{label, val}], bullets, tvSymbol}, macroCalendar: [{date, event, impact}], cards: [{id, category, sectorLabel, ticker, company, direction, directionColor, moatScore, headline, thesis, bullets, sparkline: [8 nums]}], worldNews: [{region, title, summary, bullets}]}`;
+
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: systemPrompt }] }],
+                        tools: [{ google_search: {} }]
+                    })
+                });
+                const data = await res.json();
+                const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                const match = rawText.match(/\{[\s\S]*\}/);
+                if (match) {
+                    const parsed = JSON.parse(match[0]);
+                    appState = {
+                        id: "state-" + Date.now(),
+                        timestamp: "Live aktualisiert • " + new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'}),
+                        ...parsed
+                    };
+                    archiveList.unshift(appState);
+                    if (archiveList.length > 10) archiveList.pop();
+                    localStorage.setItem('terminal_state_v3', JSON.stringify(appState));
+                    localStorage.setItem('terminal_archive_v3', JSON.stringify(archiveList));
+                    renderDashboard();
+                    updateArchiveBadge();
+                }
+            } catch (e) {
+                console.error("Live Scan Fehler:", e);
+            } finally {
+                banner.classList.add('hidden');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
