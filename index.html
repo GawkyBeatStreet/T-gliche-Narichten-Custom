@@ -44,9 +44,6 @@
     .drawer-backdrop {
       transition: opacity 0.25s ease;
     }
-    .drawer-panel {
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
 
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -104,7 +101,9 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-2 text-xs">
       <div class="flex items-start md:items-center gap-2.5">
         <span class="mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/25 shrink-0 mt-0.5 md:mt-0">Leitmedien-Synthese</span>
-        <p id="morningSynthesis" class="text-slate-300 leading-relaxed"></p>
+        <p id="morningSynthesis" class="text-slate-300 leading-relaxed">
+          <strong class="text-white font-medium">Thema des Tages (WSJ · Handelsblatt · FT):</strong> Globale Industriekonzerne und Tech-Giganten sichern sich langfristige Energie- und Halbleiter-Kapazitäten, während westliche Zentralbanken angesichts hoher struktureller Staatsdefizite vor vorschnellen Zinssenkungen warnen.
+        </p>
       </div>
       <div class="hidden xl:flex items-center gap-1.5 text-[11px] text-slate-400 mono shrink-0">
         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -113,7 +112,7 @@
     </div>
   </div>
 
-  <!-- Live Google Search Grounding Proof Bar (Shows real queries & sources when fetched via API) -->
+  <!-- Live Google Search Grounding Proof Bar -->
   <div id="groundingProofBar" class="hidden border-b border-emerald-500/20 bg-emerald-950/20 px-4 lg:px-8 py-2">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px]">
       <div class="flex items-center gap-2 text-emerald-300 mono">
@@ -164,7 +163,7 @@
       <!-- Sector Filter Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
         <div class="flex items-center gap-1.5 overflow-x-auto py-1">
-          <button onclick="filterCards('all')" class="sector-pill active px-3 py-1.5 rounded-xl bg-white/10 text-white text-xs font-medium transition" data-filter="all">Alle Sektoren</button>
+          <button onclick="filterCards('all')" class="sector-pill active px-3 py-1.5 rounded-xl bg-white/10 text-white text-xs font-medium transition" data-filter="all">Alle Sektoren (6)</button>
           <button onclick="filterCards('equities')" class="sector-pill px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 text-xs transition" data-filter="equities">Globale Qualitätsaktien</button>
           <button onclick="filterCards('commodities')" class="sector-pill px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 text-xs transition" data-filter="commodities">Gold · Silber · Kupfer · Uran</button>
           <button onclick="filterCards('crypto')" class="sector-pill px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 text-xs transition" data-filter="crypto">Krypto & Monetäre Assets</button>
@@ -371,7 +370,7 @@
 
   <script>
     const defaultData = {
-      lastUpdated: "Referenz-Dossiers (Bereit für Live-Scan)",
+      lastUpdated: "Referenz-Dossiers aktiv",
       groundingQueries: ["Wall Street Journal top business news today", "Handelsblatt Schlagzeilen Wirtschaft", "Reuters global markets macro verification", "Financial Times commodities semiconductor news"],
       groundingUrls: [
         { title: "Wall Street Journal Markets", uri: "https://www.wsj.com" },
@@ -627,7 +626,16 @@
       ]
     };
 
-    let appState = JSON.parse(localStorage.getItem('intelligence_v6_state')) || defaultData;
+    let appState = defaultData;
+    try {
+      const saved = JSON.parse(localStorage.getItem('intelligence_v7_state'));
+      if (saved && Array.isArray(saved.worldNews) && saved.worldNews.length > 0) {
+        appState = saved;
+      }
+    } catch (e) {
+      appState = defaultData;
+    }
+
     let currentFilter = 'all';
 
     function initApp() {
@@ -649,15 +657,14 @@
         document.getElementById('customPromptInput').value = localStorage.getItem('custom_directive');
       }
       renderAll();
-      lucide.createIcons();
+      if (window.lucide) {
+        lucide.createIcons();
+      }
     }
 
-    // Bulletproof JSON Parser & Repair Function for Gemini + Google Search Grounding responses
     function safeParseGeminiJSON(rawText) {
       if (!rawText) return null;
-      // 1. Strip markdown code fences if present
       let cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-      // 2. Extract outermost JSON object
       const firstBrace = cleaned.indexOf('{');
       const lastBrace = cleaned.lastIndexOf('}');
       if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) return null;
@@ -666,7 +673,6 @@
       try {
         return JSON.parse(jsonCandidate);
       } catch (err1) {
-        // 3. Repair common LLM JSON glitches (trailing commas before ] or }, unescaped control chars)
         let repaired = jsonCandidate
           .replace(/,\s*([\]}])/g, '$1')
           .replace(/[\u0000-\u0019]+/g, ' ');
@@ -679,10 +685,8 @@
       }
     }
 
-    // Offline Self-Test to verify that parsing, minimum field depth, and grounding metadata work
     function runOfflineQualitySimulation() {
       const simEl = document.getElementById('simResultText');
-      // Simulate a messy Gemini response with markdown fences, trailing commas, and Google Search metadata
       const simulatedRawResponse = "Hier ist das verifizierte Briefing:\n```json\n" + JSON.stringify(defaultData, null, 2).replace(/\]\s*\}/, '],\n}') + "\n```";
       const parsed = safeParseGeminiJSON(simulatedRawResponse);
 
@@ -694,7 +698,7 @@
         renderAll();
         document.getElementById('groundingProofBar').classList.remove('hidden');
         simEl.className = "text-[11px] text-emerald-300 font-medium";
-        simEl.textContent = `✓ Test bestanden! JSON-Reparatur aktiv, ${parsed.worldNews.length} Welt-Dossiers & ${parsed.cards.length} Markt-Kacheln validiert (Ø Erklärtext-Länge: ${avgContextLen} Zeichen). Morgen früh zu 100 % einsatzbereit.`;
+        simEl.textContent = "✓ Test bestanden! JSON-Reparatur aktiv, " + parsed.worldNews.length + " Welt-Dossiers & " + parsed.cards.length + " Markt-Kacheln validiert (Ø Erklärtext-Länge: " + avgContextLen + " Zeichen). Morgen früh zu 100 % einsatzbereit.";
       } else {
         simEl.className = "text-[11px] text-rose-400";
         simEl.textContent = "Fehler im Selbsttest.";
@@ -702,7 +706,7 @@
     }
 
     function resetToDefaultData() {
-      localStorage.removeItem('intelligence_v6_state');
+      localStorage.removeItem('intelligence_v7_state');
       appState = JSON.parse(JSON.stringify(defaultData));
       renderAll();
       toggleModal('settingsModal');
@@ -716,50 +720,43 @@
       const coords = safePoints.map((p, i) => {
         const x = (i / (safePoints.length - 1)) * width;
         const y = height - ((p - min) / range) * (height - 8) - 4;
-        return `${x.toFixed(1)},${y.toFixed(1)}`;
+        return x.toFixed(1) + "," + y.toFixed(1);
       }).join(' ');
       const stroke = isPositive ? '#34d399' : '#fb7185';
-      return `<svg width="${width}" height="${height}" class="overflow-visible">
-        <polyline fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${coords}" />
-      </svg>`;
+      return '<svg width="' + width + '" height="' + height + '" class="overflow-visible"><polyline fill="none" stroke="' + stroke + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="' + coords + '" /></svg>';
     }
 
     function renderSourcePills(sources) {
       if (!sources || !Array.isArray(sources) || sources.length === 0) {
-        return `<span class="text-[10px] mono px-2.5 py-1 rounded-md bg-white/[0.05] text-slate-300">WSJ · Handelsblatt · Reuters</span>`;
+        return '<span class="text-[10px] mono px-2.5 py-1 rounded-md bg-white/[0.05] text-slate-300">WSJ · Handelsblatt · Reuters</span>';
       }
-      return sources.map(s => `<span class="text-[11px] mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">${s}</span>`).join('');
+      return sources.map(s => '<span class="text-[11px] mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">' + s + '</span>').join('');
     }
 
     function renderAll() {
-      // Last scan timestamp
       document.getElementById('lastScanTimeLabel').textContent = appState.lastUpdated || "Referenz-Dossiers aktiv";
 
-      // Grounding proof bar if available
       if (appState.groundingQueries && appState.groundingQueries.length > 0) {
-        document.getElementById('groundingQueriesText').textContent = `Live-Suchabfragen: "${appState.groundingQueries.slice(0, 3).join('", "')}"`;
+        document.getElementById('groundingQueriesText').textContent = 'Live-Suchabfragen: "' + appState.groundingQueries.slice(0, 3).join('", "') + '"';
         const linksHtml = (appState.groundingUrls || []).slice(0, 4).map(u => 
-          `<a href="${u.uri}" target="_blank" rel="noopener" class="text-[10px] mono px-2 py-0.5 rounded bg-white/[0.06] hover:bg-white/15 text-emerald-300 transition flex items-center gap-1">${u.title || 'Quelle'} ↗</a>`
+          '<a href="' + u.uri + '" target="_blank" rel="noopener" class="text-[10px] mono px-2 py-0.5 rounded bg-white/[0.06] hover:bg-white/15 text-emerald-300 transition flex items-center gap-1">' + (u.title || 'Quelle') + ' ↗</a>'
         ).join('');
         document.getElementById('groundingLinksContainer').innerHTML = linksHtml;
       }
 
-      // Morning synthesis
       if (appState.morningSynthesis) {
-        document.getElementById('morningSynthesis').innerHTML = `<strong class="text-white font-medium">Thema des Tages (WSJ · Handelsblatt · FT):</strong> ${appState.morningSynthesis}`;
+        document.getElementById('morningSynthesis').innerHTML = '<strong class="text-white font-medium">Thema des Tages (WSJ · Handelsblatt · FT):</strong> ' + appState.morningSynthesis;
       }
 
-      // Intermarket
       if (appState.intermarket) {
         document.getElementById('intermarketTitle').textContent = appState.intermarket.title;
         document.getElementById('intermarketSummary').textContent = appState.intermarket.summary;
         document.getElementById('intermarketContext').textContent = appState.intermarket.contextExplanation || appState.intermarket.summary;
         if (appState.intermarket.sources && appState.intermarket.sources.length) {
-          document.getElementById('intermarketSourcesBadge').innerHTML = `<i data-lucide="shield-check" class="w-3 h-3"></i> ${appState.intermarket.sources.slice(0, 3).join(' · ')}`;
+          document.getElementById('intermarketSourcesBadge').innerHTML = '<i data-lucide="shield-check" class="w-3 h-3"></i> ' + appState.intermarket.sources.slice(0, 3).join(' · ');
         }
       }
 
-      // Macro Calendar
       const macroEl = document.getElementById('macroList');
       macroEl.innerHTML = (appState.macroCalendar || []).map(item => `
         <div class="p-3 rounded-xl bg-black/30 border border-white/[0.04] flex items-start justify-between gap-3">
@@ -771,7 +768,6 @@
         </div>
       `).join('');
 
-      // World News Grid (Deep Context Cards)
       const worldGrid = document.getElementById('worldGrid');
       worldGrid.innerHTML = (appState.worldNews || []).map((n, i) => {
         const sourcesText = (n.sources && n.sources.length) ? n.sources.join(' · ') : 'WSJ · Handelsblatt · Reuters';
@@ -790,7 +786,6 @@
               <h3 class="text-base sm:text-[17px] font-semibold text-white leading-snug mb-2">${n.title}</h3>
               <p class="text-xs text-slate-300 leading-relaxed mb-3.5">${n.summary}</p>
 
-              <!-- Inline Context Explainer Preview -->
               <div class="p-3.5 rounded-xl bg-white/[0.025] border border-white/[0.05] mb-3">
                 <span class="text-[10px] mono uppercase text-sky-400 block mb-1 font-medium">Hintergrund · Warum das wichtig ist:</span>
                 <p class="text-xs text-slate-300 leading-relaxed line-clamp-3">${contextPreview}</p>
@@ -805,7 +800,6 @@
         `;
       }).join('');
 
-      // Market Cards Grid
       const grid = document.getElementById('bentoGrid');
       const filtered = currentFilter === 'all'
         ? (appState.cards || [])
@@ -829,13 +823,11 @@
               </div>
               <p class="text-xs text-slate-200 font-medium leading-relaxed mb-3">${card.headline}</p>
 
-              <!-- Context Box on Card -->
               <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] text-xs text-slate-300 mb-3">
                 <span class="text-[10px] mono uppercase text-emerald-400 block mb-0.5">Kontext & Einordnung:</span>
                 <p class="line-clamp-3 leading-relaxed text-[11.5px] text-slate-300">${contextPreview}</p>
               </div>
               
-              <!-- Source & Verification Badge Row -->
               <div class="pt-2 flex items-center justify-between gap-2 text-[10px] mono">
                 <span class="text-emerald-400 flex items-center gap-1 shrink-0">
                   <i data-lucide="shield-check" class="w-3 h-3"></i> ${verStatus}
@@ -860,7 +852,9 @@
         `;
       }).join('');
 
-      lucide.createIcons();
+      if (window.lucide) {
+        lucide.createIcons();
+      }
     }
 
     function filterCards(cat) {
@@ -888,7 +882,6 @@
         : "px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 text-slate-400 hover:text-white";
     }
 
-    // Modern Frameless TradingView Symbol-Overview Area Chart
     function loadModernChartWidget(symbol, label) {
       const container = document.getElementById('tvChartContainer');
       container.innerHTML = '';
@@ -947,13 +940,13 @@
       if (!card) return;
       document.getElementById('modalSectorBadge').textContent = card.sectorLabel;
       document.getElementById('modalTickerBadge').textContent = card.ticker;
-      document.getElementById('modalTitle').textContent = `${card.company} – ${card.headline}`;
+      document.getElementById('modalTitle').textContent = card.company + " – " + card.headline;
       document.getElementById('modalImpactDirection').textContent = card.direction;
-      document.getElementById('modalImpactDirection').className = `text-xs font-semibold mono ${card.directionColor || 'text-emerald-400'}`;
+      document.getElementById('modalImpactDirection').className = "text-xs font-semibold mono " + (card.directionColor || 'text-emerald-400');
       
       document.getElementById('modalContextExplanation').textContent = card.contextExplanation || card.thesis;
       document.getElementById('modalLongTermThesis').textContent = card.thesis;
-      document.getElementById('modalBullets').innerHTML = (card.bullets || []).map(b => `<li>${b}</li>`).join('');
+      document.getElementById('modalBullets').innerHTML = (card.bullets || []).map(b => "<li>" + b + "</li>").join('');
       
       document.getElementById('modalVerificationStatus').textContent = card.verificationStatus || "Mehrfach verifiziert";
       document.getElementById('modalVerificationNote').textContent = card.verificationNote || "Abgeglichen über führende Wirtschaftsmedien (WSJ, Handelsblatt, FT) und internationale Nachrichtenagenturen (Reuters, AP, Bloomberg).";
@@ -962,7 +955,7 @@
       document.getElementById('chartSection').classList.remove('hidden');
       loadModernChartWidget(card.ticker, card.company);
       document.getElementById('detailModal').classList.remove('hidden');
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     function openIntermarketDetail() {
@@ -975,7 +968,7 @@
       
       document.getElementById('modalContextExplanation').textContent = im.contextExplanation || im.summary;
       document.getElementById('modalLongTermThesis').textContent = im.summary;
-      document.getElementById('modalBullets').innerHTML = (im.bullets || []).map(b => `<li>${b}</li>`).join('');
+      document.getElementById('modalBullets').innerHTML = (im.bullets || []).map(b => "<li>" + b + "</li>").join('');
       
       document.getElementById('modalVerificationStatus').textContent = "Multi-Institut Konsens";
       document.getElementById('modalVerificationNote').textContent = im.verificationNote || "Abgeglichen über Zentralbankdaten sowie Leitartikel aus Wall Street Journal, Financial Times und Handelsblatt.";
@@ -984,7 +977,7 @@
       document.getElementById('chartSection').classList.remove('hidden');
       loadModernChartWidget(im.symbol || "TVC:US10Y", "10Y US-Staatsanleihen Rendite");
       document.getElementById('detailModal').classList.remove('hidden');
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     function openWorldModal(idx) {
@@ -997,7 +990,7 @@
       
       document.getElementById('modalContextExplanation').textContent = n.contextExplanation || n.summary;
       document.getElementById('modalLongTermThesis').textContent = n.longTermImpact || n.summary;
-      document.getElementById('modalBullets').innerHTML = (n.bullets || []).map(b => `<li>${b}</li>`).join('');
+      document.getElementById('modalBullets').innerHTML = (n.bullets || []).map(b => "<li>" + b + "</li>").join('');
       
       document.getElementById('modalVerificationStatus').textContent = n.verificationStatus || "Abgeglichen über globale Agenturen";
       document.getElementById('modalVerificationNote').textContent = n.verificationNote || "Diese Meldung wurde über mehrere unabhängige internationale Nachrichteninstitute (Reuters, AP, AFP, dpa) auf Faktentreue abgeglichen.";
@@ -1005,7 +998,7 @@
 
       document.getElementById('chartSection').classList.add('hidden');
       document.getElementById('detailModal').classList.remove('hidden');
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     function closeDetailModal() {
@@ -1039,7 +1032,6 @@
         return;
       }
 
-      // Quota guard: ask user if they already scanned today
       const todayStr = new Date().toLocaleDateString('de-DE');
       if (localStorage.getItem('last_scan_date') === todayStr) {
         const proceed = confirm("Du hast heute bereits einen Live-Scan durchgeführt. Möchtest du trotzdem einen weiteren API-Abruf starten?");
@@ -1054,85 +1046,26 @@
       const verificationAgencies = document.getElementById('verificationAgenciesInput').value;
       const userDirective = document.getElementById('customPromptInput').value;
 
-      const systemPrompt = `Du bist ein erstklassiges Financial & Global Intelligence Terminal (im Stil von The Economist, Wall Street Journal und Handelsblatt).
-Heutiges Datum: ${todayStr}.
-Nutze Google Search, um die aktuellen Tagesthemen zu recherchieren, und antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt (keine Markdown-Backticks, kein Text vor `{` oder nach `}`).
-WICHTIG FÜR VALIDES JSON: Verwende innerhalb von JSON-Texten niemals doppelte Anführungszeichen ("), sondern einfache Anführungszeichen ('...'), damit das JSON nicht bricht!
-
-VERBINDLICHE QUALITÄTS- & UMFANGS-GARANTIE (DAMIT DAS ERGEBNIS TIEFGEHEND IST):
-1. LEITMEDIEN-RADAR:
-   Recherchiere die heutigen Headlines, Titelthemen und Schwerpunkte von: ${tier1Media}.
-2. GLOBALER FAKTEN-ABGLEICH (ANTI-DESINFORMATION):
-   Jede Nachricht und Zahl MUSS über mindestens 2 bis 3 unabhängige internationale Nachrichteninstitute (${verificationAgencies}) gegengeprüft sein. Nenne die konkreten Medien im Array "sources".
-3. AUSFÜHRLICHE ERKLÄRUNG STATT KURZMELDUNG (PFLICHT):
-   Das Feld "contextExplanation" darf NIEMALS nur 1-2 Sätze kurz sein! Schreibe dort für JEDEN Artikel und JEDE Kachel 4 bis 5 ausführliche, tiefgehende Sätze (mindestens 70-100 Wörter), die verständlich erklären:
-   - Warum passiert das genau jetzt?
-   - Wie hängen die ökonomischen, technologischen oder geopolitischen Faktoren dahinter zusammen?
-   - Was muss man verstehen, um die Tragweite einzuordnen?
-4. FESTGELEGTE ANZAHL AN ARTIKELN (NICHT KÜRZEN!):
-   - "worldNews": Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers aus verschiedenen Regionen/Themenfeldern.
-   - "cards": Erstelle EXAKT 6 detaillierte Markt-Kacheln:
-     * 2x category: "equities" (Globale Qualitätsaktien mit 5Y+ Burggraben-Relevanz, Ticker im TradingView-Format wie NASDAQ:NVDA, NYSE:ETN, XETR:SAP)
-     * 3x category: "commodities" (Gold/Silber mit Ticker TVC:GOLD, Kupfer mit Ticker COMEX:HG1!, Uran mit Ticker NYSE:CCJ)
-     * 1x category: "crypto" (Bitcoin & institutionelle Adoption mit Ticker BITSTAMP:BTCUSD)
-5. ZUSATZ-DIREKTIVE:
-   ${userDirective}
-
-Exakte JSON-Struktur:
-{
-  "morningSynthesis": "1-2 prägnante Sätze zum heutigen globalen Hauptthema aus WSJ/Handelsblatt/FT",
-  "intermarket": {
-    "title": "...",
-    "summary": "...",
-    "contextExplanation": "Ausführliche 4-5 Sätze Hintergrund-Erklärung der aktuellen Zins-, Anleihen- und Rohstoffmechanik...",
-    "bullets": ["Fakt mit konkreter Zahl 1", "Fakt mit konkreter Zahl 2", "Fakt mit konkreter Zahl 3"],
-    "symbol": "TVC:US10Y",
-    "sources": ["Wall Street Journal", "Financial Times", "Reuters"],
-    "verificationNote": "Konkrete Angabe, welche Quellen/Daten abgeglichen wurden"
-  },
-  "macroCalendar": [
-    { "date": "...", "event": "...", "impact": "..." },
-    { "date": "...", "event": "...", "impact": "..." },
-    { "date": "...", "event": "...", "impact": "..." },
-    { "date": "...", "event": "...", "impact": "..." }
-  ],
-  "cards": [
-    {
-      "id": "eq-1",
-      "category": "equities",
-      "sectorLabel": "Aktien · Sektorname",
-      "ticker": "NASDAQ:ASML",
-      "company": "Firmenname",
-      "direction": "BURGGRABEN WÄCHST (5Y+)",
-      "directionColor": "text-emerald-400",
-      "moatScore": 92,
-      "headline": "Aussagekräftige Headline...",
-      "contextExplanation": "Mindestens 4-5 ausführliche Sätze: Warum passiert das, wie funktioniert das Geschäftsmodell/Engpass dahinter...",
-      "thesis": "Ausführliche 5-Jahres-Einschätzung zu Margen, Bilanz und Burggraben...",
-      "bullets": ["Detaillierter Fakt 1", "Detaillierter Fakt 2", "Detaillierter Fakt 3"],
-      "sources": ["Wall Street Journal", "Handelsblatt", "Reuters"],
-      "verificationStatus": "Mehrfach verifiziert (3 Quellen)",
-      "verificationNote": "Erklärung des Quellenabgleichs...",
-      "sparkline": [45, 50, 52, 58, 63, 70, 75, 84]
-    }
-  ],
-  "worldNews": [
-    {
-      "region": "Region / Themenfeld",
-      "title": "Aussagekräftige Schlagzeile",
-      "summary": "2 Sätze Zusammenfassung des Kerngeschehens",
-      "contextExplanation": "Mindestens 4-5 ausführliche Sätze Hintergrund-Erklärung: Warum passiert das jetzt, was ist die Vorgeschichte und wie hängen die Faktoren zusammen...",
-      "longTermImpact": "Was folgt daraus strukturell auf Sicht der nächsten Jahre...",
-      "bullets": ["Abgeglichener Fakt 1", "Abgeglichener Fakt 2", "Abgeglichener Fakt 3"],
-      "sources": ["Handelsblatt", "Wall Street Journal", "Reuters", "dpa"],
-      "verificationStatus": "Agentur-Konsens (4 Quellen)",
-      "verificationNote": "Konkreter Hinweis zum Abgleich über internationale Nachrichtenagenturen"
-    }
-  ]
-}`;
+      const systemPrompt = [
+        "Du bist ein erstklassiges Financial & Global Intelligence Terminal (im Stil von The Economist, Wall Street Journal und Handelsblatt).",
+        "Heutiges Datum: " + todayStr + ".",
+        "Nutze Google Search, um die aktuellen Tagesthemen zu recherchieren, und antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt (keine Markdown-Backticks, kein Vorwort).",
+        "WICHTIG FÜR VALIDES JSON: Verwende innerhalb von JSON-Texten niemals doppelte Anführungszeichen, sondern einfache Anführungszeichen ('...'), damit das JSON nicht bricht!",
+        "",
+        "VERBINDLICHE QUALITÄTS- & UMFANGS-GARANTIE:",
+        "1. LEITMEDIEN-RADAR: Recherchiere die heutigen Headlines, Titelthemen und Schwerpunkte von: " + tier1Media + ".",
+        "2. GLOBALER FAKTEN-ABGLEICH (ANTI-DESINFORMATION): Jede Nachricht und Zahl MUSS über mindestens 2 bis 3 unabhängige internationale Nachrichteninstitute (" + verificationAgencies + ") gegengeprüft sein. Nenne die konkreten Medien im Array 'sources'.",
+        "3. AUSFÜHRLICHE ERKLÄRUNG STATT KURZMELDUNG (PFLICHT): Das Feld 'contextExplanation' darf NIEMALS nur 1-2 Sätze kurz sein! Schreibe dort für JEDEN Artikel und JEDE Kachel 4 bis 5 ausführliche, tiefgehende Sätze (mindestens 70-100 Wörter), die verständlich erklären, WARUM das genau jetzt passiert, wie die ökonomischen/geopolitischen Faktoren dahinter zusammenhängen und was der Leser verstehen muss.",
+        "4. FESTGELEGTE ANZAHL AN ARTIKELN (NICHT KÜRZEN!):",
+        "   - 'worldNews': Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers aus verschiedenen Regionen/Themenfeldern.",
+        "   - 'cards': Erstelle EXAKT 6 detaillierte Markt-Kacheln (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA oder XETR:SAP; 3x category 'commodities' zu Gold/Silber TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD).",
+        "5. ZUSATZ-DIREKTIVE: " + userDirective,
+        "",
+        "Halte dich exakt an die JSON-Felder: morningSynthesis, intermarket (title, summary, contextExplanation, bullets, symbol, sources, verificationNote), macroCalendar (date, event, impact), cards (id, category, sectorLabel, ticker, company, direction, directionColor, moatScore, headline, contextExplanation, thesis, bullets, sources, verificationStatus, verificationNote, sparkline), worldNews (region, title, summary, contextExplanation, longTermImpact, bullets, sources, verificationStatus, verificationNote)."
+      ].join("\n");
 
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelName)}:generateContent?key=${key}`, {
+        const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(modelName) + ":generateContent?key=" + key, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1160,7 +1093,6 @@ Exakte JSON-Struktur:
         
         const parsedState = safeParseGeminiJSON(rawText);
         if (parsedState && Array.isArray(parsedState.worldNews) && Array.isArray(parsedState.cards)) {
-          // Extract real Google Search Grounding proof if returned by API
           const gm = candidate?.groundingMetadata;
           parsedState.groundingQueries = gm?.webSearchQueries || ["WSJ / Handelsblatt / FT / Reuters Live-Scan"];
           parsedState.groundingUrls = (gm?.groundingChunks || [])
@@ -1168,10 +1100,10 @@ Exakte JSON-Struktur:
             .map(c => ({ title: c.web.title, uri: c.web.uri }));
 
           const timeStr = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-          parsedState.lastUpdated = `Live verifiziert: ${todayStr}, ${timeStr} Uhr`;
+          parsedState.lastUpdated = "Live verifiziert: " + todayStr + ", " + timeStr + " Uhr";
 
           appState = parsedState;
-          localStorage.setItem('intelligence_v6_state', JSON.stringify(appState));
+          localStorage.setItem('intelligence_v7_state', JSON.stringify(appState));
           localStorage.setItem('last_scan_date', todayStr);
           renderAll();
           document.getElementById('groundingProofBar').classList.remove('hidden');
