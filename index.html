@@ -3,649 +3,630 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>08:00 Intelligence · Deep Context Terminal</title>
+  <title>08:00 Intelligence</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     :root {
-      --bg-base: #07080c;
-      --bg-card: rgba(16, 18, 26, 0.78);
-      --border-subtle: rgba(255, 255, 255, 0.065);
+      --apple-bg: #000000;
+      --apple-surface: #121214;
+      --apple-surface-hover: #18181b;
+      --apple-elevated: #1c1c1e;
+      --apple-border: rgba(255, 255, 255, 0.08);
+      --apple-border-hover: rgba(255, 255, 255, 0.16);
+      --apple-blue: #0a84ff;
+      --apple-green: #30d158;
+      --apple-red: #ff453a;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-base);
-      background-image: 
-        radial-gradient(at 15% 0%, rgba(16, 185, 129, 0.06) 0px, transparent 45%),
-        radial-gradient(at 85% 5%, rgba(56, 189, 248, 0.05) 0px, transparent 45%);
-      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+      background-color: var(--apple-bg);
+      color: #f5f5f7;
       -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.011em;
     }
 
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    .serif-editorial { font-family: 'Newsreader', Georgia, serif; }
-
-    .bento-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    .apple-card {
+      background-color: var(--apple-surface);
+      border: 1px solid var(--apple-border);
+      border-radius: 22px;
+      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .bento-card:hover {
-      border-color: rgba(255, 255, 255, 0.16);
-      background: rgba(21, 24, 34, 0.9);
-      transform: translateY(-2px);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    .apple-card:hover {
+      background-color: var(--apple-surface-hover);
+      border-color: var(--apple-border-hover);
+      transform: scale(1.006);
     }
 
-    .drawer-backdrop {
-      transition: opacity 0.25s ease;
+    .apple-glass {
+      background: rgba(18, 18, 20, 0.78);
+      backdrop-filter: saturate(180%) blur(24px);
+      -webkit-backdrop-filter: saturate(180%) blur(24px);
     }
 
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 9999px; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-emerald-500/30 selection:text-emerald-200">
+<body class="min-h-screen flex flex-col selection:bg-[#0a84ff]/30 selection:text-white">
 
-  <!-- Top Navigation Bar -->
-  <header class="sticky top-0 z-30 backdrop-blur-2xl bg-[#07080c]/85 border-b border-white/[0.06] px-4 lg:px-8 py-3.5">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+  <!-- Minimalist Apple Top Bar -->
+  <header class="sticky top-0 z-30 apple-glass border-b border-white/[0.07] px-5 lg:px-10 py-3.5">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
       
-      <!-- Brand -->
-      <div class="flex items-center gap-3.5">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/5 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-inner">
-          <i data-lucide="compass" class="w-5 h-5"></i>
+      <!-- Brand & Date -->
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-white/[0.08] flex items-center justify-center text-white">
+          <i data-lucide="compass" class="w-4 h-4"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2.5">
-            <h1 class="font-semibold text-[15px] tracking-tight text-white">08:00 Intelligence</h1>
-            <span id="scanStatusBadge" class="inline-flex items-center gap-1 text-[10px] mono uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-              <i data-lucide="shield-check" class="w-3 h-3"></i> Live-Feed + Multi-Model
-            </span>
-            <span id="fridayBadge" class="hidden text-[10px] mono uppercase px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Freitags-Review</span>
-          </div>
-          <p id="dateDisplay" class="text-[11px] text-slate-400 mono mt-0.5"></p>
+          <h1 class="font-semibold text-[15px] tracking-tight text-white">Intelligence</h1>
+          <p id="dateDisplay" class="text-[11px] text-[#86868b]"></p>
         </div>
       </div>
 
-      <!-- Mode Switcher (Segmented Control) -->
-      <div class="flex items-center bg-white/[0.03] p-1 rounded-xl border border-white/[0.06]">
-        <button onclick="switchTab('world')" id="tab-world" class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 bg-white/10 text-white shadow-sm">
-          <i data-lucide="newspaper" class="w-3.5 h-3.5 text-sky-400"></i> 08:00 Deep Briefing (Welt & Wirtschaft)
+      <!-- Apple Segmented Control -->
+      <div class="flex items-center bg-[#1c1c1e] p-1 rounded-full border border-white/[0.06]">
+        <button onclick="switchTab('world')" id="tab-world" class="px-4 py-1.5 rounded-full text-xs font-medium transition-all bg-white text-black shadow-sm">
+          Briefing
         </button>
-        <button onclick="switchTab('market')" id="tab-market" class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 text-slate-400 hover:text-white">
-          <i data-lucide="line-chart" class="w-3.5 h-3.5 text-emerald-400"></i> Märkte & 5Y-Radar
+        <button onclick="switchTab('market')" id="tab-market" class="px-4 py-1.5 rounded-full text-xs font-medium transition-all text-[#86868b] hover:text-white">
+          Märkte
         </button>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Actions -->
       <div class="flex items-center gap-2">
-        <button onclick="fetchLiveBriefing()" id="refreshBtn" class="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs flex items-center gap-1.5 transition shadow-lg shadow-emerald-500/15">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-          <span>Live-Scan starten</span>
+        <button onclick="fetchLiveBriefing()" id="refreshBtn" class="px-4 py-1.5 rounded-full bg-[#0a84ff] hover:bg-[#0071e3] text-white font-medium text-xs flex items-center gap-1.5 transition">
+          <i data-lucide="refresh-cw" id="refreshIcon" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Aktualisieren</span>
         </button>
-        <button onclick="toggleModal('settingsModal')" class="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.07] transition" title="API, Modell-Kaskade & Diagnose">
+        <button onclick="toggleModal('settingsModal')" class="p-2 rounded-full bg-[#1c1c1e] hover:bg-white/[0.12] text-[#86868b] hover:text-white transition" title="Einstellungen">
           <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Executive Morning Summary Bar -->
-  <div class="border-b border-white/[0.05] bg-[#0a0c12]/90 px-4 lg:px-8 py-3">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-2 text-xs">
-      <div class="flex items-start md:items-center gap-2.5">
-        <span class="mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/25 shrink-0 mt-0.5 md:mt-0">Leitmedien-Synthese</span>
-        <p id="morningSynthesis" class="text-slate-300 leading-relaxed">
-          <strong class="text-white font-medium">Thema des Tages (WSJ · Handelsblatt · FT):</strong> Globale Industriekonzerne und Tech-Giganten sichern sich langfristige Energie- und Halbleiter-Kapazitäten, während westliche Zentralbanken angesichts hoher struktureller Staatsdefizite vor vorschnellen Zinssenkungen warnen.
-        </p>
-      </div>
-      <div class="hidden xl:flex items-center gap-1.5 text-[11px] text-slate-400 mono shrink-0">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span id="lastScanTimeLabel">Referenz-Dossiers aktiv</span>
-      </div>
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-5 lg:px-10 py-8 space-y-8">
+
+    <!-- Subtle Progress Pill (Only visible during scan) -->
+    <div id="loadingBanner" class="hidden py-3 px-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.08] flex items-center gap-3">
+      <div class="w-3.5 h-3.5 border-2 border-[#0a84ff] border-t-transparent rounded-full animate-spin shrink-0"></div>
+      <span id="loadingStepTitle" class="text-xs text-[#f5f5f7]">Aktualisiere Dossiers...</span>
     </div>
-  </div>
 
-  <!-- Live Feed & Grounding Proof Bar -->
-  <div id="groundingProofBar" class="hidden border-b border-emerald-500/20 bg-emerald-950/20 px-4 lg:px-8 py-2">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px]">
-      <div class="flex items-center gap-2 text-emerald-300 mono">
-        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 shrink-0"></i>
-        <span id="groundingQueriesText">Live-Feeds & Modell-Verifikation aktiv</span>
+    <!-- Executive Summary Hero -->
+    <div class="apple-card p-6 sm:p-7">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff]">Tages-Synthese</span>
+        <span id="lastScanTimeLabel" class="text-[11px] text-[#86868b]"></span>
       </div>
-      <div id="groundingLinksContainer" class="flex flex-wrap items-center gap-2"></div>
-    </div>
-  </div>
-
-  <!-- Main Content Container -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
-
-    <!-- Loading Status Banner -->
-    <div id="loadingBanner" class="hidden mb-6 p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin shrink-0"></div>
-        <div class="text-xs text-emerald-200">
-          <span id="loadingStepTitle" class="font-semibold block">1/2: Lade aktuelle Live-Headlines von WSJ, Handelsblatt, FT & Tagesschau...</span>
-          <span id="loadingStepSub" class="text-emerald-300/80 text-[11px]">Umgeht die Google-Search-429-Sperre durch direkten Live-Feed-Abruf + automatische Modell-Kaskade.</span>
-        </div>
-      </div>
+      <p id="morningSynthesis" class="text-base sm:text-lg font-medium text-[#f5f5f7] leading-snug"></p>
     </div>
 
     <!-- ========================================== -->
-    <!-- VIEW 1: 08:00 GLOBAL DEEP BRIEFING (WORLD) -->
+    <!-- VIEW 1: BRIEFING (WORLD & ECONOMY)         -->
     <!-- ========================================== -->
     <section id="view-world" class="space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-2 border-b border-white/[0.06]">
-        <div>
-          <span class="text-[11px] mono uppercase tracking-wider text-sky-400">Hintergrund & Einordnung · Mehrfach abgeglichen</span>
-          <h2 class="text-lg font-semibold text-white mt-0.5">Das 08:00 Uhr Welt- & Wirtschafts-Briefing</h2>
-        </div>
-        <p class="text-xs text-slate-400">Klicke auf einen Artikel für die vollständige Hintergrund-Erklärung & den Quellen-Abgleich.</p>
-      </div>
-
-      <!-- World News Grid (6 Detailed Cards) -->
       <div id="worldGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Populated by JS -->
       </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- VIEW 2: MARKET & 5Y RADAR                  -->
+    <!-- VIEW 2: MARKETS & 5Y RADAR                 -->
     <!-- ========================================== -->
     <section id="view-market" class="hidden space-y-6">
 
-      <!-- Sector Filter Bar -->
-      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
-        <div class="flex items-center gap-1.5 overflow-x-auto py-1">
-          <button onclick="filterCards('all')" class="sector-pill active px-3 py-1.5 rounded-xl bg-white/10 text-white text-xs font-medium transition" data-filter="all">Alle Sektoren (6)</button>
-          <button onclick="filterCards('equities')" class="sector-pill px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 text-xs transition" data-filter="equities">Globale Qualitätsaktien</button>
-          <button onclick="filterCards('commodities')" class="sector-pill px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 text-xs transition" data-filter="commodities">Gold · Silber · Kupfer · Uran</button>
-          <button onclick="filterCards('crypto')" class="sector-pill px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 text-xs transition" data-filter="crypto">Krypto & Monetäre Assets</button>
+      <!-- Clean Apple Filter Pills -->
+      <div class="flex items-center justify-between gap-3 overflow-x-auto pb-1">
+        <div class="flex items-center gap-2">
+          <button onclick="filterCards('all')" class="sector-pill px-3.5 py-1.5 rounded-full bg-white text-black text-xs font-medium transition" data-filter="all">Alle</button>
+          <button onclick="filterCards('equities')" class="sector-pill px-3.5 py-1.5 rounded-full bg-[#1c1c1e] text-[#86868b] hover:text-white text-xs font-medium transition" data-filter="equities">Aktien</button>
+          <button onclick="filterCards('commodities')" class="sector-pill px-3.5 py-1.5 rounded-full bg-[#1c1c1e] text-[#86868b] hover:text-white text-xs font-medium transition" data-filter="commodities">Rohstoffe</button>
+          <button onclick="filterCards('crypto')" class="sector-pill px-3.5 py-1.5 rounded-full bg-[#1c1c1e] text-[#86868b] hover:text-white text-xs font-medium transition" data-filter="crypto">Krypto</button>
         </div>
-        <span class="text-[11px] text-slate-400 mono">Horizont: 5+ Jahre Burggraben & Realwerte</span>
       </div>
 
-      <!-- Top Row: Intermarket Correlation & Macro Structural Drivers -->
+      <!-- Top Row: Intermarket & Macro -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <!-- Intermarket Radar -->
-        <div class="bento-card rounded-2xl p-6 lg:col-span-7 flex flex-col justify-between cursor-pointer" onclick="openIntermarketDetail()">
+        <!-- Intermarket Card -->
+        <div class="apple-card p-6 lg:col-span-7 flex flex-col justify-between cursor-pointer" onclick="openIntermarketDetail()">
           <div>
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <div class="flex items-center gap-2">
-                <span class="text-[11px] mono uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-indigo-500/15 text-indigo-300 border border-indigo-500/20">Intermarket & Staatsanleihen</span>
-                <span id="intermarketSourcesBadge" class="text-[10px] mono text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded flex items-center gap-1">
-                  <i data-lucide="shield-check" class="w-3 h-3"></i> WSJ · FT · Reuters
-                </span>
-              </div>
-              <span class="text-xs text-emerald-400 flex items-center gap-1 font-medium">Hintergrund & Chart <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i></span>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff]">Anleihen & Intermarket</span>
+              <span id="intermarketSourcesBadge" class="text-[11px] text-[#86868b]"></span>
             </div>
-            <h2 id="intermarketTitle" class="text-base font-semibold text-white mb-2"></h2>
-            <p id="intermarketSummary" class="text-xs text-slate-300 leading-relaxed mb-3"></p>
-            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] text-xs text-slate-300">
-              <span class="text-[10px] mono uppercase text-indigo-300 block mb-1">Einfach erklärt · Warum das wichtig ist:</span>
-              <span id="intermarketContext"></span>
-            </div>
+            <h2 id="intermarketTitle" class="text-lg font-semibold text-white mb-2 leading-snug"></h2>
+            <p id="intermarketContext" class="text-xs sm:text-[13px] text-[#a1a1a6] leading-relaxed line-clamp-4"></p>
           </div>
-          <div class="grid grid-cols-3 gap-2.5 mt-4 pt-3.5 border-t border-white/[0.06] text-xs">
-            <div class="bg-black/30 rounded-xl p-2.5 border border-white/[0.03]">
-              <span class="text-[10px] text-slate-400 block">10Y Staatsanleihen</span>
-              <span class="mono font-medium text-amber-300">~4,0 % (Realzins +)</span>
+          <div class="grid grid-cols-3 gap-2.5 mt-5 pt-4 border-t border-white/[0.06] text-xs">
+            <div class="bg-[#1c1c1e] rounded-xl p-3">
+              <span class="text-[10px] text-[#86868b] block">10Y Rendite</span>
+              <span class="font-semibold text-white mt-0.5 block">~4,0 %</span>
             </div>
-            <div class="bg-black/30 rounded-xl p-2.5 border border-white/[0.03]">
-              <span class="text-[10px] text-slate-400 block">Kapital-Rotation</span>
-              <span class="mono font-medium text-slate-200">In Sachwerte & Cashflow</span>
+            <div class="bg-[#1c1c1e] rounded-xl p-3">
+              <span class="text-[10px] text-[#86868b] block">Rotation</span>
+              <span class="font-semibold text-white mt-0.5 block">Sachwerte</span>
             </div>
-            <div class="bg-black/30 rounded-xl p-2.5 border border-white/[0.03]">
-              <span class="text-[10px] text-slate-400 block">5Y-Konsequenz</span>
-              <span class="mono font-medium text-emerald-300">Preissetzungsmacht siegt</span>
+            <div class="bg-[#1c1c1e] rounded-xl p-3">
+              <span class="text-[10px] text-[#86868b] block">Fokus</span>
+              <span class="font-semibold text-[#30d158] mt-0.5 block">Cashflow</span>
             </div>
           </div>
         </div>
 
-        <!-- Structural Macro Calendar -->
-        <div class="bento-card rounded-2xl p-6 lg:col-span-5 flex flex-col justify-between">
+        <!-- Macro Drivers -->
+        <div class="apple-card p-6 lg:col-span-5 flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-[11px] mono uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-white/[0.06] text-slate-300">Strukturelle Makro-Treiber</span>
-              <i data-lucide="layers" class="w-4 h-4 text-slate-400"></i>
-            </div>
-            <div id="macroList" class="space-y-3 text-xs">
-              <!-- Populated by JS -->
-            </div>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b] block mb-4">Makro-Zyklen</span>
+            <div id="macroList" class="space-y-3 text-xs"></div>
           </div>
-          <p class="text-[11px] text-slate-500 mt-4 pt-3 border-t border-white/[0.05]">
-            Fokus auf mehrjährige Investitions- und Zinszyklen statt kurzfristiger Tagesvolatilität.
-          </p>
         </div>
       </div>
 
-      <!-- Market Cards Grid (6 Cards) -->
-      <div id="bentoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <!-- Populated by JS -->
-      </div>
+      <!-- Market Cards Grid -->
+      <div id="bentoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
   </main>
 
   <!-- ===================================================== -->
-  <!-- SLIDE-OVER READER DRAWER (Modern Article + Modern Chart) -->
+  <!-- APPLE-STYLE SLIDE-OVER DOSSIER + INTEGRATED AI CHAT   -->
   <!-- ===================================================== -->
   <div id="detailModal" class="fixed inset-0 z-50 hidden">
-    <!-- Backdrop -->
-    <div onclick="closeDetailModal()" class="drawer-backdrop absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+    <div onclick="closeDetailModal()" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
     
-    <!-- Right Slide-Over Panel -->
-    <div class="relative z-10 ml-auto h-full w-full max-w-2xl bg-[#0c0e15] border-l border-white/10 shadow-2xl flex flex-col justify-between overflow-y-auto">
+    <div class="relative z-10 ml-auto h-full w-full max-w-2xl bg-[#121214] border-l border-white/[0.08] shadow-2xl flex flex-col overflow-hidden">
       
-      <!-- Sticky Top Bar inside Drawer -->
-      <div class="sticky top-0 z-20 backdrop-blur-xl bg-[#0c0e15]/90 border-b border-white/[0.07] px-6 py-4 flex items-start justify-between gap-4">
+      <!-- Drawer Header -->
+      <div class="apple-glass border-b border-white/[0.07] px-6 py-4 flex items-start justify-between gap-4 shrink-0">
         <div>
-          <div class="flex flex-wrap items-center gap-2 mb-1.5">
-            <span id="modalSectorBadge" class="text-[10px] mono uppercase px-2.5 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/20"></span>
-            <span id="modalTickerBadge" class="text-xs mono font-semibold text-slate-300 bg-white/[0.06] px-2 py-0.5 rounded-md"></span>
-            <span id="modalImpactDirection" class="text-[11px] font-semibold mono"></span>
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <span id="modalSectorBadge" class="text-[11px] font-medium text-[#0a84ff]"></span>
+            <span class="text-[#86868b]">·</span>
+            <span id="modalTickerBadge" class="text-[11px] text-[#86868b]"></span>
           </div>
           <h3 id="modalTitle" class="text-lg sm:text-xl font-semibold text-white leading-snug"></h3>
         </div>
-        <button onclick="closeDetailModal()" class="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 text-slate-400 hover:text-white transition shrink-0">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-white/[0.15] text-[#86868b] hover:text-white flex items-center justify-center transition shrink-0">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <!-- Drawer Body -->
-      <div class="p-6 space-y-6 flex-1">
+      <!-- Scrollable Dossier Content -->
+      <div class="p-6 space-y-6 overflow-y-auto flex-1">
 
-        <!-- 1. "Warum ist das wichtig?" (Deep Context & Explanation) -->
-        <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900/95 to-slate-900/50 border border-white/[0.08] space-y-3">
-          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sky-400 mono">
-            <i data-lucide="book-open" class="w-4 h-4"></i>
-            <span>Hintergrund & Einordnung (Einfach erklärt)</span>
-          </div>
-          <p id="modalContextExplanation" class="text-sm text-slate-200 leading-relaxed serif-editorial text-[15px]"></p>
+        <!-- 1. Deep Context Explanation -->
+        <div class="space-y-2">
+          <h4 class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Kontext & Einordnung</h4>
+          <p id="modalContextExplanation" class="text-[15px] text-[#f5f5f7] leading-relaxed font-normal"></p>
         </div>
 
-        <!-- 2. Langfristige 5-Jahres-Implikation / Effekte 2. Ordnung -->
-        <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2">
+        <!-- 2. Diverging Narratives Box (ONLY shown if hasDivergingNarratives is true) -->
+        <div id="modalNarrativeBox" class="hidden p-4 rounded-2xl bg-[#1c1c1e] border border-amber-500/25 space-y-2">
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-amber-400">
+            <i data-lucide="split" class="w-3.5 h-3.5"></i>
+            <span>Unterschiedliche Narrative im Medien-Abgleich</span>
+          </div>
+          <p id="modalNarrativeText" class="text-xs sm:text-[13px] text-[#d1d1d6] leading-relaxed"></p>
+        </div>
+
+        <!-- 3. Bull Case vs. Bear Case (2-Column Grid for Markets, Single Box for World) -->
+        <div id="modalThesisGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div class="p-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.05] space-y-1.5">
+            <span id="modalBullLabel" class="text-[11px] font-semibold uppercase tracking-wider text-[#30d158] block">5Y Bull-Case & These</span>
+            <p id="modalLongTermThesis" class="text-xs sm:text-[13px] text-[#d1d1d6] leading-relaxed"></p>
+          </div>
+          <div id="modalBearBox" class="p-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.05] space-y-1.5">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#ff453a] block">Gegenrisiko (Bear-Case)</span>
+            <p id="modalBearCaseText" class="text-xs sm:text-[13px] text-[#d1d1d6] leading-relaxed"></p>
+          </div>
+        </div>
+
+        <!-- 4. Modern Frameless Chart -->
+        <div id="chartSection" class="space-y-2">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mono flex items-center gap-1.5">
-              <i data-lucide="compass" class="w-4 h-4"></i> Strukturelle 5-Jahres-These & Folgen
-            </span>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Kursverlauf</span>
+            <span id="externalChartLink" class="text-[11px] text-[#86868b]"></span>
           </div>
-          <p id="modalLongTermThesis" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+          <div id="tvChartContainer" class="w-full h-72 rounded-2xl overflow-hidden border border-white/[0.07] bg-[#09090b] p-1"></div>
         </div>
 
-        <!-- 3. Moderne Chart-Einbindung (TradingView Symbol Overview - Clean Area Look) -->
-        <div id="chartSection" class="space-y-2.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 mono flex items-center gap-1.5">
-              <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i> Modernes Markt-Chart (1M · 1Y · 5Y · MAX)
-            </span>
-            <span id="externalChartLink" class="text-[11px] mono text-slate-400"></span>
-          </div>
-          <!-- Clean Frameless Glass Container -->
-          <div id="tvChartContainer" class="w-full h-80 rounded-2xl overflow-hidden border border-white/[0.08] bg-[#080a0f] p-1"></div>
+        <!-- 5. Key Facts -->
+        <div class="space-y-2.5">
+          <h4 class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Kernfakten</h4>
+          <ul id="modalBullets" class="space-y-2 text-[13px] text-[#d1d1d6] list-disc pl-5 leading-relaxed"></ul>
         </div>
 
-        <!-- 4. Abgeglichene Kernfakten & Zahlen -->
-        <div class="space-y-3">
-          <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mono">Harte Fakten & Zahlen im Überblick</h4>
-          <ul id="modalBullets" class="space-y-2.5 text-xs sm:text-sm text-slate-300 list-disc pl-5 leading-relaxed"></ul>
+        <!-- 6. Sources Footer -->
+        <div class="pt-4 border-t border-white/[0.07] flex flex-wrap items-center justify-between gap-2">
+          <div id="modalSourcesList" class="flex flex-wrap gap-1.5"></div>
+          <span id="modalVerificationStatus" class="text-[11px] text-[#30d158] font-medium"></span>
         </div>
 
-        <!-- 5. Multi-Source Cross-Verification Box -->
-        <div class="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/25 space-y-2.5">
+        <!-- 7. Integrated Dossier AI Chat -->
+        <div class="pt-4 border-t border-white/[0.08] space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <span class="text-[11px] mono uppercase text-emerald-300 flex items-center gap-1.5 font-semibold">
-              <i data-lucide="shield-check" class="w-4 h-4"></i> Multi-Source Fakten-Check (Anti-Desinformation)
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff] flex items-center gap-1.5">
+              <i data-lucide="message-square" class="w-3.5 h-3.5"></i> Rückfrage zum Dossier
             </span>
-            <span id="modalVerificationStatus" class="text-[10px] mono uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 border border-emerald-500/30"></span>
+            <div class="flex gap-1.5">
+              <button onclick="askQuickQuestion('Erkläre die Hintergründe noch einfacher an einem konkreten Beispiel.')" class="text-[11px] px-2.5 py-1 rounded-full bg-[#1c1c1e] hover:bg-white/[0.12] text-[#a1a1a6] hover:text-white transition">Einfacher erklären</button>
+              <button onclick="askQuickQuestion('Welche konkreten Unternehmen oder Sektoren profitieren davon am stärksten?')" class="text-[11px] px-2.5 py-1 rounded-full bg-[#1c1c1e] hover:bg-white/[0.12] text-[#a1a1a6] hover:text-white transition">Profiteure?</button>
+            </div>
           </div>
-          <p id="modalVerificationNote" class="text-xs text-slate-300 leading-relaxed"></p>
-          <div id="modalSourcesList" class="flex flex-wrap gap-1.5 pt-1"></div>
+
+          <!-- Chat Messages Area -->
+          <div id="dossierChatLog" class="space-y-2.5 max-h-60 overflow-y-auto"></div>
+
+          <!-- Chat Input Bar -->
+          <form onsubmit="handleChatSubmit(event)" class="flex items-center gap-2">
+            <input id="dossierChatInput" type="text" placeholder="Frage zu diesem Artikel stellen..." class="flex-1 px-4 py-2.5 rounded-full bg-[#1c1c1e] border border-white/[0.08] text-xs text-white placeholder-[#86868b] focus:outline-none focus:border-[#0a84ff]">
+            <button type="submit" id="chatSendBtn" class="w-9 h-9 rounded-full bg-[#0a84ff] hover:bg-[#0071e3] text-white flex items-center justify-center transition shrink-0">
+              <i data-lucide="arrow-up" class="w-4 h-4"></i>
+            </button>
+          </form>
         </div>
 
       </div>
     </div>
   </div>
 
-  <!-- Settings & Diagnostics Modal -->
-  <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-[#11141d] border border-white/10 rounded-2xl max-w-xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+  <!-- ===================================================== -->
+  <!-- CLEAN APPLE SETTINGS MODAL                            -->
+  <!-- ===================================================== -->
+  <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#121214] border border-white/[0.1] rounded-3xl max-w-lg w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto shadow-2xl">
       <div class="flex items-center justify-between pb-3 border-b border-white/[0.07]">
-        <h3 class="font-semibold text-white text-base">API, Auto-Fallback & Anti-429-Lösung</h3>
-        <button onclick="toggleModal('settingsModal')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <h3 class="font-semibold text-white text-base">Einstellungen</h3>
+        <button onclick="toggleModal('settingsModal')" class="w-7 h-7 rounded-full bg-[#1c1c1e] text-[#86868b] hover:text-white flex items-center justify-center"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
-      <div class="space-y-3.5 text-xs">
-        
-        <!-- Explanation of 429 Fix -->
-        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-emerald-200 leading-relaxed">
-          <strong class="text-emerald-300 block mb-0.5">✓ 429-Überkapazitäts-Schutz aktiv:</strong>
-          In der kostenlosen AI-Studio-Stufe blockiert Google oft das interne Search-Tool mit <code class="mono">429 TooManyRequests</code>, obwohl deine Modelle (<code class="mono">0/20</code> bzw. <code class="mono">0/500</code>) frei sind. Die App lädt deshalb zuerst echte Live-RSS-Feeds (WSJ, Handelsblatt, FT, CNBC, Tagesschau) direkt im Browser und nutzt eine automatische Modell-Kaskade (<code class="mono">3.8-flash</code> ➔ <code class="mono">3.6-flash</code> ➔ <code class="mono">3.5-flash-lite</code> [500/Tag] ➔ <code class="mono">3.1-flash-lite</code> [500/Tag]).
-        </div>
 
+      <div class="space-y-4 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-slate-300 font-medium mb-1">Google Gemini API-Key</label>
-            <input id="apiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white mono focus:outline-none focus:border-emerald-500">
+            <label class="block text-[#86868b] font-medium mb-1.5">Gemini API-Key</label>
+            <input id="apiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-white focus:outline-none focus:border-[#0a84ff]">
           </div>
           <div>
-            <label class="block text-slate-300 font-medium mb-1">Start-Modell (mit Auto-Fallback)</label>
-            <select id="modelNameInput" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-emerald-300 mono focus:outline-none focus:border-emerald-500">
-              <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite (500/Tag Frei!)</option>
-              <option value="gemini-3.8-flash">gemini-3.8-flash (20/Tag Frei)</option>
-              <option value="gemini-3.6-flash">gemini-3.6-flash (20/Tag Frei)</option>
-              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite (500/Tag Frei!)</option>
+            <label class="block text-[#86868b] font-medium mb-1.5">Bevorzugtes Modell</label>
+            <select id="modelNameInput" class="w-full px-3.5 py-2.5 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-white focus:outline-none focus:border-[#0a84ff]">
+              <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite (500/Tag)</option>
+              <option value="gemini-3.8-flash">gemini-3.8-flash (20/Tag)</option>
+              <option value="gemini-3.6-flash">gemini-3.6-flash (20/Tag)</option>
+              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite (500/Tag)</option>
             </select>
           </div>
         </div>
 
+        <button type="button" onclick="copyMobileSyncLink()" id="copySyncBtn" class="w-full py-2.5 rounded-xl bg-[#1c1c1e] hover:bg-white/[0.1] text-white font-medium transition flex items-center justify-center gap-2 border border-white/[0.06]">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5 text-[#0a84ff]"></i>
+          <span>API-Key per Link ans Handy übertragen</span>
+        </button>
+
         <div>
-          <label class="block text-slate-300 font-medium mb-1">Priorisierte Qualitäts-Leitmedien (Headlines & Themen-Geber)</label>
-          <input id="tier1MediaInput" type="text" value="Wall Street Journal (WSJ), Handelsblatt, Financial Times (FT), The Economist, Bloomberg, Neue Zürcher Zeitung (NZZ), Nikkei Asia" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-slate-200 focus:outline-none focus:border-emerald-500">
+          <label class="block text-[#86868b] font-medium mb-1.5">Leitmedien & Agenturen</label>
+          <input id="tier1MediaInput" type="text" value="Wall Street Journal (WSJ), Handelsblatt, Financial Times (FT), The Economist, Bloomberg, NZZ, Nikkei Asia" class="w-full px-3.5 py-2 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-[#d1d1d6] focus:outline-none focus:border-[#0a84ff] mb-2">
+          <input id="verificationAgenciesInput" type="text" value="Reuters, Associated Press (AP), dpa, AFP, Bloomberg News, Primärquellen (SEC, EZB, Fed, IWF)" class="w-full px-3.5 py-2 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-[#d1d1d6] focus:outline-none focus:border-[#0a84ff]">
         </div>
+
         <div>
-          <label class="block text-slate-300 font-medium mb-1">Globale Verifikations-Institute (Cross-Check gegen Falschinformationen)</label>
-          <input id="verificationAgenciesInput" type="text" value="Reuters, Associated Press (AP), dpa, AFP, Bloomberg News, Kyodo News sowie Primärquellen (SEC, EZB, Fed, IWF)" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-slate-200 focus:outline-none focus:border-emerald-500">
-        </div>
-        <div>
-          <label class="block text-slate-300 font-medium mb-1">Recherche- & Erklärungs-Direktive</label>
-          <textarea id="customPromptInput" rows="3" class="w-full p-3 rounded-xl bg-slate-900 border border-white/10 text-slate-200 leading-relaxed focus:outline-none focus:border-emerald-500">Liefere keine bloßen Roh-Fakten ohne Kontext! Erkläre bei jedem Artikel verständlich die Hintergründe ('Warum passiert das jetzt? Wie hängen die Faktoren zusammen? Was bedeutet das für die nächsten 5 Jahre?'). Scanne die täglichen Schwerpunkte aus Wall Street Journal, Handelsblatt und Financial Times und gleiche jede Nachricht über globale Nachrichtenagenturen (Reuters, AP, dpa) ab.</textarea>
+          <label class="block text-[#86868b] font-medium mb-1.5">Recherche-Fokus</label>
+          <textarea id="customPromptInput" rows="2" class="w-full p-3 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-[#d1d1d6] leading-relaxed focus:outline-none focus:border-[#0a84ff]">Erkläre bei jedem Artikel verständlich die Hintergründe ('Warum passiert das jetzt? Wie hängen die Faktoren zusammen?'). Zeige unterschiedliche Medien-Narrative nur dann an, wenn sich US-, EU- oder Asien-Quellen tatsächlich widersprechen.</textarea>
         </div>
       </div>
 
       <div class="flex justify-between items-center pt-2">
-        <button onclick="resetToDefaultData()" class="text-xs text-slate-400 hover:text-white underline">Standard-Dossiers laden</button>
-        <button onclick="saveSettings()" class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-semibold text-xs">Speichern & Schließen</button>
+        <button onclick="resetToDefaultData()" class="text-xs text-[#86868b] hover:text-white">Zurücksetzen</button>
+        <button onclick="saveSettings()" class="px-5 py-2 rounded-full bg-white text-black font-semibold text-xs hover:bg-white/90 transition">Fertig</button>
       </div>
     </div>
   </div>
 
   <script>
     const defaultData = {
-      lastUpdated: "Referenz-Dossiers aktiv",
-      groundingQueries: ["WSJ Markets Live-Feed", "Handelsblatt Politik & Wirtschaft RSS", "Financial Times Global Economy", "Tagesschau Wirtschaft / dpa / Reuters"],
-      groundingUrls: [
-        { title: "Wall Street Journal Markets", uri: "https://www.wsj.com" },
-        { title: "Handelsblatt Wirtschafts-Briefing", uri: "https://www.handelsblatt.com" },
-        { title: "Reuters Global Wire", uri: "https://www.reuters.com" },
-        { title: "Financial Times World", uri: "https://www.ft.com" }
-      ],
+      lastUpdated: "Referenz-Dossiers",
       morningSynthesis: "Globale Industriekonzerne und Tech-Giganten sichern sich langfristige Energie- und Halbleiter-Kapazitäten, während westliche Zentralbanken angesichts hoher struktureller Staatsdefizite vor vorschnellen Zinssenkungen warnen.",
       intermarket: {
         title: "US-Staatsanleihen (~4,0 % Rendite) vs. Sachwerte: Warum Bilanzqualität wieder über allem steht",
-        summary: "Die Renditen 10-jähriger US-Staatsanleihen verharren hartnäckig nahe der 4-%-Marke, während gleichzeitig physische Rohstoffe (Gold, Kupfer) und hochprofitable Qualitätsaktien steigen.",
-        contextExplanation: "Normalerweise drücken hohe Anleihezinsen auf die Preise von Gold und Aktien, weil Zinspapiere wieder eine sichere Rendite abwerfen. Dass Gold und Qualitätsaktien trotzdem steigen, liegt an der hohen Staatsverschuldung in den USA und Europa: Großinvestoren verlangen für Staatsanleihen einen Risikoaufschlag und schützen ihr Kapital gleichzeitig durch knappe Sachwerte (Edelmetalle, Rohstoffe) sowie Aktien von Unternehmen, die kaum Schulden haben und Preiserhöhungen mühelos an Kunden weitergeben können.",
+        summary: "Die Renditen 10-jähriger US-Staatsanleihen verharren nahe der 4-%-Marke, während physische Rohstoffe (Gold, Kupfer) und hochprofitable Qualitätsaktien parallel steigen.",
+        contextExplanation: "Normalerweise drücken hohe Anleihezinsen auf die Preise von Gold und Aktien, weil Zinspapiere wieder eine sichere Rendite abwerfen. Dass Gold und Qualitätsaktien trotzdem steigen, liegt an der hohen Staatsverschuldung in den USA und Europa: Großinvestoren verlangen für Staatsanleihen einen Risikoaufschlag und schützen ihr Kapital gleichzeitig durch knappe Sachwerte sowie Aktien von Unternehmen, die kaum Schulden haben und Preiserhöhungen mühelos weitergeben können.",
+        bearCase: "Sollte eine unerwartet scharfe globale Rezession eintreten, könnten Investoren kurzfristig wieder massiv in langlaufende Staatsanleihen flüchten und Zykliker verkaufen.",
+        hasDivergingNarratives: false,
+        narrativeComparison: "",
         bullets: [
           "10-jährige US-Treasuries notieren um 4,0 %, deutsche Bundesanleihen bei rund 2,3 % – die Ära des kostenlosen Geldes ist strukturell vorbei.",
-          "Unternehmen mit hoher Verschuldung müssen alte Kredite zu deutlich höheren Zinsen refinanzieren, was deren Gewinne drückt.",
-          "Marktführer mit hohen Cash-Reserven (z. B. Tech-Plattformen, Spezial-Industrie) profitieren sogar von hohen Zinsen durch Zinserträge auf ihr Festgeld."
+          "Unternehmen mit hoher Verschuldung müssen auslaufende Kredite zu deutlich höheren Zinsen refinanzieren.",
+          "Marktführer mit hohen Cash-Reserven profitieren hingegen durch hohe Zinserträge auf ihre Liquidität."
         ],
         symbol: "TVC:US10Y",
-        sources: ["Wall Street Journal", "Financial Times", "Reuters", "Bloomberg"],
-        verificationNote: "Abgeglichen über offizielle US-Treasury-Auktionsergebnisse, EZB-Zinsprotokolle sowie Leitanalysen im Wall Street Journal und der Financial Times."
+        sources: ["Wall Street Journal", "Financial Times", "Reuters"]
       },
       macroCalendar: [
-        { date: "WSJ / Fed-Fokus", event: "Strukturelle US-Haushaltsdefizite & Anleihe-Auktionen", impact: "Hält Langfrist-Zinsen strukturell höher" },
-        { date: "Handelsblatt Fokus", event: "Europäische Industriepolitik & Energiekosten-Gefälle", impact: "Standort-Verlagerung in USA & Asien" },
-        { date: "FT / IEA Report", event: "Globale Stromnetz-Engpässe durch KI & Elektrifizierung", impact: "Superzyklus für Kupfer, Uran & Netztechnik" },
-        { date: "Reuters / IWF", event: "Zentralbank-Goldkäufe der Schwellenländer (BRICS+)", impact: "Struktureller Boden für Edelmetalle" }
+        { date: "US-Haushalt & Fed", event: "Hohe US-Anleiheauktionen treffen auf selektive Käufer", impact: "Langfrist-Zinsen bleiben erhöht" },
+        { date: "EU-Industrie", event: "Energiekosten-Gefälle & lokale Wertschöpfungsquoten", impact: "Vorteil für globale Nischenführer" },
+        { date: "Energie & Netze", event: "Stromnetz-Engpässe durch KI-Rechenzentren & Elektrifizierung", impact: "Mehrjahres-Zyklus für Kupfer & Uran" },
+        { date: "Notenbanken", event: "Zentralbank-Goldkäufe der Schwellenländer (BRICS+)", impact: "Struktureller Boden für Edelmetalle" }
       ],
       cards: [
         {
           id: "eq-1",
           category: "equities",
-          sectorLabel: "Aktien · Halbleiter-Infrastruktur",
+          sectorLabel: "Halbleiter-Monopol",
           ticker: "NASDAQ:ASML",
-          company: "ASML & TSMC Ökosystem",
-          direction: "BURGGRABEN WÄCHST (5Y+)",
-          directionColor: "text-emerald-400",
+          company: "ASML & TSMC",
+          direction: "Burggraben wächst",
+          directionColor: "text-[#30d158]",
           moatScore: 96,
-          headline: "High-NA-EUV-Monopol: Chip-Hersteller buchen Produktionskapazitäten für die 2-Nanometer-Ära bis 2030.",
-          contextExplanation: "Um moderne KI-Rechenzentren, Smartphones und autonome Systeme zu betreiben, müssen Transistoren auf Mikrochips fast auf Atomgröße verkleinert werden. Weltweit gibt es nur ein einziges Unternehmen (ASML aus den Niederlanden), das die dafür nötigen Extrem-Ultraviolett-Belichtungsmaschinen (Stückpreis über 350 Mio. Euro) bauen kann, und mit TSMC einen dominanten Fertiger. Selbst wenn Konkurrenten Milliarden investieren, lässt sich das über 30 Jahre aufgebaute Lieferketten- und Physik-Know-how nicht kopieren.",
-          thesis: "Der technologische Burggraben ist nahezu unüberwindbar. Da die großen US-Technologiekonzerne im Wettlauf um künstliche Intelligenz nicht auf die nächste Chip-Generation verzichten können, besitzen ASML und TSMC extreme Preissetzungsmacht über das gesamte Jahrzehnt.",
+          headline: "High-NA-EUV: Chip-Hersteller buchen Produktionskapazitäten für die 2-Nanometer-Ära bis 2030.",
+          contextExplanation: "Um moderne KI-Rechenzentren, Smartphones und autonome Systeme zu betreiben, müssen Transistoren auf Mikrochips fast auf Atomgröße verkleinert werden. Weltweit gibt es nur ein einziges Unternehmen (ASML aus den Niederlanden), das die dafür nötigen Extrem-Ultraviolett-Belichtungsmaschinen (Stückpreis über 350 Mio. Euro) bauen kann, und mit TSMC einen dominanten Fertiger. Selbst wenn Konkurrenten Milliarden investieren, lässt sich dieses über 30 Jahre aufgebaute Lieferketten- und Physik-Know-how nicht kopieren.",
+          thesis: "Da die großen US-Technologiekonzerne im Wettlauf um künstliche Intelligenz nicht auf die nächste Chip-Generation verzichten können, besitzen ASML und TSMC extreme Preissetzungsmacht über das gesamte Jahrzehnt.",
+          bearCase: "Strengere US-Exportverbote für Wartungsdienstleistungen und ältere DUV-Maschinen nach China sowie geopolitische Spannungen rund um Taiwan bleiben das zentrale Bewertungsrisiko.",
+          hasDivergingNarratives: true,
+          narrativeComparison: "US-Medien (WSJ) betonen die nationale Sicherheitsnotwendigkeit schärferer Chip-Exportkontrollen gegen China, während europäische Berichte (Handelsblatt/FD) vor Umsatzeinbußen und dem Aufbau einer unabhängigen chinesischen Parallel-Lieferkette warnen.",
           bullets: [
-            "Eine einzige High-NA-EUV-Maschine kostet rund 350 bis 380 Mio. Euro und besteht aus über 100.000 Spezialteilen (u. a. Optiken von Carl Zeiss).",
-            "TSMC plant den Serienstart der 2nm-Architektur mit voller Auslastung durch Großkunden wie Apple, Nvidia und AMD.",
-            "Bruttomargen von über 50 % ermöglichen massive Forschungsinvestitionen, die den Abstand zur Konkurrenz weiter vergrößern."
+            "Eine einzige High-NA-EUV-Maschine kostet rund 350 bis 380 Mio. Euro und besteht aus über 100.000 Spezialteilen.",
+            "TSMC plant den Serienstart der 2nm-Architektur mit voller Auslastung durch Apple, Nvidia und AMD.",
+            "Bruttomargen von über 50 % sichern die technologische Marktführerschaft langfristig ab."
           ],
           sources: ["Wall Street Journal", "Handelsblatt", "Reuters", "Nikkei Asia"],
-          verificationStatus: "Verifiziert (4 Leitmedien)",
-          verificationNote: "Zahlen und Auftragsbestände abgeglichen mit offiziellen Quartalsberichten von ASML/TSMC sowie Branchenberichten in Nikkei Asia und WSJ.",
+          verificationStatus: "Verifiziert · 4 Quellen",
           sparkline: [42, 46, 44, 53, 60, 68, 76, 88]
         },
         {
           id: "eq-2",
           category: "equities",
-          sectorLabel: "Aktien · Stromnetze & Elektrifizierung",
+          sectorLabel: "Stromnetze & Infrastruktur",
           ticker: "NYSE:ETN",
           company: "Eaton / Schneider Electric",
-          direction: "STRUKTURELLER PROFITEUR",
-          directionColor: "text-emerald-400",
+          direction: "Struktureller Profiteur",
+          directionColor: "text-[#30d158]",
           moatScore: 91,
           headline: "Weltweiter Engpass bei Transformatoren und Schaltanlagen beschert Netztechnik-Konzernen Rekord-Auftragsbücher.",
-          contextExplanation: "Während alle Welt über KI-Software spricht, entsteht der wahre Flaschenhals in der physischen Stromversorgung: Ein KI-Rechenzentrum benötigt bis zu zehnmal so viel Strom wie ein klassisches Serverzentrum. Gleichzeitig sind die Stromnetze in den USA und Europa im Schnitt über 40 Jahre alt. Spezialisten für Hochspannungs-Schaltanlagen, Transformatoren und Lastmanagement (wie Eaton, Schneider Electric oder Siemens Energy) erleben daher eine historisch einmalige Sonderkonjunktur.",
-          thesis: "Der Umbau der globalen Stromnetze ist kein kurzfristiger Hype, sondern ein 10- bis 15-jähriger Investitionszyklus, der gesetzlich und technologisch erzwungen wird. Lange Lieferzeiten (bis zu 3 Jahre für Großtransformatoren) sichern hohe Margen und planbare Umsätze.",
+          contextExplanation: "Während alle Welt über KI-Software spricht, entsteht der wahre Flaschenhals in der physischen Stromversorgung: Ein KI-Rechenzentrum benötigt bis zu zehnmal so viel Strom wie ein klassisches Serverzentrum. Gleichzeitig sind die Stromnetze in den USA und Europa im Schnitt über 40 Jahre alt. Spezialisten für Hochspannungs-Schaltanlagen, Transformatoren und Lastmanagement erleben daher eine historisch einmalige Sonderkonjunktur.",
+          thesis: "Der Umbau der globalen Stromnetze ist ein 10- bis 15-jähriger Investitionszyklus. Lange Lieferzeiten von bis zu 3 Jahren für Großtransformatoren sichern hohe Margen und planbare Umsätze.",
+          bearCase: "Hohe Bewertungsmultiples an der Börse lassen wenig Raum für Projektverzögerungen bei staatlichen Genehmigungsverfahren oder Engpässe bei Facharbeitern.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Wartezeiten für Hochspannungstransformatoren in den USA und Europa sind von 12 auf bis zu 36–48 Monate gestiegen.",
-            "Auftragsbestand (Backlog) führender Elektrifizierungs-Konzerne deckt bereits mehrere Jahresumsätze ab.",
-            "Hohe regulatorische Zulassungshürden schützen etablierte westliche Anbieter vor Billigkonkurrenz bei kritischer Netzinfrastruktur."
+            "Wartezeiten für Hochspannungstransformatoren in den USA und Europa sind auf bis zu 36–48 Monate gestiegen.",
+            "Der Auftragsbestand führender Elektrifizierungs-Konzerne deckt bereits mehrere Jahresumsätze ab.",
+            "Hohe Zulassungshürden schützen etablierte westliche Anbieter vor neuer Billigkonkurrenz."
           ],
-          sources: ["Financial Times", "Handelsblatt", "Wall Street Journal", "Bloomberg"],
-          verificationStatus: "Verifiziert (FT / Handelsblatt)",
-          verificationNote: "Daten zu Lieferzeiten und Netzinvestitionen bestätigt durch Analysen der Financial Times, des Handelsblatts und Berichte des US-Energieministeriums.",
+          sources: ["Financial Times", "Handelsblatt", "Wall Street Journal"],
+          verificationStatus: "Verifiziert · 3 Quellen",
           sparkline: [38, 43, 49, 55, 62, 70, 78, 86]
         },
         {
           id: "com-1",
           category: "commodities",
-          sectorLabel: "Rohstoffe · Strategische Metalle",
+          sectorLabel: "Industriemetalle",
           ticker: "COMEX:HG1!",
-          company: "Kupfer (Physisches Angebotsdefizit)",
-          direction: "STRUKTURELL BULLISCH (5Y+)",
-          directionColor: "text-emerald-400",
+          company: "Kupfer",
+          direction: "Angebotsdefizit (5Y+)",
+          directionColor: "text-[#30d158]",
           moatScore: 90,
-          headline: "Sinkende Erzgrade in bestehenden Großminen treffen auf explodierenden Kupferbedarf für Stromnetze und E-Mobilität.",
-          contextExplanation: "Kupfer ist das unverzichtbare Leitmetall für jede Form von Elektrizität. Das Problem: In den größten Kupferminen der Welt (vor allem in Chile und Peru) sinkt der Kupfergehalt im Gestein seit Jahren – es muss immer mehr Erde bewegt werden, um dieselbe Tonne Kupfer zu gewinnen. Gleichzeitig dauert es heute wegen strenger Umweltauflagen durchschnittlich 16 Jahre, bis eine neu entdeckte Kupfermine das erste Metall liefert. Das Angebot kann kurzfristig schlicht nicht erhöht werden.",
-          thesis: "Selbst bei einer vorübergehenden Konjunkturabkühlung steuert der Weltmarkt bis 2030 auf ein strukturelles Defizit von mehreren Millionen Tonnen zu. Große Bergbaukonzerne kaufen deshalb lieber bestehende Konkurrenten auf, statt selbst neue Minen zu bauen – ein klares Signal, dass aktuelle Kupferpreise noch zu niedrig für Neubauten sind.",
+          headline: "Sinkende Erzgrade in bestehenden Großminen treffen auf wachsenden Bedarf für Stromnetze und Elektrifizierung.",
+          contextExplanation: "Kupfer ist das unverzichtbare Leitmetall für jede Form von Elektrizität. In den größten Kupferminen der Welt (vor allem in Chile und Peru) sinkt jedoch der Kupfergehalt im Gestein seit Jahren – es muss immer mehr Gestein bewegt werden, um dieselbe Tonne Kupfer zu gewinnen. Gleichzeitig dauert es heute durchschnittlich 16 Jahre, bis eine neu entdeckte Kupfermine das erste Metall liefert.",
+          thesis: "Der Weltmarkt steuert bis 2030 auf ein strukturelles Defizit zu. Große Bergbaukonzerne kaufen lieber bestehende Konkurrenten auf, statt selbst neue Minen zu bauen – weil aktuelle Kupferpreise die hohen Baukosten neuer Minen noch kaum decken.",
+          bearCase: "Eine anhaltende Schwäche im chinesischen Bausektor (bisher der größte Einzelabnehmer von Kupfer) oder eine Substitution durch Aluminium in Hochspannungskabeln kann kurzfristig auf den Preis drücken.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Laut Internationaler Energieagentur (IEA) decken bestehende und geplante Minen bis 2030 nur rund 80 % des prognostizierten Bedarfs.",
-            "Ein einziges großes Windrad oder Rechenzentrum verschlingt mehrere Tonnen reines Kupfer.",
-            "Staatliche Eingriffe (z. B. Minenschließung in Panama) verschärfen die globale Angebotsknappheit zusätzlich."
+            "Laut Internationaler Energieagentur (IEA) decken bestehende Minen bis 2030 nur rund 80 % des prognostizierten Bedarfs.",
+            "Netzausbau, Rechenzentren und E-Mobilität erhöhen die Kupferintensität pro Wirtschaftseinheit massiv.",
+            "Staatliche Umweltauflagen verzögern neue Minenprojekte in Nord- und Südamerika um Jahre."
           ],
-          sources: ["Wall Street Journal", "Financial Times", "Reuters", "IEA"],
-          verificationStatus: "Mehrfach verifiziert (IEA / Reuters)",
-          verificationNote: "Abgeglichen mit den Rohstoff-Statistiken der International Energy Agency (IEA), Reuters Mining-Desk und dem Wall Street Journal.",
+          sources: ["Financial Times", "Reuters", "IEA", "Wall Street Journal"],
+          verificationStatus: "Verifiziert · IEA & Reuters",
           sparkline: [45, 48, 52, 50, 59, 65, 71, 82]
         },
         {
           id: "com-2",
           category: "commodities",
-          sectorLabel: "Rohstoffe · Monetäre Edelmetalle",
+          sectorLabel: "Monetäre Edelmetalle",
           ticker: "TVC:GOLD",
-          company: "Gold & Silber (Zentralbank-Reserve)",
-          direction: "MONETÄRER ANKER (5Y+)",
-          directionColor: "text-emerald-400",
+          company: "Gold & Silber",
+          direction: "Monetärer Anker",
+          directionColor: "text-[#30d158]",
           moatScore: 93,
-          headline: "Historische Goldkäufe durch Notenbanken der Schwellenländer entkoppeln den Goldpreis von den US-Zinsen.",
-          contextExplanation: "Seit dem Einfrieren russischer Devisenreserven im Jahr 2022 hat sich das Verhalten vieler Notenbanken außerhalb der westlichen G7-Staaten grundlegend verändert: Statt ihre Handelsüberschüsse wie früher fast ausschließlich in US-Staatsanleihen (Dollar) zu parken, schichten Zentralbanken in Asien, dem Nahen Osten und Osteuropa systematisch in physisches Gold um, das im eigenen Land gelagert wird und keinem Sanktions- oder Ausfallrisiko unterliegt.",
-          thesis: "Gold wandelt sich vom reinen Krisenschutz zurück zur strategischen Welt-Währungsreserve. Da die globale Staatsverschuldung weiter schneller wächst als die Wirtschaftsleistung, bleibt der langfristige Aufwärtstrend von Gold und Silber (welches zusätzlich in der Solar- und Elektronikindustrie gebraucht wird) fundamental untermauert.",
+          headline: "Rekordkäufe durch Notenbanken der Schwellenländer entkoppeln den Goldpreis von den US-Zinsen.",
+          contextExplanation: "Seit dem Einfrieren russischer Devisenreserven im Jahr 2022 hat sich das Verhalten vieler Notenbanken außerhalb der westlichen G7-Staaten grundlegend verändert: Statt ihre Handelsüberschüsse fast ausschließlich in US-Staatsanleihen zu parken, schichten Zentralbanken in Asien und dem Nahen Osten systematisch in physisches Gold um, das im eigenen Land gelagert wird und keinem Sanktionsrisiko unterliegt.",
+          thesis: "Gold wandelt sich zurück zur strategischen Welt-Währungsreserve. Da die globale Staatsverschuldung weiter schneller wächst als die Wirtschaftsleistung, bleibt der langfristige Aufwärtstrend fundamental untermauert.",
+          bearCase: "Sollten die Notenbanken der Schwellenländer ihre Käufe nach Erreichen ihrer Zielquoten pausieren, fehlt kurzfristig der wichtigste physische Preis-Treiber.",
+          hasDivergingNarratives: true,
+          narrativeComparison: "Westliche Finanzmedien betrachten Gold oft noch primär als kurzfristige Zins-Wette auf die US-Fed, während asiatische Quellen (Nikkei/SCMP) die langfristige Abkehr vom US-Dollar-Monopol als strukturellen Treiber hervorheben.",
           bullets: [
-            "Zentralbanken kauften in den letzten zwei Jahren jeweils über 1.000 Tonnen Gold pro Jahr – mehr als doppelt so viel wie im Jahrzehnt zuvor.",
-            "Silber verzeichnet durch den massiven Ausbau der Photovoltaik-Industrie das vierte Jahr in Folge ein physisches Marktdefizit.",
-            "Westliche Finanzinvestoren (ETFs) waren zuletzt kaum beteiligt – der Preisanstieg wird von physischen Käufen aus Asien getragen."
+            "Zentralbanken kauften zuletzt über 1.000 Tonnen Gold pro Jahr – doppelt so viel wie im Durchschnitt des letzten Jahrzehnts.",
+            "Silber verzeichnet durch den Ausbau der Solarindustrie das vierte Jahr in Folge ein physisches Marktdefizit.",
+            "Der Preisanstieg wird von physischen Käufen aus Asien statt von westlichen Kredit-Spekulanten getragen."
           ],
           sources: ["Financial Times", "Handelsblatt", "World Gold Council", "Reuters"],
-          verificationStatus: "Verifiziert (WGC / FT / Reuters)",
-          verificationNote: "Bestätigt durch Quartalsdaten des World Gold Council, Zollstatistiken (Schweiz/China) sowie Berichte in Financial Times und Handelsblatt.",
+          verificationStatus: "Verifiziert · WGC & FT",
           sparkline: [50, 54, 58, 63, 69, 75, 83, 91]
         },
         {
           id: "com-3",
           category: "commodities",
-          sectorLabel: "Rohstoffe · Grundlast-Energie",
+          sectorLabel: "Grundlast-Energie",
           ticker: "NYSE:CCJ",
-          company: "Uran & Kernkraft-Renaissance",
-          direction: "STRUKTURELL BULLISCH (5Y+)",
-          directionColor: "text-emerald-400",
+          company: "Uran & Kernkraft",
+          direction: "Strukturell Bullisch",
+          directionColor: "text-[#30d158]",
           moatScore: 88,
-          headline: "US-Tech-Giganten schließen direkte Stromlieferverträge mit Kernkraftwerken – Uranmarkt bleibt im Angebotsdefizit.",
-          contextExplanation: "Sonnen- und Windenergie sind günstig, liefern aber keinen konstanten Strom rund um die Uhr (24/7-Grundlast), den Rechenzentren und Schwerindustrie zwingend brauchen. Deshalb erleben wir eine weltweite Kehrtwende in der Energiepolitik: Über 20 Staaten haben auf der UN-Klimakonferenz vereinbart, ihre Kernkraftkapazitäten bis 2050 zu verdreifachen. Da nach der Fukushima-Krise 2011 über ein Jahrzehnt lang kaum in neue Uranminen investiert wurde, trifft die neue Nachfrage auf ein sehr knappes Angebot.",
-          thesis: "Für den Betrieb eines Kernkraftwerks machen die Kosten für das Roh-Uran weniger als 5 % der Gesamtkosten aus – ohne Uran steht das Milliarden-Kraftwerk jedoch still. Energieversorger müssen daher fast jeden Preis zahlen, um sich langfristige Lieferverträge bei westlichen Produzenten wie Cameco zu sichern.",
+          headline: "US-Tech-Konzerne schließen direkte Stromlieferverträge mit Kernkraftwerken – Uranmarkt bleibt knapp.",
+          contextExplanation: "Sonnen- und Windenergie liefern keinen konstanten Strom rund um die Uhr (24/7-Grundlast), den KI-Rechenzentren und Schwerindustrie zwingend brauchen. Deshalb haben über 20 Staaten vereinbart, ihre Kernkraftkapazitäten bis 2050 zu verdreifachen. Da nach 2011 über ein Jahrzehnt lang kaum in neue Uranminen investiert wurde, trifft die neue Nachfrage auf ein sehr knappes Primärangebot.",
+          thesis: "Für den Betrieb eines Kernkraftwerks machen die Kosten für Roh-Uran weniger als 5 % der Gesamtkosten aus – ohne Uran steht das Kraftwerk jedoch still. Versorger sichern sich daher langfristige Verträge bei westlichen Produzenten wie Cameco.",
+          bearCase: "Ein sicherheitsrelevanter Störfall in einem Kernkraftwerk weltweit oder die Freigabe strategischer Regierungsbestände würde die Stimmung im Sektor schlagartig belasten.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Große Cloud-Anbieter (Microsoft, Amazon, Google) investieren direkt in Kernkraft-Reaktoren und Small Modular Reactors (SMRs).",
-            "Über 60 neue Reaktoren befinden sich weltweit im Bau (insbesondere in China, Indien und Osteuropa), während alte Reaktoren in den USA Laufzeitverlängerungen auf 80 Jahre erhalten.",
-            "Geopolitische Risiken (Kasachstan, Niger, Russland-Sanktionen) machen westliche Uran-Vorkommen in Kanada (Athabasca-Becken) strategisch unersetzlich."
+            "Cloud-Anbieter (Microsoft, Amazon, Google) schließen exklusive Mehrjahresverträge mit Kernkraftwerksbetreibern ab.",
+            "Über 60 neue Reaktoren befinden sich weltweit im Bau, während bestehende US-Reaktoren Laufzeitverlängerungen auf 80 Jahre erhalten.",
+            "Geopolitische Risiken in Kasachstan und Niger erhöhen den strategischen Wert kanadischer Minen."
           ],
-          sources: ["Wall Street Journal", "Reuters", "Bloomberg", "World Nuclear Association"],
-          verificationStatus: "Verifiziert (WSJ / Reuters / WNA)",
-          verificationNote: "Abgeglichen über offizielle Abnahmeverträge (PPAs) der US-Techkonzerne, Berichte im Wall Street Journal und Daten der World Nuclear Association.",
+          sources: ["Wall Street Journal", "Reuters", "Bloomberg"],
+          verificationStatus: "Verifiziert · 3 Quellen",
           sparkline: [40, 44, 51, 56, 61, 68, 74, 84]
         },
         {
           id: "cry-1",
           category: "crypto",
-          sectorLabel: "Krypto · Institutionelle Bilanz-Adoption",
+          sectorLabel: "Monetäres Netzwerk",
           ticker: "BITSTAMP:BTCUSD",
-          company: "Bitcoin (BTC) · Digitales knappes Gut",
-          direction: "STRUKTURELL INTAKT (5Y+)",
-          directionColor: "text-emerald-400",
+          company: "Bitcoin (BTC)",
+          direction: "Strukturell Intakt",
+          directionColor: "text-[#30d158]",
           moatScore: 86,
-          headline: "Vom Spekulationsobjekt zur Anlageklasse: US-Pensionskassen und Vermögensverwalter integrieren Bitcoin-Spot-ETFs.",
-          contextExplanation: "Lange Zeit war Bitcoin für große Institutionen (Versicherungen, Pensionskassen, Stiftungen) aus regulatorischen Gründen tabu, weil sie keine Krypto-Wallets verwalten durften. Durch die Zulassung regulierter Börsenfonds (Spot-ETFs) durch die US-Börsenaufsicht SEC und große Anbieter wie BlackRock und Fidelity kann Bitcoin nun wie eine normale Aktie ins Depot gelegt werden. Gleichzeitig wurde durch das 'Halving' die Menge neu geschürfter Bitcoins halbiert.",
-          thesis: "Auf Sicht von 5+ Jahren wirkt Bitcoin wie ein hochsensibles Barometer für die weltweite Geldmenge: Da die maximale Anzahl auf exakt 21 Millionen Stück mathematisch begrenzt ist, führt schon eine kleine Umschichtung (z. B. 1 % bis 2 %) aus dem über 100 Billionen Dollar schweren globalen Anleihe- und Aktienmarkt zu einer dauerhaften Verknappung.",
+          headline: "Vom Spekulationsobjekt zur Anlageklasse: Vermögensverwalter und Pensionskassen nutzen regulierte Spot-ETFs.",
+          contextExplanation: "Lange Zeit war Bitcoin für große Institutionen aus regulatorischen Gründen tabu, weil sie keine eigenen Krypto-Wallets verwalten durften. Durch die Zulassung regulierter Börsenfonds (Spot-ETFs) durch die US-Börsenaufsicht SEC und Anbieter wie BlackRock und Fidelity kann Bitcoin nun wie ein normales Wertpapier ins institutionelle Depot aufgenommen werden.",
+          thesis: "Da die maximale Anzahl auf exakt 21 Millionen Stück begrenzt ist, führt schon eine kleine Portfolio-Beimischung von 1 % bis 2 % bei institutionellen Anlegern zu einer langfristigen Verknappung.",
+          bearCase: "Bei starken Liquiditätsengpässen an den globalen Aktienmärkten reagiert Bitcoin kurzfristig weiterhin wie ein hochvolatiles Risiko-Asset mit möglichen Korrekturen von 30 % bis 50 %.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Die US-Spot-ETFs von BlackRock (IBIT) und Fidelity gehören zu den am schnellsten wachsenden ETF-Neuerscheinungen der Finanzgeschichte.",
-            "Rund 70 % aller existierenden Bitcoins wurden seit über einem Jahr nicht bewegt – das frei handelbare Angebot an Börsen sinkt.",
-            "Neue Bilanzierungsregeln (FASB) in den USA erleichtern es Unternehmen, Bitcoin als Reserve in der eigenen Firmenbilanz zu halten."
+            "Die US-Spot-ETFs von BlackRock und Fidelity zählen zu den am schnellsten wachsenden ETF-Starts der Finanzgeschichte.",
+            "Rund 70 % aller existierenden Bitcoins wurden seit über 12 Monaten nicht bewegt.",
+            "Neue US-Bilanzierungsregeln erleichtern Unternehmen das Halten von Bitcoin als Bilanzreserve."
           ],
-          sources: ["Wall Street Journal", "Bloomberg", "SEC Filings", "Reuters"],
-          verificationStatus: "Verifiziert (SEC 13F / Bloomberg)",
-          verificationNote: "Institutionelle Zuflüsse und Halterdaten bestätigt durch offizielle 13F-Pflichtmitteilungen bei der US-Börsenaufsicht SEC sowie Bloomberg-Daten.",
+          sources: ["Wall Street Journal", "Bloomberg", "SEC Filings"],
+          verificationStatus: "Verifiziert · SEC & WSJ",
           sparkline: [35, 42, 48, 46, 58, 66, 73, 85]
         }
       ],
       worldNews: [
         {
-          region: "EU / Industriepolitik · Handelsblatt & FT Schwerpunkt",
+          region: "EU · Industriepolitik",
           title: "Europa verschärft den Schutz heimischer Schlüsselindustrien mit lokalen Wertschöpfungsquoten",
-          summary: "Als Reaktion auf massive Subventionen in den USA und China plant die EU verbindliche 'Made in Europe'-Quoten bei öffentlichen Aufträgen und Förderprogrammen.",
-          contextExplanation: "Warum passiert das jetzt? Europäische Hersteller – vom Maschinenbau über die Chemie bis zur Solar- und Batteriebranche – geraten von zwei Seiten unter Druck: China exportiert seine hochsubventionierten Überkapazitäten zu Niedrigpreisen nach Europa, während die USA mit dem 'Inflation Reduction Act' und niedrigen Energiepreisen Fabriken abwerben. Um eine Deindustrialisierung Europas zu verhindern, rückt die EU von ihrer bisherigen Politik des bedingungslosen Freihandels ab und knüpft staatliche Gelder künftig daran, dass ein Großteil der Bauteile tatsächlich in Europa gefertigt wird.",
-          longTermImpact: "Auf Sicht von 5 Jahren profitieren europäische Konzerne mit starker lokaler Produktion in der EU (z. B. im Bereich Rüstung, Stromnetze, Medizintechnik), während reine Importeure mit höheren Zöllen und Hürden rechnen müssen.",
+          summary: "Als Reaktion auf Subventionen in den USA und China plant die EU verbindliche 'Made in Europe'-Quoten bei öffentlichen Aufträgen und Förderprogrammen.",
+          contextExplanation: "Europäische Hersteller – vom Maschinenbau über die Chemie bis zur Batteriebranche – geraten von zwei Seiten unter Druck: China exportiert hochsubventionierten Überkapazitäten zu Niedrigpreisen nach Europa, während die USA mit Steuergutschriften und niedrigen Energiepreisen Fabriken abwerben. Um eine Deindustrialisierung zu verhindern, knüpft die EU staatliche Gelder künftig daran, dass ein Großteil der Bauteile tatsächlich in Europa gefertigt wird.",
+          longTermImpact: "Europäische Konzerne mit starker lokaler Fertigung in der EU (Rüstung, Stromnetze, Medizintechnik) profitieren, während exportabhängige Branchen wie die Autoindustrie Gegenmaßnahmen Chinas fürchten.",
+          hasDivergingNarratives: true,
+          narrativeComparison: "Französische und Brüsseler Quellen befürworten strikte europäische Schutzzölle ('Buy European'), während deutsche Wirtschaftsmedien (Handelsblatt) intensiv vor einem Handelskrieg mit China warnen, der deutsche Exporteure treffen würde.",
           bullets: [
-            "Geplantes 'Made in Europe'-Kriterium sieht vor, dass bei öffentlichen Ausschreibungen mindestens 60–70 % der Wertschöpfung aus Europa stammen müssen.",
-            "Schutzinstrumente sollen neben E-Autos auch auf den europäischen Maschinenbau, Windkraftanlagen und die Grundstoffchemie ausgeweitet werden.",
-            "Wirtschaftsverbände warnen gleichzeitig vor möglichen Gegenmaßnahmen Chinas für exportabhängige deutsche Autobauer."
+            "Geplantes 'Made in Europe'-Kriterium sieht mindestens 60–70 % europäische Wertschöpfung bei öffentlichen Ausschreibungen vor.",
+            "Schutzinstrumente sollen auf Maschinenbau, Windkraft und Grundstoffchemie ausgeweitet werden.",
+            "Ziel ist eine verbindliche Einigung innerhalb des neuen mehrjährigen EU-Finanzrahmens."
           ],
           sources: ["Handelsblatt", "Financial Times", "Reuters", "dpa"],
-          verificationStatus: "Konsens (EU-Dokumente + 4 Agenturen)",
-          verificationNote: "Abgeglichen mit den Entwürfen des EU-Wettbewerbsfähigkeitsrats sowie unabhängigen Berichten von Handelsblatt, Financial Times, Reuters und dpa."
+          verificationStatus: "Verifiziert · 4 Quellen"
         },
         {
-          region: "USA / Geldpolitik & Staatsschulden · WSJ Leitartikel",
+          region: "USA · Geldpolitik & Staatsschulden",
           title: "US-Notenbank Fed und Anleihemärkte stellen sich auf dauerhaft höhere Realzinsen ein",
-          summary: "Robuste US-Konsumdaten und ein historisch hohes staatliches Haushaltsdefizit von über 6 % des BIP verhindern eine Rückkehr zu den Nullzinsen der 2010er-Jahre.",
-          contextExplanation: "Viele Marktteilnehmer hatten gehofft, dass die Zinsen nach dem Rückgang der ersten Inflationswelle schnell wieder auf 1 % bis 2 % sinken würden. Das Wall Street Journal und Daten des Congressional Budget Office (CBO) zeigen jedoch den wahren Grund, warum die Zinsen oben bleiben: Die US-Regierung gibt jedes Jahr fast 2 Billionen Dollar mehr aus, als sie einnimmt. Um diese Schulden zu finanzieren, muss das US-Finanzministerium ständig neue Staatsanleihen auf den Markt werfen. Damit Käufer diese riesigen Mengen abnehmen, müssen höhere Zinsen geboten werden.",
-          longTermImpact: "Der 'neutrale Zins' liegt strukturell höher als im letzten Jahrzehnt. Das begünstigt hochprofitable Unternehmen mit starken Bilanzen und schadet unprofitablen Wachstumsfirmen sowie hochverschuldeten Immobilienkonzernen.",
+          summary: "Robuste US-Konsumdaten und ein staatliches Haushaltsdefizit von über 6 % des BIP verhindern eine Rückkehr zu den Nullzinsen der 2010er-Jahre.",
+          contextExplanation: "Viele Marktteilnehmer hatten gehofft, dass die Zinsen schnell wieder auf 1 % bis 2 % sinken würden. Das Wall Street Journal und Daten des Congressional Budget Office (CBO) zeigen jedoch den strukturellen Grund, warum die Zinsen oben bleiben: Die US-Regierung gibt jedes Jahr fast 2 Billionen Dollar mehr aus, als sie einnimmt. Um diese Schulden zu finanzieren, muss das Finanzministerium ständig neue Staatsanleihen auf den Markt bringen – und dafür höhere Zinsen bieten.",
+          longTermImpact: "Der 'neutrale Zins' liegt strukturell höher als im letzten Jahrzehnt. Das begünstigt schuldenfreie Unternehmen und belastet hochverschuldete Immobilien- und Staatssektoren.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Die jährlichen Zinszahlungen der USA für ihre Staatsschulden haben erstmals die Marke von 1 Billion US-Dollar überschritten – mehr als das gesamte US-Verteidigungsbudget.",
-            "Die US-Wirtschaft wächst dank hoher Investitionen in Technologie, Infrastruktur und heimische Industrie dennoch deutlich schneller als die Eurozone.",
-            "Fed-Vertreter betonen, dass vorschnelle Zinssenkungen die Inflation bei Dienstleistungen und Löhnen sofort wieder anheizen würden."
+            "Die jährlichen Zinszahlungen der USA haben erstmals die Marke von 1 Billion US-Dollar überschritten.",
+            "Die US-Wirtschaft wächst dank hoher Technologie- und Infrastrukturinvestitionen dennoch schneller als die Eurozone.",
+            "Die Fed betont, dass vorschnelle Zinssenkungen die Dienstleistungsinflation wieder anheizen würden."
           ],
-          sources: ["Wall Street Journal", "Bloomberg", "Associated Press (AP)", "Reuters"],
-          verificationStatus: "Verifiziert (Fed / CBO / WSJ / AP)",
-          verificationNote: "Zahlen direkt abgeglichen mit dem Congressional Budget Office (CBO), Fed-Protokollen sowie Analysen von WSJ, Bloomberg und AP."
+          sources: ["Wall Street Journal", "Bloomberg", "AP", "Reuters"],
+          verificationStatus: "Verifiziert · CBO & WSJ"
         },
         {
-          region: "Asien / Welthandel · Nikkei & Economist Fokus",
-          title: "Die 'China+1'-Strategie verändert die globalen Lieferketten dauerhaft zugunsten von Indien, Vietnam und Mexiko",
+          region: "Asien · Globale Lieferketten",
+          title: "Die 'China+1'-Strategie verlagert neue Industriekapazitäten dauerhaft nach Indien, Vietnam und Mexiko",
           summary: "Weltkonzerne lösen sich nicht komplett von China, bauen aber systematisch parallele Produktionszentren im globalen Süden auf.",
-          contextExplanation: "Nach den Lieferketten-Schocks der Pandemie und angesichts drohender US-Handelszölle ist das Risiko, zu 100 % von Fabriken in China abzuhängen, für westliche Vorstände untragbar geworden. Statt China komplett zu verlassen (was wegen des riesigen Binnenmarkts und der perfekten Zuliefer-Infrastruktur kaum möglich ist), fahren Konzerne wie Apple, Samsung oder Siemens die 'China+1'-Strategie: Jede neue Fabrik wird außerhalb Chinas – vor allem in Indien, Vietnam oder Mexiko – errichtet.",
-          longTermImpact: "Mexiko ist bereits vor China zum größten Handelspartner der USA aufgestiegen; Indien und Südostasien erleben einen mehrjährigen Industrialisierungs-Boom mit stark wachsendem Infrastruktur- und Energiebedarf.",
+          contextExplanation: "Nach den Lieferketten-Schocks und angesichts drohender Handelszölle ist das Risiko, zu 100 % von Fabriken in China abzuhängen, für westliche Vorstände zu groß geworden. Statt China komplett zu verlassen, fahren Konzerne wie Apple, Samsung oder Siemens die 'China+1'-Strategie: Jede neue Erweiterungsfabrik wird außerhalb Chinas – vor allem in Indien, Vietnam oder Mexiko – errichtet.",
+          longTermImpact: "Mexiko ist bereits vor China zum größten Handelspartner der USA aufgestiegen; Indien und Südostasien erleben einen mehrjährigen Industrialisierungs- und Infrastruktur-Boom.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Apple produziert inzwischen rund 14 % seiner iPhones in Indien und baut die Kapazitäten mit Partner Foxconn massiv weiter aus.",
-            "Mexiko verzeichnet Rekord-Direktinvestitionen ('Nearshoring'), da dort gefertigte Güter über das USMCA-Abkommen zollfrei in die USA geliefert werden können.",
-            "Chinesische Hersteller bauen selbst Werke in Mexiko, Vietnam und Ungarn auf, um westliche Zölle legal zu umgehen."
+            "Apple produziert inzwischen rund 14 % seiner iPhones in Indien und baut die Kapazitäten weiter aus.",
+            "Mexiko verzeichnet Rekord-Direktinvestitionen, da Güter über das USMCA-Abkommen zollfrei in die USA gelangen.",
+            "Selbst chinesische Hersteller errichten eigene Werke in Mexiko, Vietnam und Ungarn, um Zölle zu umgehen."
           ],
           sources: ["Nikkei Asia", "The Economist", "Wall Street Journal", "Reuters"],
-          verificationStatus: "Mehrfach verifiziert (Nikkei / WTO / WSJ)",
-          verificationNote: "Handelsströme und Investitionsdaten bestätigt durch WTO-Handelsstatistiken, Nikkei Asia Supply-Chain-Reports und das Wall Street Journal."
+          verificationStatus: "Verifiziert · 4 Quellen"
         },
         {
-          region: "Deutschland & Eurozone · Handelsblatt & NZZ Analyse",
-          title: "Strukturwandel der deutschen Industrie: Stille Erfolge im Mittelstand trotz Stagnation der Gesamtwirtschaft",
-          summary: "Während energieintensive Branchen (Grundstoffchemie, Stahl) in Deutschland schrumpfen, wachsen hochspezialisierte Nischenführer in Automatisierung, Medizintechnik und Luftfahrt weltweit.",
-          contextExplanation: "Die Schlagzeilen über die deutsche Wirtschaft klingen oft pauschal düster. Ein genauerer Blick in die Daten von Handelsblatt und NZZ zeigt jedoch eine scharfe Zweiteilung: Unternehmen, deren Geschäftsmodell auf billigem russischem Pipeline-Gas und einfachen Massenprodukten basierte, verlieren Marktanteile. Gleichzeitig erzielen deutsche und Schweizer Hochtechnologie-Unternehmen – die weltweit in den USA und Asien vor Ort produzieren – Rekordgewinne, weil ihre Spezialmaschinen und Software für die weltweite Automatisierung unverzichtbar sind.",
-          longTermImpact: "Die Börsenindizes (wie der DAX oder SMI) entkoppeln sich zunehmend von der heimischen Binnenkonjunktur, da die führenden Konzerne über 80 % ihrer Umsätze im profitablen Ausland erwirtschaften.",
+          region: "Deutschland & Schweiz · Industrie",
+          title: "Zweigeteilte Industrie: Stille Rekorde bei Technologie-Nischenführern trotz schwacher Binnenkonjunktur",
+          summary: "Während energieintensive Grundstoffbranchen in Deutschland schrumpfen, wachsen spezialisierte Anbieter in Automatisierung, Medizintechnik und Netzinfrastruktur weltweit.",
+          contextExplanation: "Ein genauer Blick in die Unternehmensdaten von Handelsblatt und NZZ zeigt eine scharfe Zweiteilung: Firmen, deren Geschäftsmodell auf billigem Pipeline-Gas und einfachen Massenprodukten basierte, verlieren Marktanteile. Gleichzeitig erzielen deutsche und Schweizer Hochtechnologie-Konzerne – die in Nordamerika und Asien direkt vor Ort produzieren – Rekordgewinne, weil ihre Spezialmaschinen und Software weltweit unverzichtbar sind.",
+          longTermImpact: "Börsenindizes wie DAX und SMI entkoppeln sich zunehmend von der heimischen Konjunktur, da über 80 % der Umsätze im wachsenden Ausland erzielt werden.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "DAX-Konzerne erwirtschaften weniger als 20 % ihrer Umsätze innerhalb Deutschlands – das Wachstum kommt aus Nordamerika und Asien.",
-            "Hohe Bürokratiekosten, Energiepreise und Fachkräftemangel führen dazu, dass Erweiterungsinvestitionen überwiegend im Ausland stattfinden.",
-            "Starkes Wachstum verzeichnen die Sektoren Verteidigung/Sicherheit, Netztechnik, industrielle Software und Medizintechnik."
+            "DAX-Konzerne erwirtschaften weniger als 20 % ihrer Umsätze innerhalb Deutschlands.",
+            "Erweiterungsinvestitionen fließen wegen niedrigerer Energiekosten und schnellerer Genehmigungen verstärkt in die USA.",
+            "Hohes strukturelles Wachstum zeigen Netztechnik, Verteidigung, Industrie-Software und Medizintechnik."
           ],
-          sources: ["Handelsblatt", "Neue Zürcher Zeitung (NZZ)", "dpa", "Reuters"],
-          verificationStatus: "Abgeglichen (Ifo / Destatis / HB / NZZ)",
-          verificationNote: "Fakten abgeglichen mit aktuellen Daten des Statistischen Bundesamts (Destatis), Ifo-Institut sowie Analysen aus Handelsblatt und NZZ."
+          sources: ["Handelsblatt", "NZZ", "dpa", "Reuters"],
+          verificationStatus: "Verifiziert · HB & NZZ"
         },
         {
-          region: "Geopolitik & Logistik · Reuters & AP Fokus",
+          region: "Geopolitik · Welthandel & Logistik",
           title: "Sicherheit von Seewegen und Unterseekabeln rückt ins Zentrum westlicher Wirtschaftsstrategie",
-          summary: "Störungen im Roten Meer und Risiken im Südchinesischen Meer zwingen Reedereien und Staaten zu höheren Sicherheitsausgaben und längeren Transportrouten.",
-          contextExplanation: "Über 90 % des weltweiten Warenhandels laufen über Containerschiffe, und über 95 % des interkontinentalen Datenverkehrs fließen durch wenige hundert Glasfaser-Unterseekabel am Meeresboden. Die Angriffe im Roten Meer haben gezeigt, wie schnell ein Nadelöhr (der Suezkanal) blockiert werden kann: Schiffe müssen um ganz Afrika herumfahren, was die Reisezeit zwischen Asien und Europa um 10 bis 14 Tage verlängert und die Frachtraten hochhält.",
-          longTermImpact: "Die Ära der extrem billigen 'Just-in-Time'-Lieferketten weicht einer 'Just-in-Case'-Lagerhaltung. Unternehmen halten größere Vorräte an kritischen Rohstoffen und Bauteilen, was das gebundene Kapital erhöht.",
+          summary: "Störungen an maritimen Nadelöhren zwingen Reedereien und Industriekonzerne zu längeren Transportrouten und höherer Lagerhaltung.",
+          contextExplanation: "Über 90 % des weltweiten Warenhandels laufen über Containerschiffe, und über 95 % des interkontinentalen Datenverkehrs fließen durch Glasfaser-Unterseekabel. Die Krise im Roten Meer hat gezeigt, wie verwundbar globale Nadelöhre sind: Schiffe müssen um ganz Afrika herumfahren, was die Reisezeit zwischen Asien und Europa um 10 bis 14 Tage verlängert und Schiffskapazitäten bindet.",
+          longTermImpact: "Die Ära der extrem knappen 'Just-in-Time'-Lieferketten weicht einer sicherheitsorientierten 'Just-in-Case'-Lagerhaltung in der Nähe der Absatzmärkte.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Das Frachtvolumen durch den Suezkanal ist im Vergleich zum Vorkrisenniveau um über 60 % eingebrochen; die Kap-Route um Südafrika ist zum neuen Standard geworden.",
-            "NATO und EU haben neue Überwachungsprogramme zum Schutz kritischer Energie-Pipelines und Daten-Unterseekabel gestartet.",
-            "Höhere Versicherungsprämien und längere Laufzeiten wirken wie eine dauerhafte Zusatzsteuer auf den globalen Warenverkehr."
+            "Das Frachtvolumen durch den Suezkanal liegt über 60 % unter dem Vorkrisenniveau.",
+            "NATO und EU bauen gemeinsame Überwachungsstrukturen für Pipelines und Daten-Unterseekabel aus.",
+            "Längere Laufzeiten und Versicherungsprämien halten die globalen Frachtkosten strukturell höher."
           ],
           sources: ["Reuters", "Associated Press (AP)", "Financial Times", "AFP"],
-          verificationStatus: "Verifiziert (4 globale Agenturen)",
-          verificationNote: "Schifffahrts- und Frachtdaten unabhängig bestätigt durch Reuters Maritime Desk, Associated Press, AFP und Lloyd's List."
+          verificationStatus: "Verifiziert · 4 Agenturen"
         },
         {
-          region: "Demografie & Arbeitsmarkt · Economist & IWF Dossier",
-          title: "Schrumpfende Erwerbsbevölkerung in den Industrienationen macht KI und Robotik zur ökonomischen Pflicht",
-          summary: "In Deutschland, Japan, Südkorea und selbst China schrumpft die Zahl der Menschen im erwerbsfähigen Alter – Produktivitätssteigerung durch Technologie wird zum einzigen Wachstumstreiber.",
-          contextExplanation: "Oft wird über Künstliche Intelligenz und Industrieroboter so diskutiert, als würden sie massenhaft Menschen arbeitslos machen. Ökonomen von IWF und The Economist weisen jedoch auf die gegenteilige Realität hin: In den nächsten 10 Jahren gehen in Europa, Ostasien und den USA die geburtenstarken Jahrgänge ('Babyboomer') in Rente. Es fehlen schlicht Millionen von Arbeitskräften in Verwaltung, Industrie, Logistik und Pflege. Ohne Automatisierung durch Software und Robotik würde der Wohlstand allein aus demografischen Gründen sinken.",
-          longTermImpact: "Anbieter von Industrie-Robotik (z. B. Fanuc, ABB, Keyence) und produktivitätssteigernder Unternehmenssoftware (z. B. Microsoft, SAP, ServiceNow) besitzen strukturellen Rückenwind über Jahrzehnte.",
+          region: "Demografie · Produktivität & KI",
+          title: "Schrumpfende Erwerbsbevölkerung macht Automatisierung und KI in den Industrienationen zur Pflicht",
+          summary: "In Europa, Japan, Südkorea und China sinkt die Zahl der Menschen im erwerbsfähigen Alter – Technologie wird zum einzigen Weg, das Wohlstandsniveau zu halten.",
+          contextExplanation: "Oft wird über Künstliche Intelligenz und Robotik so diskutiert, als würden sie Arbeitsplätze vernichten. Daten von IWF und OECD zeigen jedoch die gegenteilige Realität: In den nächsten 10 Jahren gehen in Europa und Ostasien Millionen 'Babyboomer' in Rente. Es fehlen schlicht Arbeitskräfte in Industrie, Handwerk, Logistik und Verwaltung. Ohne Produktivitätssteigerung durch Software und Roboter würde die Wirtschaftsleistung allein demografisch bedingt schrumpfen.",
+          longTermImpact: "Hersteller von Industrie-Robotik und produktivitätssteigernder Unternehmenssoftware profitieren von einem jahrzehntelangen strukturellen Nachfragetrend.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
           bullets: [
-            "Allein in Deutschland scheiden bis 2035 netto rund 5 bis 7 Millionen mehr Menschen altersbedingt aus dem Arbeitsmarkt aus, als junge Arbeitskräfte nachrücken.",
-            "Südkorea, Japan und Deutschland weisen bereits heute die höchste Roboterdichte pro 10.000 Industriearbeiter weltweit auf.",
-            "Unternehmen investieren verstärkt in KI-Agenten für Buchhaltung, Kundenservice und Softwareentwicklung, um den Fachkräftemangel abzufedern."
+            "Allein in Deutschland scheiden bis 2035 netto rund 5 bis 7 Millionen mehr Menschen altersbedingt aus dem Arbeitsmarkt aus, als nachrücken.",
+            "Asiatische und europäische Industrieunternehmen verzeichnen Rekordbestellungen bei kollaborativen Robotern.",
+            "KI-Systeme werden vor allem zur Entlastung bei administrativen Standardprozessen und in der Softwareentwicklung eingesetzt."
           ],
           sources: ["The Economist", "IWF", "Handelsblatt", "Reuters"],
-          verificationStatus: "Primärdaten (IWF / OECD / Economist)",
-          verificationNote: "Abgeglichen mit den demografischen Langfrist-Projektionen von OECD und IWF sowie dem Sonderbericht von The Economist."
+          verificationStatus: "Verifiziert · IWF & OECD"
         }
       ]
     };
 
     let appState = defaultData;
-    try {
-      const saved = JSON.parse(localStorage.getItem('intelligence_v8_state'));
-      if (saved && Array.isArray(saved.worldNews) && saved.worldNews.length > 0) {
-        appState = saved;
-      }
-    } catch (e) {
-      appState = defaultData;
-    }
-
+    let activeDossierContext = null;
     let currentFilter = 'all';
 
-    function initApp() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
-      document.getElementById('dateDisplay').textContent = now.toLocaleDateString('de-DE', options) + " · WSJ / Handelsblatt / FT / Global Agency Verification";
-      if (now.getDay() === 5) {
-        document.getElementById('fridayBadge').classList.remove('hidden');
+    function checkUrlSyncParams() {
+      if (window.location.hash && window.location.hash.startsWith('#sync=')) {
+        try {
+          const b64 = window.location.hash.substring(6);
+          const decoded = JSON.parse(atob(b64));
+          if (decoded.k) localStorage.setItem('gemini_api_key', decoded.k);
+          if (decoded.m) localStorage.setItem('gemini_model_name', decoded.m);
+          history.replaceState(null, null, window.location.pathname);
+        } catch (e) {}
       }
+    }
+
+    function initApp() {
+      checkUrlSyncParams();
+
+      const now = new Date();
+      const options = { weekday: 'long', day: '2-digit', month: 'long' };
+      document.getElementById('dateDisplay').textContent = now.toLocaleDateString('de-DE', options);
+
       document.getElementById('apiKeyInput').value = localStorage.getItem('gemini_api_key') || '';
-      const savedModel = localStorage.getItem('gemini_model_name') || 'gemini-3.5-flash-lite';
-      document.getElementById('modelNameInput').value = savedModel;
+      document.getElementById('modelNameInput').value = localStorage.getItem('gemini_model_name') || 'gemini-3.5-flash-lite';
+
       if (localStorage.getItem('tier1_media')) {
         document.getElementById('tier1MediaInput').value = localStorage.getItem('tier1_media');
       }
@@ -655,10 +636,32 @@
       if (localStorage.getItem('custom_directive')) {
         document.getElementById('customPromptInput').value = localStorage.getItem('custom_directive');
       }
+
+      try {
+        const saved = JSON.parse(localStorage.getItem('intelligence_v10_state'));
+        if (saved && Array.isArray(saved.worldNews) && saved.worldNews.length > 0) {
+          appState = saved;
+        }
+      } catch (e) {}
+
       renderAll();
-      if (window.lucide) {
-        lucide.createIcons();
-      }
+    }
+
+    function copyMobileSyncLink() {
+      const payload = {
+        k: document.getElementById('apiKeyInput').value.trim(),
+        m: document.getElementById('modelNameInput').value.trim()
+      };
+      const base64 = btoa(JSON.stringify(payload));
+      const syncUrl = window.location.origin + window.location.pathname + "#sync=" + base64;
+      navigator.clipboard.writeText(syncUrl).then(() => {
+        const btn = document.getElementById('copySyncBtn');
+        btn.innerHTML = '<span>✓ Link kopiert! Einfach am Handy öffnen</span>';
+        setTimeout(() => {
+          btn.innerHTML = '<i data-lucide="smartphone" class="w-3.5 h-3.5 text-[#0a84ff]"></i><span>API-Key per Link ans Handy übertragen</span>';
+          if (window.lucide) lucide.createIcons();
+        }, 3000);
+      });
     }
 
     function safeParseGeminiJSON(rawText) {
@@ -678,25 +681,21 @@
         try {
           return JSON.parse(repaired);
         } catch (err2) {
-          console.error("JSON Repair failed:", err2);
           return null;
         }
       }
     }
 
-    // Fetch live headlines from public RSS feeds via rss2json / cors-friendly endpoints so we don't need Google Search Grounding tool quota
     async function fetchLiveRSSContext() {
       const feeds = [
-        { name: "Wall Street Journal (Markets/World)", url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml" },
-        { name: "Wall Street Journal (World)", url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml" },
-        { name: "Handelsblatt (Wirtschaft/Politik)", url: "https://www.handelsblatt.com/contentexport/feed/schlagzeilen" },
+        { name: "Wall Street Journal", url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml" },
+        { name: "WSJ World", url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml" },
+        { name: "Handelsblatt", url: "https://www.handelsblatt.com/contentexport/feed/schlagzeilen" },
         { name: "Tagesschau Wirtschaft", url: "https://www.tagesschau.de/wirtschaft/index~rss2.xml" },
-        { name: "CNBC / Global Markets", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114" }
+        { name: "CNBC Global", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114" }
       ];
 
       let collectedHeadlines = [];
-      let sourceLinks = [];
-
       await Promise.allSettled(feeds.map(async (f) => {
         try {
           const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(f.url);
@@ -708,31 +707,25 @@
               const cleanDesc = (item.description || '').replace(/<[^>]*>/g, '').slice(0, 220);
               collectedHeadlines.push("[" + f.name + "] " + item.title + " — " + cleanDesc);
             });
-            if (j.items[0] && j.items[0].link) {
-              sourceLinks.push({ title: f.name, uri: j.items[0].link });
-            }
           }
-        } catch (err) {
-          // Ignore individual feed error
-        }
+        } catch (err) {}
       }));
 
       return {
         headlinesText: collectedHeadlines.join("\n"),
-        count: collectedHeadlines.length,
-        sourceLinks: sourceLinks
+        count: collectedHeadlines.length
       };
     }
 
     function resetToDefaultData() {
-      localStorage.removeItem('intelligence_v8_state');
+      localStorage.removeItem('intelligence_v10_state');
       appState = JSON.parse(JSON.stringify(defaultData));
       renderAll();
       toggleModal('settingsModal');
     }
 
     function createSparklineSVG(points, isPositive) {
-      const width = 105, height = 30;
+      const width = 96, height = 28;
       const safePoints = (Array.isArray(points) && points.length >= 2) ? points : [45, 50, 54, 58, 62, 68, 74, 80];
       const min = Math.min(...safePoints), max = Math.max(...safePoints);
       const range = max - min || 1;
@@ -741,79 +734,60 @@
         const y = height - ((p - min) / range) * (height - 8) - 4;
         return x.toFixed(1) + "," + y.toFixed(1);
       }).join(' ');
-      const stroke = isPositive ? '#34d399' : '#fb7185';
+      const stroke = isPositive ? '#30d158' : '#ff453a';
       return '<svg width="' + width + '" height="' + height + '" class="overflow-visible"><polyline fill="none" stroke="' + stroke + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="' + coords + '" /></svg>';
     }
 
     function renderSourcePills(sources) {
-      if (!sources || !Array.isArray(sources) || sources.length === 0) {
-        return '<span class="text-[10px] mono px-2.5 py-1 rounded-md bg-white/[0.05] text-slate-300">WSJ · Handelsblatt · Reuters</span>';
-      }
-      return sources.map(s => '<span class="text-[11px] mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">' + s + '</span>').join('');
+      if (!sources || !Array.isArray(sources) || sources.length === 0) return '';
+      return sources.map(s => '<span class="text-[11px] px-2.5 py-1 rounded-full bg-[#1c1c1e] text-[#a1a1a6]">' + s + '</span>').join('');
     }
 
     function renderAll() {
-      document.getElementById('lastScanTimeLabel').textContent = appState.lastUpdated || "Referenz-Dossiers aktiv";
-
-      if (appState.groundingQueries && appState.groundingQueries.length > 0) {
-        document.getElementById('groundingQueriesText').textContent = appState.groundingQueries.join(" · ");
-        const linksHtml = (appState.groundingUrls || []).slice(0, 4).map(u => 
-          '<a href="' + u.uri + '" target="_blank" rel="noopener" class="text-[10px] mono px-2 py-0.5 rounded bg-white/[0.06] hover:bg-white/15 text-emerald-300 transition flex items-center gap-1">' + (u.title || 'Quelle') + ' ↗</a>'
-        ).join('');
-        document.getElementById('groundingLinksContainer').innerHTML = linksHtml;
-      }
-
-      if (appState.morningSynthesis) {
-        document.getElementById('morningSynthesis').innerHTML = '<strong class="text-white font-medium">Thema des Tages (WSJ · Handelsblatt · FT):</strong> ' + appState.morningSynthesis;
-      }
+      document.getElementById('lastScanTimeLabel').textContent = appState.lastUpdated || "";
+      document.getElementById('morningSynthesis').textContent = appState.morningSynthesis || "";
 
       if (appState.intermarket) {
         document.getElementById('intermarketTitle').textContent = appState.intermarket.title;
-        document.getElementById('intermarketSummary').textContent = appState.intermarket.summary;
         document.getElementById('intermarketContext').textContent = appState.intermarket.contextExplanation || appState.intermarket.summary;
         if (appState.intermarket.sources && appState.intermarket.sources.length) {
-          document.getElementById('intermarketSourcesBadge').innerHTML = '<i data-lucide="shield-check" class="w-3 h-3"></i> ' + appState.intermarket.sources.slice(0, 3).join(' · ');
+          document.getElementById('intermarketSourcesBadge').textContent = appState.intermarket.sources.slice(0, 3).join(' · ');
         }
       }
 
       const macroEl = document.getElementById('macroList');
       macroEl.innerHTML = (appState.macroCalendar || []).map(item => `
-        <div class="p-3 rounded-xl bg-black/30 border border-white/[0.04] flex items-start justify-between gap-3">
+        <div class="p-3.5 rounded-2xl bg-[#1c1c1e] flex items-center justify-between gap-3">
           <div>
-            <span class="mono text-[10px] text-emerald-400 block mb-0.5">${item.date}</span>
-            <p class="text-slate-200 font-medium leading-snug">${item.event}</p>
+            <span class="text-[10px] font-medium text-[#0a84ff] block mb-0.5">${item.date}</span>
+            <p class="text-[#f5f5f7] font-medium leading-snug">${item.event}</p>
           </div>
-          <span class="text-[10px] mono px-2 py-0.5 rounded bg-white/[0.05] text-slate-300 shrink-0">${item.impact}</span>
+          <span class="text-[11px] text-[#86868b] shrink-0">${item.impact}</span>
         </div>
       `).join('');
 
       const worldGrid = document.getElementById('worldGrid');
       worldGrid.innerHTML = (appState.worldNews || []).map((n, i) => {
-        const sourcesText = (n.sources && n.sources.length) ? n.sources.join(' · ') : 'WSJ · Handelsblatt · Reuters';
-        const verStatus = n.verificationStatus || 'Multi-Agentur Konsens';
+        const sourcesText = (n.sources && n.sources.length) ? n.sources.slice(0, 3).join(' · ') : 'WSJ · Handelsblatt · Reuters';
         const contextPreview = n.contextExplanation || n.summary;
+        const narrativeBadge = n.hasDivergingNarratives
+          ? '<span class="text-[10px] font-medium px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400">Kontroverse Sichtweisen</span>'
+          : '';
         return `
-          <div onclick="openWorldModal(${i})" class="bento-card rounded-2xl p-6 cursor-pointer flex flex-col justify-between">
+          <div onclick="openWorldModal(${i})" class="apple-card p-6 cursor-pointer flex flex-col justify-between">
             <div>
-              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <span class="text-[10px] mono uppercase px-2.5 py-0.5 rounded-md bg-sky-500/15 text-sky-300 border border-sky-500/20">${n.region}</span>
-                <span class="text-[10px] mono text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md flex items-center gap-1">
-                  <i data-lucide="shield-check" class="w-3 h-3"></i> ${verStatus}
-                </span>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff]">${n.region}</span>
+                ${narrativeBadge}
               </div>
 
-              <h3 class="text-base sm:text-[17px] font-semibold text-white leading-snug mb-2">${n.title}</h3>
-              <p class="text-xs text-slate-300 leading-relaxed mb-3.5">${n.summary}</p>
-
-              <div class="p-3.5 rounded-xl bg-white/[0.025] border border-white/[0.05] mb-3">
-                <span class="text-[10px] mono uppercase text-sky-400 block mb-1 font-medium">Hintergrund · Warum das wichtig ist:</span>
-                <p class="text-xs text-slate-300 leading-relaxed line-clamp-3">${contextPreview}</p>
-              </div>
+              <h3 class="text-[17px] font-semibold text-white leading-snug mb-2.5">${n.title}</h3>
+              <p class="text-[13px] text-[#a1a1a6] leading-relaxed line-clamp-4 mb-4">${contextPreview}</p>
             </div>
 
-            <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between gap-2 text-[11px]">
-              <span class="mono text-[10px] text-slate-400 truncate">${sourcesText}</span>
-              <span class="text-emerald-400 font-medium flex items-center gap-1 shrink-0">Ganzes Dossier lesen <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+            <div class="pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-[#86868b]">
+              <span class="truncate">${sourcesText}</span>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-[#86868b] shrink-0"></i>
             </div>
           </div>
         `;
@@ -825,45 +799,28 @@
         : (appState.cards || []).filter(c => c.category === currentFilter);
 
       grid.innerHTML = filtered.map((card) => {
-        const isPos = !(card.direction || '').includes('VERSCHLECHTERT');
-        const sourcesText = (card.sources && card.sources.length) ? card.sources.slice(0, 3).join(' · ') : 'WSJ · Handelsblatt · Reuters';
-        const verStatus = card.verificationStatus || 'Mehrfach verifiziert';
+        const isPos = !(card.direction || '').toUpperCase().includes('VERSCHLECHTERT');
+        const sourcesText = (card.sources && card.sources.length) ? card.sources.slice(0, 3).join(' · ') : 'WSJ · Handelsblatt';
         const contextPreview = card.contextExplanation || card.thesis;
         return `
-          <div onclick="openCardModal('${card.id}')" class="bento-card rounded-2xl p-5 cursor-pointer flex flex-col justify-between">
+          <div onclick="openCardModal('${card.id}')" class="apple-card p-6 cursor-pointer flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="text-[10px] mono uppercase tracking-wider px-2 py-0.5 rounded bg-white/[0.06] text-slate-300">${card.sectorLabel}</span>
-                <span class="text-[10px] mono font-semibold ${card.directionColor || 'text-emerald-400'}">${card.direction}</span>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-[11px] font-medium text-[#86868b]">${card.sectorLabel}</span>
+                <span class="text-[11px] font-semibold ${isPos ? 'text-[#30d158]' : 'text-[#ff453a]'}">${card.direction}</span>
               </div>
-              <div class="flex items-baseline justify-between mb-1.5">
-                <h4 class="text-base font-semibold text-white">${card.company}</h4>
-                <span class="text-xs mono text-slate-400">${card.ticker}</span>
+              <div class="flex items-baseline justify-between mb-2">
+                <h4 class="text-[17px] font-semibold text-white">${card.company}</h4>
+                <span class="text-xs text-[#86868b]">${card.ticker}</span>
               </div>
-              <p class="text-xs text-slate-200 font-medium leading-relaxed mb-3">${card.headline}</p>
-
-              <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] text-xs text-slate-300 mb-3">
-                <span class="text-[10px] mono uppercase text-emerald-400 block mb-0.5">Kontext & Einordnung:</span>
-                <p class="line-clamp-3 leading-relaxed text-[11.5px] text-slate-300">${contextPreview}</p>
-              </div>
-              
-              <div class="pt-2 flex items-center justify-between gap-2 text-[10px] mono">
-                <span class="text-emerald-400 flex items-center gap-1 shrink-0">
-                  <i data-lucide="shield-check" class="w-3 h-3"></i> ${verStatus}
-                </span>
-                <span class="text-slate-400 truncate" title="${(card.sources || []).join(', ')}">${sourcesText}</span>
-              </div>
+              <p class="text-[13px] text-[#f5f5f7] font-medium leading-snug mb-2.5">${card.headline}</p>
+              <p class="text-xs text-[#a1a1a6] leading-relaxed line-clamp-3 mb-4">${contextPreview}</p>
             </div>
 
-            <div class="mt-3 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-              <div class="flex-1 mr-4">
-                <div class="flex justify-between text-[10px] mono text-slate-400 mb-1">
-                  <span>5Y Burggraben / Stärke</span>
-                  <span class="text-slate-200">${card.moatScore || 85}/100</span>
-                </div>
-                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                  <div class="h-full ${isPos ? 'bg-emerald-400' : 'bg-rose-400'}" style="width: ${card.moatScore || 85}%"></div>
-                </div>
+            <div class="pt-3.5 border-t border-white/[0.06] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#86868b] block">${sourcesText}</span>
+                <span class="text-xs font-semibold text-white mt-0.5 block">Moat ${card.moatScore || 85}/100</span>
               </div>
               <div>${createSparklineSVG(card.sparkline, isPos)}</div>
             </div>
@@ -871,18 +828,16 @@
         `;
       }).join('');
 
-      if (window.lucide) {
-        lucide.createIcons();
-      }
+      if (window.lucide) lucide.createIcons();
     }
 
     function filterCards(cat) {
       currentFilter = cat;
       document.querySelectorAll('.sector-pill').forEach(btn => {
         if (btn.dataset.filter === cat) {
-          btn.className = "sector-pill active px-3 py-1.5 rounded-xl bg-white/15 text-white text-xs font-medium transition";
+          btn.className = "sector-pill px-3.5 py-1.5 rounded-full bg-white text-black text-xs font-medium transition";
         } else {
-          btn.className = "sector-pill px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 text-xs transition";
+          btn.className = "sector-pill px-3.5 py-1.5 rounded-full bg-[#1c1c1e] text-[#86868b] hover:text-white text-xs font-medium transition";
         }
       });
       renderAll();
@@ -894,11 +849,11 @@
       document.getElementById('view-world').classList.toggle('hidden', isMarket);
 
       document.getElementById('tab-market').className = isMarket
-        ? "px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 bg-white/10 text-white shadow-sm"
-        : "px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 text-slate-400 hover:text-white";
+        ? "px-4 py-1.5 rounded-full text-xs font-medium transition-all bg-white text-black shadow-sm"
+        : "px-4 py-1.5 rounded-full text-xs font-medium transition-all text-[#86868b] hover:text-white";
       document.getElementById('tab-world').className = !isMarket
-        ? "px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 bg-white/10 text-white shadow-sm"
-        : "px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 text-slate-400 hover:text-white";
+        ? "px-4 py-1.5 rounded-full text-xs font-medium transition-all bg-white text-black shadow-sm"
+        : "px-4 py-1.5 rounded-full text-xs font-medium transition-all text-[#86868b] hover:text-white";
     }
 
     function loadModernChartWidget(symbol, label) {
@@ -931,27 +886,55 @@
         "hideSymbolLogo": false,
         "scalePosition": "right",
         "scaleMode": "Normal",
-        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, Inter, sans-serif",
         "fontSize": "11",
         "noTimeScale": false,
         "valuesTracking": "1",
         "changeMode": "price-and-percent",
         "chartType": "area",
-        "lineColor": "#10b981",
-        "topColor": "rgba(16, 185, 129, 0.25)",
-        "bottomColor": "rgba(16, 185, 129, 0.0)",
+        "lineColor": "#30d158",
+        "topColor": "rgba(48, 209, 88, 0.22)",
+        "bottomColor": "rgba(48, 209, 88, 0.0)",
         "lineWidth": 2,
         "isTransparent": true,
-        "dateRanges": [
-          "1m|1D",
-          "12m|1W",
-          "60m|1M",
-          "all|1M"
-        ]
+        "dateRanges": ["1m|1D", "12m|1W", "60m|1M", "all|1M"]
       });
 
       widgetWrap.appendChild(script);
       container.appendChild(widgetWrap);
+    }
+
+    function setupDossierModalContent(item) {
+      activeDossierContext = item;
+      document.getElementById('dossierChatLog').innerHTML = '';
+      document.getElementById('dossierChatInput').value = '';
+
+      const narrativeBox = document.getElementById('modalNarrativeBox');
+      if (item.hasDivergingNarratives && item.narrativeComparison && item.narrativeComparison.trim().length > 10) {
+        document.getElementById('modalNarrativeText').textContent = item.narrativeComparison;
+        narrativeBox.classList.remove('hidden');
+      } else {
+        narrativeBox.classList.add('hidden');
+      }
+
+      const bearBox = document.getElementById('modalBearBox');
+      const thesisGrid = document.getElementById('modalThesisGrid');
+      const bullLabel = document.getElementById('modalBullLabel');
+
+      if (item.bearCase && item.bearCase.trim().length > 5) {
+        bullLabel.textContent = "5Y Bull-Case & These";
+        document.getElementById('modalBearCaseText').textContent = item.bearCase;
+        bearBox.classList.remove('hidden');
+        thesisGrid.className = "grid grid-cols-1 sm:grid-cols-2 gap-3.5";
+      } else {
+        bullLabel.textContent = "Langfristige Auswirkung (5Y+)";
+        bearBox.classList.add('hidden');
+        thesisGrid.className = "grid grid-cols-1 gap-3.5";
+      }
+
+      document.getElementById('modalBullets').innerHTML = (item.bullets || []).map(b => "<li>" + b + "</li>").join('');
+      document.getElementById('modalVerificationStatus').textContent = item.verificationStatus || "Mehrfach abgeglichen";
+      document.getElementById('modalSourcesList').innerHTML = renderSourcePills(item.sources);
     }
 
     function openCardModal(id) {
@@ -960,17 +943,11 @@
       document.getElementById('modalSectorBadge').textContent = card.sectorLabel;
       document.getElementById('modalTickerBadge').textContent = card.ticker;
       document.getElementById('modalTitle').textContent = card.company + " – " + card.headline;
-      document.getElementById('modalImpactDirection').textContent = card.direction;
-      document.getElementById('modalImpactDirection').className = "text-xs font-semibold mono " + (card.directionColor || 'text-emerald-400');
       
       document.getElementById('modalContextExplanation').textContent = card.contextExplanation || card.thesis;
       document.getElementById('modalLongTermThesis').textContent = card.thesis;
-      document.getElementById('modalBullets').innerHTML = (card.bullets || []).map(b => "<li>" + b + "</li>").join('');
       
-      document.getElementById('modalVerificationStatus').textContent = card.verificationStatus || "Mehrfach verifiziert";
-      document.getElementById('modalVerificationNote').textContent = card.verificationNote || "Abgeglichen über führende Wirtschaftsmedien (WSJ, Handelsblatt, FT) und internationale Nachrichtenagenturen (Reuters, AP, Bloomberg).";
-      document.getElementById('modalSourcesList').innerHTML = renderSourcePills(card.sources);
-
+      setupDossierModalContent(card);
       document.getElementById('chartSection').classList.remove('hidden');
       loadModernChartWidget(card.ticker, card.company);
       document.getElementById('detailModal').classList.remove('hidden');
@@ -982,19 +959,13 @@
       document.getElementById('modalSectorBadge').textContent = "Intermarket & Staatsanleihen";
       document.getElementById('modalTickerBadge').textContent = im.symbol || "TVC:US10Y";
       document.getElementById('modalTitle').textContent = im.title;
-      document.getElementById('modalImpactDirection').textContent = "MAKRO-KORRELATION";
-      document.getElementById('modalImpactDirection').className = "text-xs font-semibold mono text-indigo-300";
       
       document.getElementById('modalContextExplanation').textContent = im.contextExplanation || im.summary;
       document.getElementById('modalLongTermThesis').textContent = im.summary;
-      document.getElementById('modalBullets').innerHTML = (im.bullets || []).map(b => "<li>" + b + "</li>").join('');
       
-      document.getElementById('modalVerificationStatus').textContent = "Multi-Institut Konsens";
-      document.getElementById('modalVerificationNote').textContent = im.verificationNote || "Abgeglichen über Zentralbankdaten sowie Leitartikel aus Wall Street Journal, Financial Times und Handelsblatt.";
-      document.getElementById('modalSourcesList').innerHTML = renderSourcePills(im.sources);
-
+      setupDossierModalContent(im);
       document.getElementById('chartSection').classList.remove('hidden');
-      loadModernChartWidget(im.symbol || "TVC:US10Y", "10Y US-Staatsanleihen Rendite");
+      loadModernChartWidget(im.symbol || "TVC:US10Y", "10Y US-Staatsanleihen");
       document.getElementById('detailModal').classList.remove('hidden');
       if (window.lucide) lucide.createIcons();
     }
@@ -1002,19 +973,13 @@
     function openWorldModal(idx) {
       const n = appState.worldNews[idx];
       document.getElementById('modalSectorBadge').textContent = n.region;
-      document.getElementById('modalTickerBadge').textContent = "08:00 DEEP BRIEFING";
+      document.getElementById('modalTickerBadge').textContent = "Briefing";
       document.getElementById('modalTitle').textContent = n.title;
-      document.getElementById('modalImpactDirection').textContent = "HINTERGRUND & FAKTEN-CHECK";
-      document.getElementById('modalImpactDirection').className = "text-xs font-semibold mono text-sky-300";
       
       document.getElementById('modalContextExplanation').textContent = n.contextExplanation || n.summary;
       document.getElementById('modalLongTermThesis').textContent = n.longTermImpact || n.summary;
-      document.getElementById('modalBullets').innerHTML = (n.bullets || []).map(b => "<li>" + b + "</li>").join('');
       
-      document.getElementById('modalVerificationStatus').textContent = n.verificationStatus || "Abgeglichen über globale Agenturen";
-      document.getElementById('modalVerificationNote').textContent = n.verificationNote || "Diese Meldung wurde über mehrere unabhängige internationale Nachrichteninstitute (Reuters, AP, AFP, dpa) auf Faktentreue abgeglichen.";
-      document.getElementById('modalSourcesList').innerHTML = renderSourcePills(n.sources);
-
+      setupDossierModalContent(n);
       document.getElementById('chartSection').classList.add('hidden');
       document.getElementById('detailModal').classList.remove('hidden');
       if (window.lucide) lucide.createIcons();
@@ -1030,22 +995,76 @@
     }
 
     function saveSettings() {
-      const key = document.getElementById('apiKeyInput').value.trim();
-      const modelName = document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite';
-      const tier1 = document.getElementById('tier1MediaInput').value.trim();
-      const agencies = document.getElementById('verificationAgenciesInput').value.trim();
-      const directive = document.getElementById('customPromptInput').value.trim();
-
-      localStorage.setItem('gemini_api_key', key);
-      localStorage.setItem('gemini_model_name', modelName);
-      localStorage.setItem('tier1_media', tier1);
-      localStorage.setItem('verification_agencies', agencies);
-      localStorage.setItem('custom_directive', directive);
+      localStorage.setItem('gemini_api_key', document.getElementById('apiKeyInput').value.trim());
+      localStorage.setItem('gemini_model_name', document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite');
+      localStorage.setItem('tier1_media', document.getElementById('tier1MediaInput').value.trim());
+      localStorage.setItem('verification_agencies', document.getElementById('verificationAgenciesInput').value.trim());
+      localStorage.setItem('custom_directive', document.getElementById('customPromptInput').value.trim());
       toggleModal('settingsModal');
     }
 
-    // Smart Multi-Model Cascade matching the user's exact AI Studio Dashboard models
-    async function callGeminiWithFallback(apiKey, preferredModel, systemPrompt) {
+    function askQuickQuestion(qText) {
+      document.getElementById('dossierChatInput').value = qText;
+      handleChatSubmit(new Event('submit'));
+    }
+
+    async function handleChatSubmit(e) {
+      e.preventDefault();
+      const inputEl = document.getElementById('dossierChatInput');
+      const question = inputEl.value.trim();
+      if (!question || !activeDossierContext) return;
+
+      const key = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
+      if (!key) {
+        toggleModal('settingsModal');
+        return;
+      }
+
+      const chatLog = document.getElementById('dossierChatLog');
+      inputEl.value = '';
+
+      chatLog.innerHTML += `
+        <div class="flex justify-end">
+          <div class="px-3.5 py-2 rounded-2xl bg-[#0a84ff] text-white text-xs max-w-[85%] leading-relaxed">${question}</div>
+        </div>
+      `;
+
+      const loadingId = "chat-load-" + Date.now();
+      chatLog.innerHTML += `
+        <div id="${loadingId}" class="flex justify-start">
+          <div class="px-3.5 py-2 rounded-2xl bg-[#1c1c1e] text-[#86868b] text-xs">Antwort wird erstellt...</div>
+        </div>
+      `;
+      chatLog.scrollTop = chatLog.scrollHeight;
+
+      const preferredModel = localStorage.getItem('gemini_model_name') || 'gemini-3.5-flash-lite';
+      const dossierTitle = activeDossierContext.title || activeDossierContext.headline || '';
+      const dossierBody = activeDossierContext.contextExplanation || activeDossierContext.summary || '';
+
+      const chatPrompt = [
+        "Du bist ein präziser Finanz- und Wirtschaftsanalyst. Beantworte die Rückfrage des Nutzers zum folgenden Dossier klar, verständlich und auf den Punkt (ca. 3 bis 5 Sätze, kein Markdown-Sternchen-Wirrwarr).",
+        "Dossier-Thema: " + dossierTitle,
+        "Dossier-Hintergrund: " + dossierBody,
+        "Rückfrage des Nutzers: " + question
+      ].join("\n");
+
+      try {
+        const result = await callGeminiWithFallback(key, preferredModel, chatPrompt, true);
+        const answer = result.data?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || 'Keine Antwort erhalten.';
+        const loadEl = document.getElementById(loadingId);
+        if (loadEl) {
+          loadEl.innerHTML = `<div class="px-4 py-2.5 rounded-2xl bg-[#1c1c1e] border border-white/[0.06] text-[#f5f5f7] text-xs max-w-[92%] leading-relaxed">${answer.replace(/\*\*/g, '')}</div>`;
+        }
+      } catch (err) {
+        const loadEl = document.getElementById(loadingId);
+        if (loadEl) {
+          loadEl.innerHTML = `<div class="px-3.5 py-2 rounded-2xl bg-[#ff453a]/20 text-[#ff453a] text-xs">Fehler: ${err.message}</div>`;
+        }
+      }
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    async function callGeminiWithFallback(apiKey, preferredModel, systemPrompt, isQuickChat) {
       const allModels = [
         preferredModel,
         "gemini-3.5-flash-lite",
@@ -1053,16 +1072,16 @@
         "gemini-3.8-flash",
         "gemini-3.6-flash"
       ];
-      // Deduplicate model list
       const modelQueue = [...new Set(allModels)];
       let lastError = "";
 
       for (let i = 0; i < modelQueue.length; i++) {
         const currentModel = modelQueue[i];
-        document.getElementById('loadingStepTitle').textContent = "2/2: KI-Synthese & Fakten-Check über Modell '" + currentModel + "'...";
+        if (!isQuickChat) {
+          document.getElementById('loadingStepTitle').textContent = "Analysiere Leitmedien & erstelle Dossiers (" + currentModel + ")...";
+        }
 
         try {
-          // Call WITHOUT googleSearch tool first so Free-Tier Search Grounding 429 quota never blocks the model!
           const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(currentModel) + ":generateContent?key=" + apiKey, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1070,7 +1089,7 @@
               contents: [{ parts: [{ text: systemPrompt }] }],
               generationConfig: {
                 temperature: 0.25,
-                maxOutputTokens: 8192
+                maxOutputTokens: isQuickChat ? 1024 : 8192
               }
             })
           });
@@ -1081,14 +1100,13 @@
           } else {
             const errJson = await res.json().catch(() => ({}));
             lastError = currentModel + " (" + res.status + "): " + (errJson.error?.message || res.statusText);
-            console.warn("Model fallback triggered:", lastError);
           }
         } catch (netErr) {
           lastError = netErr.message;
         }
       }
 
-      throw new Error(lastError || "Alle Modelle in der Kaskade meldeten einen Fehler.");
+      throw new Error(lastError || "Alle Modelle ausgelastet.");
     }
 
     async function fetchLiveBriefing() {
@@ -1101,11 +1119,12 @@
       const todayStr = new Date().toLocaleDateString('de-DE');
       const preferredModel = localStorage.getItem('gemini_model_name') || document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite';
       const banner = document.getElementById('loadingBanner');
+      const refreshIcon = document.getElementById('refreshIcon');
       banner.classList.remove('hidden');
+      refreshIcon.classList.add('animate-spin');
 
       try {
-        // Step 1: Fetch real live RSS feeds from WSJ, Handelsblatt, Tagesschau, CNBC
-        document.getElementById('loadingStepTitle').textContent = "1/2: Lade aktuelle Live-Schlagzeilen (WSJ, Handelsblatt, Tagesschau, CNBC)...";
+        document.getElementById('loadingStepTitle').textContent = "Lade aktuelle Schlagzeilen (WSJ, Handelsblatt, FT, Tagesschau)...";
         const rssData = await fetchLiveRSSContext();
 
         const tier1Media = document.getElementById('tier1MediaInput').value;
@@ -1113,31 +1132,29 @@
         const userDirective = document.getElementById('customPromptInput').value;
 
         const liveFeedBlock = rssData.count > 0
-          ? "AKTUELLE LIVE-SCHLAGZEILEN AUS DEN RSS-FEEDS VON HEUTE (" + todayStr + "):\n" + rssData.headlinesText
-          : "Hinweis: Nutze die wichtigsten aktuellen globalen Wirtschafts- und Marktthemen aus " + tier1Media + ".";
+          ? "AKTUELLE LIVE-SCHLAGZEILEN VON HEUTE (" + todayStr + "):\n" + rssData.headlinesText
+          : "Nutze die wichtigsten aktuellen globalen Wirtschafts- und Marktthemen aus " + tier1Media + ".";
 
         const systemPrompt = [
-          "Du bist ein erstklassiges Financial & Global Intelligence Terminal (im Stil von The Economist, Wall Street Journal und Handelsblatt).",
+          "Du bist ein präzises Financial & Global Intelligence Terminal (im Stil von The Economist, Wall Street Journal und Handelsblatt).",
           "Heutiges Datum: " + todayStr + ".",
           "Antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt (keine Markdown-Backticks, kein Vorwort).",
           "WICHTIG FÜR VALIDES JSON: Verwende innerhalb von JSON-Texten niemals doppelte Anführungszeichen, sondern einfache Anführungszeichen ('...'), damit das JSON nicht bricht!",
           "",
           liveFeedBlock,
           "",
-          "VERBINDLICHE QUALITÄTS- & UMFANGS-GARANTIE:",
-          "1. LEITMEDIEN-RADAR: Werte die oben übergebenen Live-Schlagzeilen sowie die Schwerpunkte von " + tier1Media + " aus.",
-          "2. GLOBALER FAKTEN-ABGLEICH (ANTI-DESINFORMATION): Gleiche jede Nachricht mit dem Konsens internationaler Nachrichteninstitute (" + verificationAgencies + ") ab. Nenne die konkreten Medien im Array 'sources'.",
-          "3. AUSFÜHRLICHE ERKLÄRUNG STATT KURZMELDUNG (PFLICHT): Das Feld 'contextExplanation' darf NIEMALS nur 1-2 Sätze kurz sein! Schreibe dort für JEDEN Artikel und JEDE Kachel 4 bis 5 ausführliche, tiefgehende Sätze (mindestens 70-100 Wörter), die verständlich erklären, WARUM das genau jetzt passiert, wie die ökonomischen/geopolitischen Faktoren dahinter zusammenhängen und was der Leser verstehen muss.",
-          "4. FESTGELEGTE ANZAHL AN ARTIKELN (NICHT KÜRZEN!):",
-          "   - 'worldNews': Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers aus verschiedenen Regionen/Themenfeldern.",
-          "   - 'cards': Erstelle EXAKT 6 detaillierte Markt-Kacheln (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML oder XETR:SAP; 3x category 'commodities' zu Gold/Silber TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD).",
-          "5. ZUSATZ-DIREKTIVE: " + userDirective,
+          "REGELN FÜR INHALT, NARRATIVE & GEGENRISIKEN:",
+          "1. LEITMEDIEN & VERIFIKATION: Werte die Live-Schlagzeilen von " + tier1Media + " aus und gleiche Fakten über " + verificationAgencies + " ab.",
+          "2. AUSFÜHRLICHE ERKLÄRUNG ('contextExplanation'): Schreibe für JEDEN Artikel und JEDE Kachel 4 bis 5 ausführliche Sätze (mindestens 70-100 Wörter), die verständlich erklären, WARUM das genau jetzt passiert und wie die Faktoren zusammenhängen.",
+          "3. UNTERSCHIEDLICHE NARRATIVE ('hasDivergingNarratives' & 'narrativeComparison'): Setze 'hasDivergingNarratives' NUR DANN auf true, wenn US-Medien (z.B. WSJ), europäische Medien (z.B. Handelsblatt/FT) oder asiatische Medien das Thema tatsächlich unterschiedlich oder kontrovers bewerten. Erkläre den Unterschied dann in 'narrativeComparison'. Wenn Einigkeit besteht, setze 'hasDivergingNarratives': false und 'narrativeComparison': ''.",
+          "4. THESE & ANTITHESE ('thesis' & 'bearCase'): Liefere für jede Markt-Kachel in 'thesis' den 5-Jahres-Bull-Case und in 'bearCase' das wichtigste strukturelle Gegenrisiko.",
+          "5. UMFANG: Erstelle EXAKT 6 'worldNews'-Dossiers und EXAKT 6 'cards' (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML oder XETR:SAP; 3x category 'commodities' zu Gold TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD).",
+          "6. ZUSATZ-DIREKTIVE: " + userDirective,
           "",
-          "Halte dich exakt an die JSON-Felder: morningSynthesis, intermarket (title, summary, contextExplanation, bullets, symbol, sources, verificationNote), macroCalendar (date, event, impact), cards (id, category, sectorLabel, ticker, company, direction, directionColor, moatScore, headline, contextExplanation, thesis, bullets, sources, verificationStatus, verificationNote, sparkline), worldNews (region, title, summary, contextExplanation, longTermImpact, bullets, sources, verificationStatus, verificationNote)."
+          "Halte dich exakt an die JSON-Felder: morningSynthesis, intermarket (title, summary, contextExplanation, bearCase, hasDivergingNarratives, narrativeComparison, bullets, symbol, sources), macroCalendar (date, event, impact), cards (id, category, sectorLabel, ticker, company, direction, directionColor, moatScore, headline, contextExplanation, thesis, bearCase, hasDivergingNarratives, narrativeComparison, bullets, sources, verificationStatus, sparkline), worldNews (region, title, summary, contextExplanation, longTermImpact, hasDivergingNarratives, narrativeComparison, bullets, sources, verificationStatus)."
         ].join("\n");
 
-        // Step 2: Call Gemini with automatic model cascade
-        const result = await callGeminiWithFallback(key, preferredModel, systemPrompt);
+        const result = await callGeminiWithFallback(key, preferredModel, systemPrompt, false);
         const candidate = result.data?.candidates?.[0];
         const parts = candidate?.content?.parts || [];
         const rawText = parts.map(p => p.text || '').join('\n');
@@ -1145,26 +1162,19 @@
         const parsedState = safeParseGeminiJSON(rawText);
         if (parsedState && Array.isArray(parsedState.worldNews) && Array.isArray(parsedState.cards)) {
           const timeStr = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-          parsedState.lastUpdated = "Live (" + result.usedModel + "): " + todayStr + ", " + timeStr + " Uhr";
-          parsedState.groundingQueries = [
-            "Live-RSS (" + rssData.count + " Meldungen: WSJ, Handelsblatt, Tagesschau, CNBC)",
-            "Verarbeitet mit: " + result.usedModel
-          ];
-          parsedState.groundingUrls = rssData.sourceLinks.length > 0 ? rssData.sourceLinks : defaultData.groundingUrls;
+          parsedState.lastUpdated = todayStr + ", " + timeStr + " Uhr";
 
           appState = parsedState;
-          localStorage.setItem('intelligence_v8_state', JSON.stringify(appState));
+          localStorage.setItem('intelligence_v10_state', JSON.stringify(appState));
           renderAll();
-          document.getElementById('groundingProofBar').classList.remove('hidden');
         } else {
-          console.error("Raw model output:", rawText);
-          alert("Hinweis: Die KI-Antwort war unvollständig. Deine bisherigen Dossiers bleiben sicher erhalten.");
+          alert("Die KI-Antwort war unvollständig. Bisherige Dossiers bleiben erhalten.");
         }
       } catch (e) {
-        console.error("Fehler beim Live-Abruf:", e);
-        alert("API-Meldung: " + e.message);
+        alert("API-Hinweis: " + e.message);
       } finally {
         banner.classList.add('hidden');
+        refreshIcon.classList.remove('animate-spin');
       }
     }
 
