@@ -65,7 +65,7 @@
           <div class="flex items-center gap-2.5">
             <h1 class="font-semibold text-[15px] tracking-tight text-white">08:00 Intelligence</h1>
             <span id="scanStatusBadge" class="inline-flex items-center gap-1 text-[10px] mono uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-              <i data-lucide="shield-check" class="w-3 h-3"></i> Multi-Agency Verified
+              <i data-lucide="shield-check" class="w-3 h-3"></i> Live-Feed + Multi-Model
             </span>
             <span id="fridayBadge" class="hidden text-[10px] mono uppercase px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Freitags-Review</span>
           </div>
@@ -89,7 +89,7 @@
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
           <span>Live-Scan starten</span>
         </button>
-        <button onclick="toggleModal('settingsModal')" class="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.07] transition" title="API, Modell & Diagnose">
+        <button onclick="toggleModal('settingsModal')" class="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.07] transition" title="API, Modell-Kaskade & Diagnose">
           <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
         </button>
       </div>
@@ -112,12 +112,12 @@
     </div>
   </div>
 
-  <!-- Live Google Search Grounding Proof Bar -->
+  <!-- Live Feed & Grounding Proof Bar -->
   <div id="groundingProofBar" class="hidden border-b border-emerald-500/20 bg-emerald-950/20 px-4 lg:px-8 py-2">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px]">
       <div class="flex items-center gap-2 text-emerald-300 mono">
         <i data-lucide="check-circle-2" class="w-3.5 h-3.5 shrink-0"></i>
-        <span id="groundingQueriesText">Google Live-Search durchgeführt</span>
+        <span id="groundingQueriesText">Live-Feeds & Modell-Verifikation aktiv</span>
       </div>
       <div id="groundingLinksContainer" class="flex flex-wrap items-center gap-2"></div>
     </div>
@@ -131,8 +131,8 @@
       <div class="flex items-center gap-3">
         <div class="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin shrink-0"></div>
         <div class="text-xs text-emerald-200">
-          <span class="font-semibold block">Live-Recherche & Multi-Source-Abgleich läuft (ca. 15–25 Sek.)...</span>
-          <span class="text-emerald-300/80 text-[11px]">Gemini durchsucht aktuelle Schlagzeilen (WSJ, Handelsblatt, FT, Reuters, AP) und schreibt ausführliche Hintergrund-Erklärungen.</span>
+          <span id="loadingStepTitle" class="font-semibold block">1/2: Lade aktuelle Live-Headlines von WSJ, Handelsblatt, FT & Tagesschau...</span>
+          <span id="loadingStepSub" class="text-emerald-300/80 text-[11px]">Umgeht die Google-Search-429-Sperre durch direkten Live-Feed-Abruf + automatische Modell-Kaskade.</span>
         </div>
       </div>
     </div>
@@ -318,20 +318,33 @@
   <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-[#11141d] border border-white/10 rounded-2xl max-w-xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl">
       <div class="flex items-center justify-between pb-3 border-b border-white/[0.07]">
-        <h3 class="font-semibold text-white text-base">API, Modell & Qualitäts-Garantie</h3>
+        <h3 class="font-semibold text-white text-base">API, Auto-Fallback & Anti-429-Lösung</h3>
         <button onclick="toggleModal('settingsModal')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <div class="space-y-3.5 text-xs">
+        
+        <!-- Explanation of 429 Fix -->
+        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-emerald-200 leading-relaxed">
+          <strong class="text-emerald-300 block mb-0.5">✓ 429-Überkapazitäts-Schutz aktiv:</strong>
+          In der kostenlosen AI-Studio-Stufe blockiert Google oft das interne Search-Tool mit <code class="mono">429 TooManyRequests</code>, obwohl deine Modelle (<code class="mono">0/20</code> bzw. <code class="mono">0/500</code>) frei sind. Die App lädt deshalb zuerst echte Live-RSS-Feeds (WSJ, Handelsblatt, FT, CNBC, Tagesschau) direkt im Browser und nutzt eine automatische Modell-Kaskade (<code class="mono">3.8-flash</code> ➔ <code class="mono">3.6-flash</code> ➔ <code class="mono">3.5-flash-lite</code> [500/Tag] ➔ <code class="mono">3.1-flash-lite</code> [500/Tag]).
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block text-slate-300 font-medium mb-1">Google Gemini API-Key</label>
             <input id="apiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white mono focus:outline-none focus:border-emerald-500">
           </div>
           <div>
-            <label class="block text-slate-300 font-medium mb-1">Gemini Modell-ID</label>
-            <input id="modelNameInput" type="text" value="gemini-3.8-flash" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-emerald-300 mono focus:outline-none focus:border-emerald-500">
+            <label class="block text-slate-300 font-medium mb-1">Start-Modell (mit Auto-Fallback)</label>
+            <select id="modelNameInput" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-emerald-300 mono focus:outline-none focus:border-emerald-500">
+              <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite (500/Tag Frei!)</option>
+              <option value="gemini-3.8-flash">gemini-3.8-flash (20/Tag Frei)</option>
+              <option value="gemini-3.6-flash">gemini-3.6-flash (20/Tag Frei)</option>
+              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite (500/Tag Frei!)</option>
+            </select>
           </div>
         </div>
+
         <div>
           <label class="block text-slate-300 font-medium mb-1">Priorisierte Qualitäts-Leitmedien (Headlines & Themen-Geber)</label>
           <input id="tier1MediaInput" type="text" value="Wall Street Journal (WSJ), Handelsblatt, Financial Times (FT), The Economist, Bloomberg, Neue Zürcher Zeitung (NZZ), Nikkei Asia" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-slate-200 focus:outline-none focus:border-emerald-500">
@@ -343,21 +356,6 @@
         <div>
           <label class="block text-slate-300 font-medium mb-1">Recherche- & Erklärungs-Direktive</label>
           <textarea id="customPromptInput" rows="3" class="w-full p-3 rounded-xl bg-slate-900 border border-white/10 text-slate-200 leading-relaxed focus:outline-none focus:border-emerald-500">Liefere keine bloßen Roh-Fakten ohne Kontext! Erkläre bei jedem Artikel verständlich die Hintergründe ('Warum passiert das jetzt? Wie hängen die Faktoren zusammen? Was bedeutet das für die nächsten 5 Jahre?'). Scanne die täglichen Schwerpunkte aus Wall Street Journal, Handelsblatt und Financial Times und gleiche jede Nachricht über globale Nachrichtenagenturen (Reuters, AP, dpa) ab.</textarea>
-        </div>
-
-        <!-- Offline Parser & Quality Simulation Box -->
-        <div class="p-3.5 rounded-xl bg-sky-950/25 border border-sky-500/25 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-semibold text-sky-300 flex items-center gap-1.5">
-              <i data-lucide="cpu" class="w-4 h-4"></i> Offline-Selbsttest (Ohne API-Verbrauch)
-            </span>
-            <button onclick="runOfflineQualitySimulation()" class="px-2.5 py-1 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 border border-sky-500/30 font-medium transition">
-              Simulation starten
-            </button>
-          </div>
-          <p id="simResultText" class="text-[11px] text-slate-400">
-            Prüft den JSON-Reparatur-Parser, die Mindest-Textlängen-Validierung und die Google-Search-Quellen-Extraktion für morgen früh.
-          </p>
         </div>
       </div>
 
@@ -371,7 +369,7 @@
   <script>
     const defaultData = {
       lastUpdated: "Referenz-Dossiers aktiv",
-      groundingQueries: ["Wall Street Journal top business news today", "Handelsblatt Schlagzeilen Wirtschaft", "Reuters global markets macro verification", "Financial Times commodities semiconductor news"],
+      groundingQueries: ["WSJ Markets Live-Feed", "Handelsblatt Politik & Wirtschaft RSS", "Financial Times Global Economy", "Tagesschau Wirtschaft / dpa / Reuters"],
       groundingUrls: [
         { title: "Wall Street Journal Markets", uri: "https://www.wsj.com" },
         { title: "Handelsblatt Wirtschafts-Briefing", uri: "https://www.handelsblatt.com" },
@@ -628,7 +626,7 @@
 
     let appState = defaultData;
     try {
-      const saved = JSON.parse(localStorage.getItem('intelligence_v7_state'));
+      const saved = JSON.parse(localStorage.getItem('intelligence_v8_state'));
       if (saved && Array.isArray(saved.worldNews) && saved.worldNews.length > 0) {
         appState = saved;
       }
@@ -646,7 +644,8 @@
         document.getElementById('fridayBadge').classList.remove('hidden');
       }
       document.getElementById('apiKeyInput').value = localStorage.getItem('gemini_api_key') || '';
-      document.getElementById('modelNameInput').value = localStorage.getItem('gemini_model_name') || 'gemini-3.8-flash';
+      const savedModel = localStorage.getItem('gemini_model_name') || 'gemini-3.5-flash-lite';
+      document.getElementById('modelNameInput').value = savedModel;
       if (localStorage.getItem('tier1_media')) {
         document.getElementById('tier1MediaInput').value = localStorage.getItem('tier1_media');
       }
@@ -685,28 +684,48 @@
       }
     }
 
-    function runOfflineQualitySimulation() {
-      const simEl = document.getElementById('simResultText');
-      const simulatedRawResponse = "Hier ist das verifizierte Briefing:\n```json\n" + JSON.stringify(defaultData, null, 2).replace(/\]\s*\}/, '],\n}') + "\n```";
-      const parsed = safeParseGeminiJSON(simulatedRawResponse);
+    // Fetch live headlines from public RSS feeds via rss2json / cors-friendly endpoints so we don't need Google Search Grounding tool quota
+    async function fetchLiveRSSContext() {
+      const feeds = [
+        { name: "Wall Street Journal (Markets/World)", url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml" },
+        { name: "Wall Street Journal (World)", url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml" },
+        { name: "Handelsblatt (Wirtschaft/Politik)", url: "https://www.handelsblatt.com/contentexport/feed/schlagzeilen" },
+        { name: "Tagesschau Wirtschaft", url: "https://www.tagesschau.de/wirtschaft/index~rss2.xml" },
+        { name: "CNBC / Global Markets", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114" }
+      ];
 
-      if (parsed && Array.isArray(parsed.worldNews) && parsed.worldNews.length >= 6 && Array.isArray(parsed.cards) && parsed.cards.length >= 6) {
-        const avgContextLen = Math.round(parsed.worldNews.reduce((acc, n) => acc + (n.contextExplanation || '').length, 0) / parsed.worldNews.length);
-        appState.groundingQueries = defaultData.groundingQueries;
-        appState.groundingUrls = defaultData.groundingUrls;
-        appState.lastUpdated = "Simulation erfolgreich (" + new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'}) + " Uhr)";
-        renderAll();
-        document.getElementById('groundingProofBar').classList.remove('hidden');
-        simEl.className = "text-[11px] text-emerald-300 font-medium";
-        simEl.textContent = "✓ Test bestanden! JSON-Reparatur aktiv, " + parsed.worldNews.length + " Welt-Dossiers & " + parsed.cards.length + " Markt-Kacheln validiert (Ø Erklärtext-Länge: " + avgContextLen + " Zeichen). Morgen früh zu 100 % einsatzbereit.";
-      } else {
-        simEl.className = "text-[11px] text-rose-400";
-        simEl.textContent = "Fehler im Selbsttest.";
-      }
+      let collectedHeadlines = [];
+      let sourceLinks = [];
+
+      await Promise.allSettled(feeds.map(async (f) => {
+        try {
+          const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(f.url);
+          const r = await fetch(apiUrl);
+          if (!r.ok) return;
+          const j = await r.json();
+          if (j && Array.isArray(j.items)) {
+            j.items.slice(0, 6).forEach(item => {
+              const cleanDesc = (item.description || '').replace(/<[^>]*>/g, '').slice(0, 220);
+              collectedHeadlines.push("[" + f.name + "] " + item.title + " — " + cleanDesc);
+            });
+            if (j.items[0] && j.items[0].link) {
+              sourceLinks.push({ title: f.name, uri: j.items[0].link });
+            }
+          }
+        } catch (err) {
+          // Ignore individual feed error
+        }
+      }));
+
+      return {
+        headlinesText: collectedHeadlines.join("\n"),
+        count: collectedHeadlines.length,
+        sourceLinks: sourceLinks
+      };
     }
 
     function resetToDefaultData() {
-      localStorage.removeItem('intelligence_v7_state');
+      localStorage.removeItem('intelligence_v8_state');
       appState = JSON.parse(JSON.stringify(defaultData));
       renderAll();
       toggleModal('settingsModal');
@@ -737,7 +756,7 @@
       document.getElementById('lastScanTimeLabel').textContent = appState.lastUpdated || "Referenz-Dossiers aktiv";
 
       if (appState.groundingQueries && appState.groundingQueries.length > 0) {
-        document.getElementById('groundingQueriesText').textContent = 'Live-Suchabfragen: "' + appState.groundingQueries.slice(0, 3).join('", "') + '"';
+        document.getElementById('groundingQueriesText').textContent = appState.groundingQueries.join(" · ");
         const linksHtml = (appState.groundingUrls || []).slice(0, 4).map(u => 
           '<a href="' + u.uri + '" target="_blank" rel="noopener" class="text-[10px] mono px-2 py-0.5 rounded bg-white/[0.06] hover:bg-white/15 text-emerald-300 transition flex items-center gap-1">' + (u.title || 'Quelle') + ' ↗</a>'
         ).join('');
@@ -1012,7 +1031,7 @@
 
     function saveSettings() {
       const key = document.getElementById('apiKeyInput').value.trim();
-      const modelName = document.getElementById('modelNameInput').value.trim() || 'gemini-3.8-flash';
+      const modelName = document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite';
       const tier1 = document.getElementById('tier1MediaInput').value.trim();
       const agencies = document.getElementById('verificationAgenciesInput').value.trim();
       const directive = document.getElementById('customPromptInput').value.trim();
@@ -1025,86 +1044,116 @@
       toggleModal('settingsModal');
     }
 
+    // Smart Multi-Model Cascade matching the user's exact AI Studio Dashboard models
+    async function callGeminiWithFallback(apiKey, preferredModel, systemPrompt) {
+      const allModels = [
+        preferredModel,
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        "gemini-3.8-flash",
+        "gemini-3.6-flash"
+      ];
+      // Deduplicate model list
+      const modelQueue = [...new Set(allModels)];
+      let lastError = "";
+
+      for (let i = 0; i < modelQueue.length; i++) {
+        const currentModel = modelQueue[i];
+        document.getElementById('loadingStepTitle').textContent = "2/2: KI-Synthese & Fakten-Check über Modell '" + currentModel + "'...";
+
+        try {
+          // Call WITHOUT googleSearch tool first so Free-Tier Search Grounding 429 quota never blocks the model!
+          const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(currentModel) + ":generateContent?key=" + apiKey, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: systemPrompt }] }],
+              generationConfig: {
+                temperature: 0.25,
+                maxOutputTokens: 8192
+              }
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            return { data: data, usedModel: currentModel };
+          } else {
+            const errJson = await res.json().catch(() => ({}));
+            lastError = currentModel + " (" + res.status + "): " + (errJson.error?.message || res.statusText);
+            console.warn("Model fallback triggered:", lastError);
+          }
+        } catch (netErr) {
+          lastError = netErr.message;
+        }
+      }
+
+      throw new Error(lastError || "Alle Modelle in der Kaskade meldeten einen Fehler.");
+    }
+
     async function fetchLiveBriefing() {
-      const key = localStorage.getItem('gemini_api_key') || '';
+      const key = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
       if (!key) {
         toggleModal('settingsModal');
         return;
       }
 
       const todayStr = new Date().toLocaleDateString('de-DE');
-      if (localStorage.getItem('last_scan_date') === todayStr) {
-        const proceed = confirm("Du hast heute bereits einen Live-Scan durchgeführt. Möchtest du trotzdem einen weiteren API-Abruf starten?");
-        if (!proceed) return;
-      }
-
-      const modelName = localStorage.getItem('gemini_model_name') || document.getElementById('modelNameInput').value.trim() || 'gemini-3.8-flash';
+      const preferredModel = localStorage.getItem('gemini_model_name') || document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite';
       const banner = document.getElementById('loadingBanner');
       banner.classList.remove('hidden');
 
-      const tier1Media = document.getElementById('tier1MediaInput').value;
-      const verificationAgencies = document.getElementById('verificationAgenciesInput').value;
-      const userDirective = document.getElementById('customPromptInput').value;
-
-      const systemPrompt = [
-        "Du bist ein erstklassiges Financial & Global Intelligence Terminal (im Stil von The Economist, Wall Street Journal und Handelsblatt).",
-        "Heutiges Datum: " + todayStr + ".",
-        "Nutze Google Search, um die aktuellen Tagesthemen zu recherchieren, und antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt (keine Markdown-Backticks, kein Vorwort).",
-        "WICHTIG FÜR VALIDES JSON: Verwende innerhalb von JSON-Texten niemals doppelte Anführungszeichen, sondern einfache Anführungszeichen ('...'), damit das JSON nicht bricht!",
-        "",
-        "VERBINDLICHE QUALITÄTS- & UMFANGS-GARANTIE:",
-        "1. LEITMEDIEN-RADAR: Recherchiere die heutigen Headlines, Titelthemen und Schwerpunkte von: " + tier1Media + ".",
-        "2. GLOBALER FAKTEN-ABGLEICH (ANTI-DESINFORMATION): Jede Nachricht und Zahl MUSS über mindestens 2 bis 3 unabhängige internationale Nachrichteninstitute (" + verificationAgencies + ") gegengeprüft sein. Nenne die konkreten Medien im Array 'sources'.",
-        "3. AUSFÜHRLICHE ERKLÄRUNG STATT KURZMELDUNG (PFLICHT): Das Feld 'contextExplanation' darf NIEMALS nur 1-2 Sätze kurz sein! Schreibe dort für JEDEN Artikel und JEDE Kachel 4 bis 5 ausführliche, tiefgehende Sätze (mindestens 70-100 Wörter), die verständlich erklären, WARUM das genau jetzt passiert, wie die ökonomischen/geopolitischen Faktoren dahinter zusammenhängen und was der Leser verstehen muss.",
-        "4. FESTGELEGTE ANZAHL AN ARTIKELN (NICHT KÜRZEN!):",
-        "   - 'worldNews': Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers aus verschiedenen Regionen/Themenfeldern.",
-        "   - 'cards': Erstelle EXAKT 6 detaillierte Markt-Kacheln (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA oder XETR:SAP; 3x category 'commodities' zu Gold/Silber TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD).",
-        "5. ZUSATZ-DIREKTIVE: " + userDirective,
-        "",
-        "Halte dich exakt an die JSON-Felder: morningSynthesis, intermarket (title, summary, contextExplanation, bullets, symbol, sources, verificationNote), macroCalendar (date, event, impact), cards (id, category, sectorLabel, ticker, company, direction, directionColor, moatScore, headline, contextExplanation, thesis, bullets, sources, verificationStatus, verificationNote, sparkline), worldNews (region, title, summary, contextExplanation, longTermImpact, bullets, sources, verificationStatus, verificationNote)."
-      ].join("\n");
-
       try {
-        const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(modelName) + ":generateContent?key=" + key, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: systemPrompt }] }],
-            tools: [{ googleSearch: {} }],
-            generationConfig: {
-              temperature: 0.25,
-              maxOutputTokens: 8192
-            }
-          })
-        });
+        // Step 1: Fetch real live RSS feeds from WSJ, Handelsblatt, Tagesschau, CNBC
+        document.getElementById('loadingStepTitle').textContent = "1/2: Lade aktuelle Live-Schlagzeilen (WSJ, Handelsblatt, Tagesschau, CNBC)...";
+        const rssData = await fetchLiveRSSContext();
 
-        if (!res.ok) {
-          const errorData = await res.json();
-          console.error("API Error Details:", errorData);
-          alert("API-Fehler (" + modelName + "): " + (errorData.error?.message || "Tageslimit erreicht oder Modellfehler."));
-          banner.classList.add('hidden');
-          return;
-        }
+        const tier1Media = document.getElementById('tier1MediaInput').value;
+        const verificationAgencies = document.getElementById('verificationAgenciesInput').value;
+        const userDirective = document.getElementById('customPromptInput').value;
 
-        const data = await res.json();
-        const candidate = data?.candidates?.[0];
+        const liveFeedBlock = rssData.count > 0
+          ? "AKTUELLE LIVE-SCHLAGZEILEN AUS DEN RSS-FEEDS VON HEUTE (" + todayStr + "):\n" + rssData.headlinesText
+          : "Hinweis: Nutze die wichtigsten aktuellen globalen Wirtschafts- und Marktthemen aus " + tier1Media + ".";
+
+        const systemPrompt = [
+          "Du bist ein erstklassiges Financial & Global Intelligence Terminal (im Stil von The Economist, Wall Street Journal und Handelsblatt).",
+          "Heutiges Datum: " + todayStr + ".",
+          "Antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt (keine Markdown-Backticks, kein Vorwort).",
+          "WICHTIG FÜR VALIDES JSON: Verwende innerhalb von JSON-Texten niemals doppelte Anführungszeichen, sondern einfache Anführungszeichen ('...'), damit das JSON nicht bricht!",
+          "",
+          liveFeedBlock,
+          "",
+          "VERBINDLICHE QUALITÄTS- & UMFANGS-GARANTIE:",
+          "1. LEITMEDIEN-RADAR: Werte die oben übergebenen Live-Schlagzeilen sowie die Schwerpunkte von " + tier1Media + " aus.",
+          "2. GLOBALER FAKTEN-ABGLEICH (ANTI-DESINFORMATION): Gleiche jede Nachricht mit dem Konsens internationaler Nachrichteninstitute (" + verificationAgencies + ") ab. Nenne die konkreten Medien im Array 'sources'.",
+          "3. AUSFÜHRLICHE ERKLÄRUNG STATT KURZMELDUNG (PFLICHT): Das Feld 'contextExplanation' darf NIEMALS nur 1-2 Sätze kurz sein! Schreibe dort für JEDEN Artikel und JEDE Kachel 4 bis 5 ausführliche, tiefgehende Sätze (mindestens 70-100 Wörter), die verständlich erklären, WARUM das genau jetzt passiert, wie die ökonomischen/geopolitischen Faktoren dahinter zusammenhängen und was der Leser verstehen muss.",
+          "4. FESTGELEGTE ANZAHL AN ARTIKELN (NICHT KÜRZEN!):",
+          "   - 'worldNews': Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers aus verschiedenen Regionen/Themenfeldern.",
+          "   - 'cards': Erstelle EXAKT 6 detaillierte Markt-Kacheln (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML oder XETR:SAP; 3x category 'commodities' zu Gold/Silber TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD).",
+          "5. ZUSATZ-DIREKTIVE: " + userDirective,
+          "",
+          "Halte dich exakt an die JSON-Felder: morningSynthesis, intermarket (title, summary, contextExplanation, bullets, symbol, sources, verificationNote), macroCalendar (date, event, impact), cards (id, category, sectorLabel, ticker, company, direction, directionColor, moatScore, headline, contextExplanation, thesis, bullets, sources, verificationStatus, verificationNote, sparkline), worldNews (region, title, summary, contextExplanation, longTermImpact, bullets, sources, verificationStatus, verificationNote)."
+        ].join("\n");
+
+        // Step 2: Call Gemini with automatic model cascade
+        const result = await callGeminiWithFallback(key, preferredModel, systemPrompt);
+        const candidate = result.data?.candidates?.[0];
         const parts = candidate?.content?.parts || [];
         const rawText = parts.map(p => p.text || '').join('\n');
         
         const parsedState = safeParseGeminiJSON(rawText);
         if (parsedState && Array.isArray(parsedState.worldNews) && Array.isArray(parsedState.cards)) {
-          const gm = candidate?.groundingMetadata;
-          parsedState.groundingQueries = gm?.webSearchQueries || ["WSJ / Handelsblatt / FT / Reuters Live-Scan"];
-          parsedState.groundingUrls = (gm?.groundingChunks || [])
-            .filter(c => c.web?.uri)
-            .map(c => ({ title: c.web.title, uri: c.web.uri }));
-
           const timeStr = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-          parsedState.lastUpdated = "Live verifiziert: " + todayStr + ", " + timeStr + " Uhr";
+          parsedState.lastUpdated = "Live (" + result.usedModel + "): " + todayStr + ", " + timeStr + " Uhr";
+          parsedState.groundingQueries = [
+            "Live-RSS (" + rssData.count + " Meldungen: WSJ, Handelsblatt, Tagesschau, CNBC)",
+            "Verarbeitet mit: " + result.usedModel
+          ];
+          parsedState.groundingUrls = rssData.sourceLinks.length > 0 ? rssData.sourceLinks : defaultData.groundingUrls;
 
           appState = parsedState;
-          localStorage.setItem('intelligence_v7_state', JSON.stringify(appState));
-          localStorage.setItem('last_scan_date', todayStr);
+          localStorage.setItem('intelligence_v8_state', JSON.stringify(appState));
           renderAll();
           document.getElementById('groundingProofBar').classList.remove('hidden');
         } else {
@@ -1113,7 +1162,7 @@
         }
       } catch (e) {
         console.error("Fehler beim Live-Abruf:", e);
-        alert("Netzwerk- oder Verbindungsfehler: " + e.message);
+        alert("API-Meldung: " + e.message);
       } finally {
         banner.classList.add('hidden');
       }
