@@ -1,0 +1,243 @@
+name: Meridian Daily Briefing
+
+on:
+  schedule:
+    # Läuft jeden Tag automatisch um 05:45 UTC (06:45 Uhr deutscher Winterzeit / 07:45 Uhr Sommerzeit)
+    - cron: '45 5 * * *'
+  workflow_dispatch: # Erlaubt den manuellen Test-Start per Klick
+
+permissions:
+  contents: write
+
+jobs:
+  update-briefing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Briefing via RSS & Gemini 3-Step-Pipeline generieren
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cat << 'EOF' > generate.mjs
+          import fs from 'node:fs/promises';
+
+          const API_KEY = process.env.GEMINI_API_KEY;
+          if (!API_KEY) {
+            console.error('FEHLER: GEMINI_API_KEY ist nicht in den GitHub Secrets hinterlegt!');
+            process.exit(1);
+          }
+
+          const RSS_SOURCES = [
+            { name: 'WSJ World', url: 'https://feeds.a.dj.com/rss/RSSWorldNews.xml' },
+            { name: 'WSJ Markets', url: 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml' },
+            { name: 'Handelsblatt', url: 'https://www.handelsblatt.com/contentexport/feed/top-themen' },
+            { name: 'Financial Times', url: 'https://www.ft.com/rss/home' },
+            { name: 'Tagesschau Wirtschaft', url: 'https://www.tagesschau.de/wirtschaft/index~rss2.xml' },
+            { name: 'NZZ International', url: 'https://www.nzz.ch/international.rss' },
+            { name: 'CNBC World', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100727362' }
+          ];
+
+          async function fetchRssHeadlines() {
+            const headlines = [];
+            for (const src of RSS_SOURCES) {
+              try {
+                const res = await fetch(src.url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MeridianBot/1.0)' } });
+                if (!res.ok) continue;
+                const xml = await res.text();
+                const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].slice(0, 8);
+                for (const match of items) {
+                  const block = match[1];
+                  const title = (block.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) || block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '';
+                  const desc = (block.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/i) || block.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '';
+                  const cleanTitle = title.replace(/<[^>]+>/g, '').trim();
+                  const cleanDesc = desc.replace(/<[^>]+>/g, '').trim().slice(0, 220);
+                  if (cleanTitle) headlines.push(`[${src.name}] ${cleanTitle} — ${cleanDesc}`);
+                }
+              } catch (e) {
+                console.warn(`RSS Warnung (${src.name}):`, e.message);
+              }
+            }
+            return headlines.join('\n');
+          }
+
+          const MODELS = [
+            'gemini-3.5-flash-lite',
+            'gemini-3.1-flash-lite',
+            'gemini-3.8-flash',
+            'gemini-2.5-flash',
+            'gemini-2.0-flash'
+          ];
+
+          async function callGeminiJSON(promptText) {
+            let lastErr = null;
+            for (const model of MODELS) {
+              try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY}`;
+                const res = await fetch(url, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptText }] }],
+                    generationConfig: {
+                      temperature: 0.25,
+                      responseMimeType: 'application/json'
+                    }
+                  })
+                });
+                if (!res.ok) {
+                  const errTxt = await res.text();
+                  throw new Error(`HTTP ${res.status} (${model}): ${errTxt.slice(0, 180)}`);
+                }
+                const data = await res.json();
+                const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+                return JSON.parse(cleaned);
+              } catch (err) {
+                console.warn(`Modell ${model} fehlgeschlagen:`, err.message);
+                lastErr = err;
+              }
+            }
+            throw lastErr;
+          }
+
+          async function main() {
+            console.log('1/4 Lade aktuelle RSS-Feeds führender Leitmedien...');
+            const rssContext = await fetchRssHeadlines();
+            const todayStr = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+            console.log('2/4 Generiere 6 Weltpolitik & Makro Dossiers (Schritt 1)...');
+            const worldRes = await callGeminiJSON(`Du bist Chefredakteur von "Meridian" (Global Intelligence Briefing). Heute ist der ${todayStr}.
+          Nutze diese aktuellen Schlagzeilen führender Leitmedien (WSJ, Handelsblatt, FT, NZZ, Tagesschau, CNBC):
+          ${rssContext}
+
+          Erstelle exakt 6 tiefgehende Dossiers für den Bereich "Weltpolitik & Makro" auf Deutsch.
+          Gib NUR valides JSON im folgenden Format zurück:
+          {
+            "worldNews": [
+              {
+                "id": "w1",
+                "category": "GEOPOLITIK & HANDEL",
+                "region": "USA / EU / Asien",
+                "urgency": "Strukturell",
+                "readTime": "3 Min.",
+                "verificationBadge": "3 Agenturen (Reuters, dpa, AP)",
+                "leadSources": ["Wall Street Journal", "Handelsblatt", "Financial Times"],
+                "headline": "Prägnante deutsche Schlagzeile",
+                "summary": "2-3 Sätze Executive Summary mit den wichtigsten Fakten und Zahlen.",
+                "contextExplanation": "Ausführliche Hintergrund-Einordnung (3-4 Sätze): Warum passiert das gerade? Welche historischen oder strukturellen Mechanismen stecken dahinter?",
+                "hasDivergingNarratives": true,
+                "perspectives": {
+                  "us": "Sichtweise US-Quellen (WSJ/Bloomberg)",
+                  "eu": "Sichtweise Europa-Quellen (Handelsblatt/FT/NZZ)",
+                  "asia": "Sichtweise Asien-Quellen (Nikkei/SCMP)"
+                },
+                "transmission": [
+                  { "stage": "Ursache", "node": "Auslöser", "detail": "Konkretes Ereignis" },
+                  { "stage": "Übertragung", "node": "Realwirtschaft", "detail": "Wirkungskanal" },
+                  { "stage": "Marktfolge", "node": "Kapitalmarkt", "detail": "Langfristige Folge" }
+                ],
+                "details": {
+                  "wasPassiert": ["Fakt 1", "Fakt 2", "Fakt 3"],
+                  "warumWichtig": "Strategische Bedeutung für die nächsten 1-5 Jahre.",
+                  "faktencheck": "Bestätigung durch unabhängige Nachrichtenagenturen."
+                },
+                "sources": ["WSJ", "Handelsblatt", "Reuters"]
+              }
+            ]
+          }`);
+
+            console.log('3/4 Generiere 6 Kapitalmarkt-Karten (Schritt 2)...');
+            const marketRes = await callGeminiJSON(`Du bist Chef-Anlagestratege von "Meridian". Heute ist der ${todayStr}.
+          Kontext der heutigen Nachrichtenlage:
+          ${rssContext}
+
+          Erstelle exakt 6 tiefgehende Kapitalmarkt-Analysen (5Y+ Struktur-Fokus) auf Deutsch.
+          Gib NUR valides JSON im folgenden Format zurück:
+          {
+            "marketNews": [
+              {
+                "id": "m1",
+                "assetClass": "AKTIEN GLOBAL / ZINSEN / ROHSTOFFE / WÄHRUNGEN",
+                "ticker": "SPX / NDX / BUND / GOLD",
+                "horizon": "5J+ Strukturtrend",
+                "impact": "Bullisch / Konstruktiv / Neutral / Vorsicht",
+                "impactTone": "positive",
+                "verificationBadge": "Marktdaten & Leitmedien",
+                "leadSources": ["Financial Times", "Wall Street Journal"],
+                "headline": "Prägnante Kapitalmarkt-Schlagzeile",
+                "summary": "2-3 Sätze Kernaussage für langfristige Investoren.",
+                "contextExplanation": "Tiefgehende Erklärung der Marktmechanik (Bewertung, Zinsstruktur, Margen oder Liquidität).",
+                "bullCase": "Stärkstes Argument der Optimisten (1-2 Sätze).",
+                "bearCase": "Stärkstes Gegenargument / Risiko der Skeptiker (1-2 Sätze).",
+                "transmission": [
+                  { "stage": "Treiber", "node": "Makro-Faktor", "detail": "Zinsen / Politik / Technologie" },
+                  { "stage": "Bilanz", "node": "Unternehmen", "detail": "Cashflow & Margen-Effekt" },
+                  { "stage": "Allokation", "node": "Portfolio", "detail": "Konsequenz für Anleger" }
+                ],
+                "details": {
+                  "wasPassiert": ["Marktfakt 1", "Marktfakt 2"],
+                  "warumWichtig": "Langfristige Einordnung für die Vermögensallokation.",
+                  "faktencheck": "Fundamentale Kennzahlen und Quellenabgleich."
+                },
+                "sources": ["Financial Times", "WSJ", "Bloomberg"]
+              }
+            ]
+          }`);
+
+            console.log('4/4 Generiere Synthese & Intermarket-Matrix (Schritt 3)...');
+            const metaRes = await callGeminiJSON(`Erstelle auf Basis dieser Dossiers die Tages-Synthese für "Meridian" (${todayStr}) auf Deutsch:
+          Welt-Themen: ${worldRes.worldNews.map(w => w.headline).join(' | ')}
+          Markt-Themen: ${marketRes.marketNews.map(m => m.headline).join(' | ')}
+
+          Gib NUR valides JSON zurück:
+          {
+            "macroRegime": "Prägnanter Regime-Titel (max. 4 Wörter)",
+            "synthesisHeadline": "Übergreifende Leit-Schlagzeile des Tages",
+            "synthesisBody": "2-3 Sätze, die Weltpolitik und Kapitalmärkte heute verbinden.",
+            "intermarketMatrix": [
+              {
+                "trigger": "Weltpolitischer Auslöser",
+                "channel": "Ökonomischer Übertragungskanal",
+                "assetImpact": "Direkte Auswirkung auf Anlageklassen",
+                "confidence": "Hoch"
+              }
+            ]
+          }`);
+
+            const finalBriefing = {
+              generatedAt: new Date().toISOString(),
+              editionDate: todayStr,
+              macroRegime: metaRes.macroRegime,
+              synthesisHeadline: metaRes.synthesisHeadline,
+              synthesisBody: metaRes.synthesisBody,
+              worldNews: worldRes.worldNews,
+              marketNews: marketRes.marketNews,
+              intermarketMatrix: metaRes.intermarketMatrix
+            };
+
+            await fs.writeFile('briefing.json', JSON.stringify(finalBriefing, null, 2), 'utf-8');
+            console.log('briefing.json erfolgreich erstellt!');
+          }
+
+          main().catch(err => {
+            console.error('Fehler bei der Briefing-Generierung:', err);
+            process.exit(1);
+          });
+          EOF
+          node generate.mjs
+          rm generate.mjs
+
+      - name: Neue briefing.json ins Repository speichern
+        run: |
+          git config user.name "Meridian Auto-Publisher"
+          git config user.email "actions@github.com"
+          git add briefing.json
+          git diff --staged --quiet || git commit -m "Auto-Update Meridian Briefing ($(date -u +'%d.%m.%Y %H:%M UTC'))"
+          git push
