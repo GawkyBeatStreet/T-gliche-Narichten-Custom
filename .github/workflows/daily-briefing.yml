@@ -2,9 +2,10 @@ name: Meridian Daily Briefing
 
 on:
   schedule:
-    # Läuft jeden Tag automatisch um 05:45 UTC (06:45 Uhr deutscher Winterzeit / 07:45 Uhr Sommerzeit)
+    # Startet täglich um 04:45 UTC und 05:45 UTC (deckt 06:45 Uhr deutscher Sommer- & Winterzeit ab)
+    - cron: '45 4 * * *'
     - cron: '45 5 * * *'
-  workflow_dispatch: # Erlaubt den manuellen Test-Start per Klick
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -19,7 +20,7 @@ jobs:
       - name: Node.js einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Briefing via RSS & Gemini 3-Step-Pipeline generieren
         env:
@@ -37,10 +38,11 @@ jobs:
           const RSS_SOURCES = [
             { name: 'WSJ World', url: 'https://feeds.a.dj.com/rss/RSSWorldNews.xml' },
             { name: 'WSJ Markets', url: 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml' },
-            { name: 'Handelsblatt', url: 'https://www.handelsblatt.com/contentexport/feed/top-themen' },
+            { name: 'Handelsblatt', url: 'https://www.handelsblatt.com/contentexport/feed/schlagzeilen' },
             { name: 'Financial Times', url: 'https://www.ft.com/rss/home' },
             { name: 'Tagesschau Wirtschaft', url: 'https://www.tagesschau.de/wirtschaft/index~rss2.xml' },
             { name: 'NZZ International', url: 'https://www.nzz.ch/international.rss' },
+            { name: 'Nikkei Asia', url: 'https://asia.nikkei.com/rss/feed/nar' },
             { name: 'CNBC World', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100727362' }
           ];
 
@@ -48,14 +50,17 @@ jobs:
             const headlines = [];
             for (const src of RSS_SOURCES) {
               try {
-                const res = await fetch(src.url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MeridianBot/1.0)' } });
+                const res = await fetch(src.url, {
+                  headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MeridianBot/1.0)' },
+                  signal: AbortSignal.timeout(12000)
+                });
                 if (!res.ok) continue;
                 const xml = await res.text();
-                const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].slice(0, 8);
+                const items = [...xml.matchAll(/<item[\s>]([\s\S]*?)<\/item>/gi)].slice(0, 8);
                 for (const match of items) {
                   const block = match[1];
-                  const title = (block.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) || block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '';
-                  const desc = (block.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/i) || block.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '';
+                  const title = (block.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) || block.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
+                  const desc = (block.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/i) || block.match(/<description[^>]*>([\s\S]*?)<\/description>/i) || [])[1] || '';
                   const cleanTitle = title.replace(/<[^>]+>/g, '').trim();
                   const cleanDesc = desc.replace(/<[^>]+>/g, '').trim().slice(0, 220);
                   if (cleanTitle) headlines.push(`[${src.name}] ${cleanTitle} — ${cleanDesc}`);
@@ -71,9 +76,21 @@ jobs:
             'gemini-3.5-flash-lite',
             'gemini-3.1-flash-lite',
             'gemini-3.8-flash',
-            'gemini-2.5-flash',
-            'gemini-2.0-flash'
+            'gemini-3.6-flash'
           ];
+
+          function safeParseJSON(raw) {
+            const cleaned = String(raw || '').replace(/```json/gi, '').replace(/```/g, '').trim();
+            const first = cleaned.indexOf('{');
+            const last = cleaned.lastIndexOf('}');
+            if (first === -1 || last <= first) throw new Error('Kein JSON-Objekt gefunden');
+            const candidate = cleaned.slice(first, last + 1);
+            try {
+              return JSON.parse(candidate);
+            } catch {
+              return JSON.parse(candidate.replace(/,\s*([\]}])/g, '$1'));
+            }
+          }
 
           async function callGeminiJSON(promptText) {
             let lastErr = null;
@@ -87,6 +104,7 @@ jobs:
                     contents: [{ parts: [{ text: promptText }] }],
                     generationConfig: {
                       temperature: 0.25,
+                      maxOutputTokens: 6000,
                       responseMimeType: 'application/json'
                     }
                   })
@@ -96,9 +114,8 @@ jobs:
                   throw new Error(`HTTP ${res.status} (${model}): ${errTxt.slice(0, 180)}`);
                 }
                 const data = await res.json();
-                const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-                const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
-                return JSON.parse(cleaned);
+                const raw = (data?.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || '').join('');
+                return safeParseJSON(raw);
               } catch (err) {
                 console.warn(`Modell ${model} fehlgeschlagen:`, err.message);
                 lastErr = err;
@@ -110,120 +127,139 @@ jobs:
           async function main() {
             console.log('1/4 Lade aktuelle RSS-Feeds führender Leitmedien...');
             const rssContext = await fetchRssHeadlines();
-            const todayStr = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const now = new Date();
+            const todayStr = now.toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin', day: '2-digit', month: '2-digit', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
 
-            console.log('2/4 Generiere 6 Weltpolitik & Makro Dossiers (Schritt 1)...');
-            const worldRes = await callGeminiJSON(`Du bist Chefredakteur von "Meridian" (Global Intelligence Briefing). Heute ist der ${todayStr}.
-          Nutze diese aktuellen Schlagzeilen führender Leitmedien (WSJ, Handelsblatt, FT, NZZ, Tagesschau, CNBC):
-          ${rssContext}
+            const baseHeader = `Du bist Chefredakteur von 'Meridian' (Global Intelligence Terminal im Stil von The Economist, Wall Street Journal, Handelsblatt). Heute ist der ${todayStr}.
+          WICHTIG: Verwende innerhalb von JSON-Strings keine doppelten Anführungszeichen, sondern einfache ('...').
+          Nutze diese aktuellen Schlagzeilen führender Leitmedien und gleiche Fakten über internationale Agenturen (Reuters, AP, dpa, AFP, Bloomberg) ab:
+          ${rssContext}\n\n`;
 
-          Erstelle exakt 6 tiefgehende Dossiers für den Bereich "Weltpolitik & Makro" auf Deutsch.
-          Gib NUR valides JSON im folgenden Format zurück:
+            console.log('2/4 Generiere 6 Welt- & Wirtschafts-Dossiers...');
+            const worldRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers auf Deutsch als JSON.
+          Pflichtfelder je Eintrag in "worldNews":
           {
             "worldNews": [
               {
-                "id": "w1",
-                "category": "GEOPOLITIK & HANDEL",
-                "region": "USA / EU / Asien",
-                "urgency": "Strukturell",
-                "readTime": "3 Min.",
-                "verificationBadge": "3 Agenturen (Reuters, dpa, AP)",
-                "leadSources": ["Wall Street Journal", "Handelsblatt", "Financial Times"],
-                "headline": "Prägnante deutsche Schlagzeile",
-                "summary": "2-3 Sätze Executive Summary mit den wichtigsten Fakten und Zahlen.",
-                "contextExplanation": "Ausführliche Hintergrund-Einordnung (3-4 Sätze): Warum passiert das gerade? Welche historischen oder strukturellen Mechanismen stecken dahinter?",
-                "hasDivergingNarratives": true,
-                "perspectives": {
-                  "us": "Sichtweise US-Quellen (WSJ/Bloomberg)",
-                  "eu": "Sichtweise Europa-Quellen (Handelsblatt/FT/NZZ)",
-                  "asia": "Sichtweise Asien-Quellen (Nikkei/SCMP)"
-                },
-                "transmission": [
-                  { "stage": "Ursache", "node": "Auslöser", "detail": "Konkretes Ereignis" },
-                  { "stage": "Übertragung", "node": "Realwirtschaft", "detail": "Wirkungskanal" },
-                  { "stage": "Marktfolge", "node": "Kapitalmarkt", "detail": "Langfristige Folge" }
-                ],
-                "details": {
-                  "wasPassiert": ["Fakt 1", "Fakt 2", "Fakt 3"],
-                  "warumWichtig": "Strategische Bedeutung für die nächsten 1-5 Jahre.",
-                  "faktencheck": "Bestätigung durch unabhängige Nachrichtenagenturen."
-                },
-                "sources": ["WSJ", "Handelsblatt", "Reuters"]
+                "region": "REGION · THEMENFELD (z. B. USA · Geldpolitik oder Nahost · Geopolitik)",
+                "title": "Prägnante, aussagekräftige deutsche Überschrift",
+                "summary": "1-2 Sätze Zusammenfassung, was konkret passiert ist.",
+                "contextExplanation": "Ausführliche Hintergrund-Einordnung (4-5 vollständige Sätze): Warum passiert das genau jetzt? Welche wirtschaftlichen, geopolitischen oder strukturellen Mechanismen stecken dahinter?",
+                "longTermImpact": "2-3 Sätze zu den langfristigen Folgen für Wirtschaft und Märkte in den nächsten 1-5 Jahren.",
+                "hasDivergingNarratives": false,
+                "narrativeComparison": "Nur ausfüllen (2-3 Sätze), falls US-, europäische und asiatische Medien das Thema unterschiedlich bewerten, sonst leerer String.",
+                "bullets": ["Konkreter Fakt 1", "Konkreter Fakt 2", "Konkreter Fakt 3"],
+                "sources": ["Wall Street Journal", "Handelsblatt", "Reuters"],
+                "verificationStatus": "Verifiziert · 3 Quellen"
               }
             ]
           }`);
 
-            console.log('3/4 Generiere 6 Kapitalmarkt-Karten (Schritt 2)...');
-            const marketRes = await callGeminiJSON(`Du bist Chef-Anlagestratege von "Meridian". Heute ist der ${todayStr}.
-          Kontext der heutigen Nachrichtenlage:
-          ${rssContext}
-
-          Erstelle exakt 6 tiefgehende Kapitalmarkt-Analysen (5Y+ Struktur-Fokus) auf Deutsch.
-          Gib NUR valides JSON im folgenden Format zurück:
+            console.log('3/4 Generiere 6 Kapitalmarkt-Kacheln (Aktien, Rohstoffe, Krypto)...');
+            const cardsRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 tiefgehende Kapitalmarkt-Kacheln (Anlagehorizont 5+ Jahre, auch am Wochenende mit Fokus auf die aktuelle Struktur- & Nachrichtenlage) auf Deutsch als JSON:
+          - 2x category "equities" (global führende Unternehmen mit echtem TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML, XETR:SAP, NYSE:ETN)
+          - 3x category "commodities" (Gold mit Ticker TVC:GOLD, Kupfer mit Ticker COMEX:HG1!, Uran mit Ticker NYSE:CCJ)
+          - 1x category "crypto" (Bitcoin mit Ticker BITSTAMP:BTCUSD)
+          Gib NUR valides JSON im exakt folgenden Format zurück:
           {
-            "marketNews": [
+            "cards": [
               {
-                "id": "m1",
-                "assetClass": "AKTIEN GLOBAL / ZINSEN / ROHSTOFFE / WÄHRUNGEN",
-                "ticker": "SPX / NDX / BUND / GOLD",
-                "horizon": "5J+ Strukturtrend",
-                "impact": "Bullisch / Konstruktiv / Neutral / Vorsicht",
-                "impactTone": "positive",
-                "verificationBadge": "Marktdaten & Leitmedien",
-                "leadSources": ["Financial Times", "Wall Street Journal"],
-                "headline": "Prägnante Kapitalmarkt-Schlagzeile",
-                "summary": "2-3 Sätze Kernaussage für langfristige Investoren.",
-                "contextExplanation": "Tiefgehende Erklärung der Marktmechanik (Bewertung, Zinsstruktur, Margen oder Liquidität).",
-                "bullCase": "Stärkstes Argument der Optimisten (1-2 Sätze).",
-                "bearCase": "Stärkstes Gegenargument / Risiko der Skeptiker (1-2 Sätze).",
-                "transmission": [
-                  { "stage": "Treiber", "node": "Makro-Faktor", "detail": "Zinsen / Politik / Technologie" },
-                  { "stage": "Bilanz", "node": "Unternehmen", "detail": "Cashflow & Margen-Effekt" },
-                  { "stage": "Allokation", "node": "Portfolio", "detail": "Konsequenz für Anleger" }
-                ],
-                "details": {
-                  "wasPassiert": ["Marktfakt 1", "Marktfakt 2"],
-                  "warumWichtig": "Langfristige Einordnung für die Vermögensallokation.",
-                  "faktencheck": "Fundamentale Kennzahlen und Quellenabgleich."
-                },
-                "sources": ["Financial Times", "WSJ", "Bloomberg"]
+                "id": "card-1",
+                "category": "equities",
+                "sectorLabel": "Halbleiter / Infrastruktur / Rohstoffe",
+                "ticker": "NASDAQ:ASML",
+                "company": "Name des Unternehmens oder Rohstoffs",
+                "direction": "Burggraben wächst / Strukturell Bullisch / Fokus",
+                "isPositive": true,
+                "moatScore": 92,
+                "headline": "Prägnante deutsche Schlagzeile zur aktuellen Lage",
+                "contextExplanation": "4-5 Sätze tiefgehende Erklärung der Marktmechanik, Bewertung und warum dieses Asset über 5+ Jahre relevant ist.",
+                "thesis": "Stärkstes 5-Jahres-Argument (Bull-Case, 2-3 Sätze).",
+                "bearCase": "Wichtigstes Gegenrisiko (Bear-Case, 2-3 Sätze).",
+                "hasDivergingNarratives": false,
+                "narrativeComparison": "",
+                "bullets": ["Marktfakt 1", "Marktfakt 2", "Marktfakt 3"],
+                "sources": ["Wall Street Journal", "Financial Times", "Reuters"],
+                "verificationStatus": "Verifiziert · 3 Quellen",
+                "sparkline": [45, 50, 54, 58, 63, 70, 78, 86]
               }
             ]
           }`);
 
-            console.log('4/4 Generiere Synthese & Intermarket-Matrix (Schritt 3)...');
-            const metaRes = await callGeminiJSON(`Erstelle auf Basis dieser Dossiers die Tages-Synthese für "Meridian" (${todayStr}) auf Deutsch:
-          Welt-Themen: ${worldRes.worldNews.map(w => w.headline).join(' | ')}
-          Markt-Themen: ${marketRes.marketNews.map(m => m.headline).join(' | ')}
-
-          Gib NUR valides JSON zurück:
+            console.log('4/4 Generiere Tages-Synthese, Intermarket & Makro-Zyklen...');
+            const worldTitles = (worldRes.worldNews || []).map(w => w.title || w.headline).join(' | ');
+            const overviewRes = await callGeminiJSON(baseHeader + `Hauptthemen heute: ${worldTitles}
+          AUFGABE: Erstelle die übergreifende Tages-Synthese (morningSynthesis), das Anleihen-/Intermarket-Dossier (intermarket) und 4 Makro-Zyklen (macroCalendar) auf Deutsch als JSON:
           {
-            "macroRegime": "Prägnanter Regime-Titel (max. 4 Wörter)",
-            "synthesisHeadline": "Übergreifende Leit-Schlagzeile des Tages",
-            "synthesisBody": "2-3 Sätze, die Weltpolitik und Kapitalmärkte heute verbinden.",
-            "intermarketMatrix": [
-              {
-                "trigger": "Weltpolitischer Auslöser",
-                "channel": "Ökonomischer Übertragungskanal",
-                "assetImpact": "Direkte Auswirkung auf Anlageklassen",
-                "confidence": "Hoch"
-              }
+            "morningSynthesis": "2-3 prägnante Sätze, die das wichtigste rote Band zwischen Weltpolitik und Kapitalmärkten heute auf den Punkt bringen.",
+            "intermarket": {
+              "title": "Prägnante Überschrift zu Staatsanleihen, Zinsen & Sachwerten",
+              "summary": "2 Sätze Kernaussage zur aktuellen Zins- und Liquiditätslage.",
+              "contextExplanation": "4-5 Sätze verständliche Hintergrund-Erklärung zum Zusammenspiel von Anleiherenditen, Notenbanken, Aktien und Rohstoffen.",
+              "bearCase": "Wichtigstes Gegenszenario für die Zins- und Marktstruktur.",
+              "hasDivergingNarratives": false,
+              "narrativeComparison": "",
+              "bullets": ["Fakt 1 zu Renditen/Notenbanken", "Fakt 2 zu Kapitalflüssen", "Fakt 3 zu Bewertungen"],
+              "symbol": "TVC:US10Y",
+              "sources": ["Wall Street Journal", "Financial Times", "Reuters"],
+              "verificationStatus": "Verifiziert · 3 Quellen"
+            },
+            "macroCalendar": [
+              { "date": "US-Geldpolitik", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" },
+              { "date": "Europa & EZB", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" },
+              { "date": "Asien & Handel", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" },
+              { "date": "Rohstoffe & Energie", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" }
             ]
           }`);
+
+            // Sicherheits-Normalisierung: Garantiert, dass niemals 'undefined' im Frontend landet
+            const cleanWorld = (worldRes.worldNews || []).map((w) => ({
+              region: w.region || 'WELTPOLITIK & MAKRO',
+              title: w.title || w.headline || 'Aktuelle Analyse',
+              summary: w.summary || '',
+              contextExplanation: w.contextExplanation || w.summary || '',
+              longTermImpact: w.longTermImpact || w.details?.warumWichtig || w.summary || '',
+              hasDivergingNarratives: Boolean(w.hasDivergingNarratives && w.narrativeComparison),
+              narrativeComparison: w.narrativeComparison || '',
+              bullets: Array.isArray(w.bullets) ? w.bullets : (w.details?.wasPassiert || []),
+              sources: Array.isArray(w.sources) ? w.sources : (w.leadSources || ['WSJ', 'Handelsblatt', 'Reuters']),
+              verificationStatus: w.verificationStatus || w.verificationBadge || 'Mehrfach verifiziert'
+            }));
+
+            const cleanCards = (cardsRes.cards || []).map((c, idx) => ({
+              id: c.id || `card-${idx + 1}`,
+              category: ['equities', 'commodities', 'crypto'].includes(c.category) ? c.category : (idx < 2 ? 'equities' : idx < 5 ? 'commodities' : 'crypto'),
+              sectorLabel: c.sectorLabel || c.assetClass || 'Kapitalmarkt',
+              ticker: c.ticker || 'NASDAQ:ASML',
+              company: c.company || c.ticker || 'Marktanalyse',
+              direction: c.direction || c.impact || 'Strukturell',
+              isPositive: c.isPositive !== false,
+              moatScore: Number(c.moatScore) || 88,
+              headline: c.headline || c.title || '',
+              contextExplanation: c.contextExplanation || c.summary || '',
+              thesis: c.thesis || c.bullCase || c.summary || '',
+              bearCase: c.bearCase || '',
+              hasDivergingNarratives: Boolean(c.hasDivergingNarratives && c.narrativeComparison),
+              narrativeComparison: c.narrativeComparison || '',
+              bullets: Array.isArray(c.bullets) ? c.bullets : (c.details?.wasPassiert || []),
+              sources: Array.isArray(c.sources) ? c.sources : (c.leadSources || ['WSJ', 'FT', 'Reuters']),
+              verificationStatus: c.verificationStatus || c.verificationBadge || 'Verifiziert',
+              sparkline: Array.isArray(c.sparkline) && c.sparkline.length >= 2 ? c.sparkline : [45, 50, 54, 58, 63, 70, 78, 86]
+            }));
 
             const finalBriefing = {
-              generatedAt: new Date().toISOString(),
-              editionDate: todayStr,
-              macroRegime: metaRes.macroRegime,
-              synthesisHeadline: metaRes.synthesisHeadline,
-              synthesisBody: metaRes.synthesisBody,
-              worldNews: worldRes.worldNews,
-              marketNews: marketRes.marketNews,
-              intermarketMatrix: metaRes.intermarketMatrix
+              generatedAt: now.toISOString(),
+              lastUpdated: `${todayStr}, ${timeStr} Uhr`,
+              morningSynthesis: overviewRes.morningSynthesis || overviewRes.synthesisBody || '',
+              intermarket: overviewRes.intermarket || null,
+              macroCalendar: Array.isArray(overviewRes.macroCalendar) ? overviewRes.macroCalendar : [],
+              worldNews: cleanWorld,
+              cards: cleanCards
             };
 
             await fs.writeFile('briefing.json', JSON.stringify(finalBriefing, null, 2), 'utf-8');
-            console.log('briefing.json erfolgreich erstellt!');
+            console.log('briefing.json erfolgreich mit allen Feldern erstellt!');
           }
 
           main().catch(err => {
