@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>08:00 Intelligence</title>
+  <title>Meridian · Global Intelligence</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -64,7 +64,7 @@
           <i data-lucide="compass" class="w-4 h-4"></i>
         </div>
         <div>
-          <h1 class="font-semibold text-[15px] tracking-tight text-white">Intelligence</h1>
+          <h1 class="font-semibold text-[15px] tracking-tight text-white">Meridian</h1>
           <p id="dateDisplay" class="text-[11px] text-[#86868b]"></p>
         </div>
       </div>
@@ -81,7 +81,7 @@
 
       <!-- Actions -->
       <div class="flex items-center gap-2">
-        <button onclick="fetchLiveBriefing()" id="refreshBtn" class="px-4 py-1.5 rounded-full bg-[#0a84ff] hover:bg-[#0071e3] text-white font-medium text-xs flex items-center gap-1.5 transition">
+        <button onclick="handleRefreshClick()" id="refreshBtn" class="px-4 py-1.5 rounded-full bg-[#0a84ff] hover:bg-[#0071e3] text-white font-medium text-xs flex items-center gap-1.5 transition">
           <i data-lucide="refresh-cw" id="refreshIcon" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Aktualisieren</span>
         </button>
@@ -95,10 +95,13 @@
   <!-- Main Content -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-5 lg:px-10 py-8 space-y-8">
 
-    <!-- Subtle Progress Pill (Only visible during scan) -->
-    <div id="loadingBanner" class="hidden py-3 px-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.08] flex items-center gap-3">
-      <div class="w-3.5 h-3.5 border-2 border-[#0a84ff] border-t-transparent rounded-full animate-spin shrink-0"></div>
-      <span id="loadingStepTitle" class="text-xs text-[#f5f5f7]">Aktualisiere Dossiers...</span>
+    <!-- Multi-Step Progress Pill (Only visible during scan) -->
+    <div id="loadingBanner" class="hidden py-3 px-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.08] flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-3.5 h-3.5 border-2 border-[#0a84ff] border-t-transparent rounded-full animate-spin shrink-0"></div>
+        <span id="loadingStepTitle" class="text-xs text-[#f5f5f7]">Aktualisiere Dossiers...</span>
+      </div>
+      <span id="loadingStepBadge" class="text-[11px] text-[#86868b]"></span>
     </div>
 
     <!-- Executive Summary Hero -->
@@ -114,9 +117,7 @@
     <!-- VIEW 1: BRIEFING (WORLD & ECONOMY)         -->
     <!-- ========================================== -->
     <section id="view-world" class="space-y-6">
-      <div id="worldGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <!-- Populated by JS -->
-      </div>
+      <div id="worldGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
     </section>
 
     <!-- ========================================== -->
@@ -136,7 +137,6 @@
 
       <!-- Top Row: Intermarket & Macro -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <!-- Intermarket Card -->
         <div class="apple-card p-6 lg:col-span-7 flex flex-col justify-between cursor-pointer" onclick="openIntermarketDetail()">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -162,7 +162,6 @@
           </div>
         </div>
 
-        <!-- Macro Drivers -->
         <div class="apple-card p-6 lg:col-span-5 flex flex-col justify-between">
           <div>
             <span class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b] block mb-4">Makro-Zyklen</span>
@@ -185,7 +184,6 @@
     
     <div class="relative z-10 ml-auto h-full w-full max-w-2xl bg-[#121214] border-l border-white/[0.08] shadow-2xl flex flex-col overflow-hidden">
       
-      <!-- Drawer Header -->
       <div class="apple-glass border-b border-white/[0.07] px-6 py-4 flex items-start justify-between gap-4 shrink-0">
         <div>
           <div class="flex flex-wrap items-center gap-2 mb-1">
@@ -200,16 +198,13 @@
         </button>
       </div>
 
-      <!-- Scrollable Dossier Content -->
       <div class="p-6 space-y-6 overflow-y-auto flex-1">
 
-        <!-- 1. Deep Context Explanation -->
         <div class="space-y-2">
           <h4 class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Kontext & Einordnung</h4>
           <p id="modalContextExplanation" class="text-[15px] text-[#f5f5f7] leading-relaxed font-normal"></p>
         </div>
 
-        <!-- 2. Diverging Narratives Box (ONLY shown if hasDivergingNarratives is true) -->
         <div id="modalNarrativeBox" class="hidden p-4 rounded-2xl bg-[#1c1c1e] border border-amber-500/25 space-y-2">
           <div class="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-amber-400">
             <i data-lucide="split" class="w-3.5 h-3.5"></i>
@@ -218,7 +213,6 @@
           <p id="modalNarrativeText" class="text-xs sm:text-[13px] text-[#d1d1d6] leading-relaxed"></p>
         </div>
 
-        <!-- 3. Bull Case vs. Bear Case (2-Column Grid for Markets, Single Box for World) -->
         <div id="modalThesisGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div class="p-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.05] space-y-1.5">
             <span id="modalBullLabel" class="text-[11px] font-semibold uppercase tracking-wider text-[#30d158] block">5Y Bull-Case & These</span>
@@ -230,7 +224,6 @@
           </div>
         </div>
 
-        <!-- 4. Modern Frameless Chart -->
         <div id="chartSection" class="space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Kursverlauf</span>
@@ -239,19 +232,16 @@
           <div id="tvChartContainer" class="w-full h-72 rounded-2xl overflow-hidden border border-white/[0.07] bg-[#09090b] p-1"></div>
         </div>
 
-        <!-- 5. Key Facts -->
         <div class="space-y-2.5">
           <h4 class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Kernfakten</h4>
           <ul id="modalBullets" class="space-y-2 text-[13px] text-[#d1d1d6] list-disc pl-5 leading-relaxed"></ul>
         </div>
 
-        <!-- 6. Sources Footer -->
         <div class="pt-4 border-t border-white/[0.07] flex flex-wrap items-center justify-between gap-2">
           <div id="modalSourcesList" class="flex flex-wrap gap-1.5"></div>
           <span id="modalVerificationStatus" class="text-[11px] text-[#30d158] font-medium"></span>
         </div>
 
-        <!-- 7. Integrated Dossier AI Chat -->
         <div class="pt-4 border-t border-white/[0.08] space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff] flex items-center gap-1.5">
@@ -263,10 +253,8 @@
             </div>
           </div>
 
-          <!-- Chat Messages Area -->
           <div id="dossierChatLog" class="space-y-2.5 max-h-60 overflow-y-auto"></div>
 
-          <!-- Chat Input Bar -->
           <form onsubmit="handleChatSubmit(event)" class="flex items-center gap-2">
             <input id="dossierChatInput" type="text" placeholder="Frage zu diesem Artikel stellen..." class="flex-1 px-4 py-2.5 rounded-full bg-[#1c1c1e] border border-white/[0.08] text-xs text-white placeholder-[#86868b] focus:outline-none focus:border-[#0a84ff]">
             <button type="submit" id="chatSendBtn" class="w-9 h-9 rounded-full bg-[#0a84ff] hover:bg-[#0071e3] text-white flex items-center justify-center transition shrink-0">
@@ -292,7 +280,7 @@
       <div class="space-y-4 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-[#86868b] font-medium mb-1.5">Gemini API-Key</label>
+            <label class="block text-[#86868b] font-medium mb-1.5">Gemini API-Key (für Chat & Sofort-Scan)</label>
             <input id="apiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-white focus:outline-none focus:border-[#0a84ff]">
           </div>
           <div>
@@ -332,7 +320,7 @@
 
   <script>
     const defaultData = {
-      lastUpdated: "Referenz-Dossiers",
+      lastUpdated: "Stand: Referenz-Dossiers",
       morningSynthesis: "Globale Industriekonzerne und Tech-Giganten sichern sich langfristige Energie- und Halbleiter-Kapazitäten, während westliche Zentralbanken angesichts hoher struktureller Staatsdefizite vor vorschnellen Zinssenkungen warnen.",
       intermarket: {
         title: "US-Staatsanleihen (~4,0 % Rendite) vs. Sachwerte: Warum Bilanzqualität wieder über allem steht",
@@ -506,7 +494,7 @@
           region: "EU · Industriepolitik",
           title: "Europa verschärft den Schutz heimischer Schlüsselindustrien mit lokalen Wertschöpfungsquoten",
           summary: "Als Reaktion auf Subventionen in den USA und China plant die EU verbindliche 'Made in Europe'-Quoten bei öffentlichen Aufträgen und Förderprogrammen.",
-          contextExplanation: "Europäische Hersteller – vom Maschinenbau über die Chemie bis zur Batteriebranche – geraten von zwei Seiten unter Druck: China exportiert hochsubventionierten Überkapazitäten zu Niedrigpreisen nach Europa, während die USA mit Steuergutschriften und niedrigen Energiepreisen Fabriken abwerben. Um eine Deindustrialisierung zu verhindern, knüpft die EU staatliche Gelder künftig daran, dass ein Großteil der Bauteile tatsächlich in Europa gefertigt wird.",
+          contextExplanation: "Europäische Hersteller – vom Maschinenbau über die Chemie bis zur Batteriebranche – geraten von zwei Seiten unter Druck: China exportiert hochsubventionierte Überkapazitäten zu Niedrigpreisen nach Europa, während die USA mit Steuergutschriften und niedrigen Energiepreisen Fabriken abwerben. Um eine Deindustrialisierung zu verhindern, knüpft die EU staatliche Gelder künftig daran, dass ein Großteil der Bauteile tatsächlich in Europa gefertigt wird.",
           longTermImpact: "Europäische Konzerne mit starker lokaler Fertigung in der EU (Rüstung, Stromnetze, Medizintechnik) profitieren, während exportabhängige Branchen wie die Autoindustrie Gegenmaßnahmen Chinas fürchten.",
           hasDivergingNarratives: true,
           narrativeComparison: "Französische und Brüsseler Quellen befürworten strikte europäische Schutzzölle ('Buy European'), während deutsche Wirtschaftsmedien (Handelsblatt) intensiv vor einem Handelskrieg mit China warnen, der deutsche Exporteure treffen würde.",
@@ -617,7 +605,7 @@
       }
     }
 
-    function initApp() {
+    async function initApp() {
       checkUrlSyncParams();
 
       const now = new Date();
@@ -637,14 +625,51 @@
         document.getElementById('customPromptInput').value = localStorage.getItem('custom_directive');
       }
 
+      // 1. Load local cache immediately
       try {
-        const saved = JSON.parse(localStorage.getItem('intelligence_v10_state'));
+        const saved = JSON.parse(localStorage.getItem('meridian_v1_state'));
         if (saved && Array.isArray(saved.worldNews) && saved.worldNews.length > 0) {
           appState = saved;
         }
       } catch (e) {}
 
       renderAll();
+
+      // 2. Automatically load shared ./briefing.json from GitHub server (so all visitors see the daily 06:45 update!)
+      await loadSharedServerBriefing();
+    }
+
+    async function loadSharedServerBriefing() {
+      try {
+        const res = await fetch('./briefing.json?t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) return false;
+        const serverData = await res.json();
+        if (serverData && Array.isArray(serverData.worldNews) && serverData.worldNews.length > 0) {
+          if (serverData.generatedAt && !serverData.lastUpdated) {
+            const d = new Date(serverData.generatedAt);
+            serverData.lastUpdated = d.toLocaleDateString('de-DE') + ", " + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) + " Uhr";
+          }
+          appState = serverData;
+          localStorage.setItem('meridian_v1_state', JSON.stringify(appState));
+          renderAll();
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function handleRefreshClick() {
+      const key = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
+      if (key) {
+        fetchLiveBriefingMultiStep();
+      } else {
+        // Visitors without API key simply reload the latest shared briefing.json from the server
+        const icon = document.getElementById('refreshIcon');
+        icon.classList.add('animate-spin');
+        loadSharedServerBriefing().finally(() => {
+          setTimeout(() => icon.classList.remove('animate-spin'), 500);
+        });
+      }
     }
 
     function copyMobileSyncLink() {
@@ -718,7 +743,7 @@
     }
 
     function resetToDefaultData() {
-      localStorage.removeItem('intelligence_v10_state');
+      localStorage.removeItem('meridian_v1_state');
       appState = JSON.parse(JSON.stringify(defaultData));
       renderAll();
       toggleModal('settingsModal');
@@ -799,7 +824,7 @@
         : (appState.cards || []).filter(c => c.category === currentFilter);
 
       grid.innerHTML = filtered.map((card) => {
-        const isPos = !(card.direction || '').toUpperCase().includes('VERSCHLECHTERT');
+        const isPos = card.isPositive !== false && !(card.direction || '').toUpperCase().includes('VERSCHLECHTERT');
         const sourcesText = (card.sources && card.sources.length) ? card.sources.slice(0, 3).join(' · ') : 'WSJ · Handelsblatt';
         const contextPreview = card.contextExplanation || card.thesis;
         return `
@@ -1042,18 +1067,17 @@
       const dossierBody = activeDossierContext.contextExplanation || activeDossierContext.summary || '';
 
       const chatPrompt = [
-        "Du bist ein präziser Finanz- und Wirtschaftsanalyst. Beantworte die Rückfrage des Nutzers zum folgenden Dossier klar, verständlich und auf den Punkt (ca. 3 bis 5 Sätze, kein Markdown-Sternchen-Wirrwarr).",
+        "Du bist ein präziser Finanz- und Wirtschaftsanalyst. Beantworte die Rückfrage des Nutzers zum folgenden Dossier klar, verständlich und auf den Punkt (ca. 3 bis 5 Sätze, kein Markdown).",
         "Dossier-Thema: " + dossierTitle,
         "Dossier-Hintergrund: " + dossierBody,
         "Rückfrage des Nutzers: " + question
       ].join("\n");
 
       try {
-        const result = await callGeminiWithFallback(key, preferredModel, chatPrompt, true);
-        const answer = result.data?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || 'Keine Antwort erhalten.';
+        const result = await callGeminiJSONOrText(key, preferredModel, chatPrompt, false);
         const loadEl = document.getElementById(loadingId);
         if (loadEl) {
-          loadEl.innerHTML = `<div class="px-4 py-2.5 rounded-2xl bg-[#1c1c1e] border border-white/[0.06] text-[#f5f5f7] text-xs max-w-[92%] leading-relaxed">${answer.replace(/\*\*/g, '')}</div>`;
+          loadEl.innerHTML = `<div class="px-4 py-2.5 rounded-2xl bg-[#1c1c1e] border border-white/[0.06] text-[#f5f5f7] text-xs max-w-[92%] leading-relaxed">${result.text.replace(/\*\*/g, '')}</div>`;
         }
       } catch (err) {
         const loadEl = document.getElementById(loadingId);
@@ -1064,7 +1088,8 @@
       chatLog.scrollTop = chatLog.scrollHeight;
     }
 
-    async function callGeminiWithFallback(apiKey, preferredModel, systemPrompt, isQuickChat) {
+    // Reliable API Caller with automatic model fallback and native JSON mode support
+    async function callGeminiJSONOrText(apiKey, preferredModel, prompt, forceJsonMode) {
       const allModels = [
         preferredModel,
         "gemini-3.5-flash-lite",
@@ -1077,26 +1102,34 @@
 
       for (let i = 0; i < modelQueue.length; i++) {
         const currentModel = modelQueue[i];
-        if (!isQuickChat) {
-          document.getElementById('loadingStepTitle').textContent = "Analysiere Leitmedien & erstelle Dossiers (" + currentModel + ")...";
-        }
-
         try {
+          const genConfig = {
+            temperature: 0.25,
+            maxOutputTokens: forceJsonMode ? 6000 : 1024
+          };
+          if (forceJsonMode) {
+            genConfig.responseMimeType = "application/json";
+          }
+
           const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(currentModel) + ":generateContent?key=" + apiKey, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              contents: [{ parts: [{ text: systemPrompt }] }],
-              generationConfig: {
-                temperature: 0.25,
-                maxOutputTokens: isQuickChat ? 1024 : 8192
-              }
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: genConfig
             })
           });
 
           if (res.ok) {
             const data = await res.json();
-            return { data: data, usedModel: currentModel };
+            const text = (data?.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || '').join('\n');
+            if (forceJsonMode) {
+              const parsed = safeParseGeminiJSON(text);
+              if (parsed) return { json: parsed, usedModel: currentModel };
+              lastError = "Ungültiges JSON von " + currentModel;
+            } else {
+              return { text: text, usedModel: currentModel };
+            }
           } else {
             const errJson = await res.json().catch(() => ({}));
             lastError = currentModel + " (" + res.status + "): " + (errJson.error?.message || res.statusText);
@@ -1109,7 +1142,10 @@
       throw new Error(lastError || "Alle Modelle ausgelastet.");
     }
 
-    async function fetchLiveBriefing() {
+    // =========================================================================
+    // 3-STEP SPLIT FETCH: Solves the "1 out of 4" truncation problem completely
+    // =========================================================================
+    async function fetchLiveBriefingMultiStep() {
       const key = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
       if (!key) {
         toggleModal('settingsModal');
@@ -1119,59 +1155,72 @@
       const todayStr = new Date().toLocaleDateString('de-DE');
       const preferredModel = localStorage.getItem('gemini_model_name') || document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite';
       const banner = document.getElementById('loadingBanner');
+      const stepTitle = document.getElementById('loadingStepTitle');
+      const stepBadge = document.getElementById('loadingStepBadge');
       const refreshIcon = document.getElementById('refreshIcon');
+
       banner.classList.remove('hidden');
       refreshIcon.classList.add('animate-spin');
 
       try {
-        document.getElementById('loadingStepTitle').textContent = "Lade aktuelle Schlagzeilen (WSJ, Handelsblatt, FT, Tagesschau)...";
+        stepTitle.textContent = "Lade Live-Schlagzeilen (WSJ, Handelsblatt, FT, Tagesschau)...";
+        stepBadge.textContent = "Schritt 1 / 4";
         const rssData = await fetchLiveRSSContext();
 
         const tier1Media = document.getElementById('tier1MediaInput').value;
         const verificationAgencies = document.getElementById('verificationAgenciesInput').value;
         const userDirective = document.getElementById('customPromptInput').value;
 
-        const liveFeedBlock = rssData.count > 0
-          ? "AKTUELLE LIVE-SCHLAGZEILEN VON HEUTE (" + todayStr + "):\n" + rssData.headlinesText
-          : "Nutze die wichtigsten aktuellen globalen Wirtschafts- und Marktthemen aus " + tier1Media + ".";
-
-        const systemPrompt = [
-          "Du bist ein präzises Financial & Global Intelligence Terminal (im Stil von The Economist, Wall Street Journal und Handelsblatt).",
-          "Heutiges Datum: " + todayStr + ".",
-          "Antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt (keine Markdown-Backticks, kein Vorwort).",
-          "WICHTIG FÜR VALIDES JSON: Verwende innerhalb von JSON-Texten niemals doppelte Anführungszeichen, sondern einfache Anführungszeichen ('...'), damit das JSON nicht bricht!",
-          "",
-          liveFeedBlock,
-          "",
-          "REGELN FÜR INHALT, NARRATIVE & GEGENRISIKEN:",
-          "1. LEITMEDIEN & VERIFIKATION: Werte die Live-Schlagzeilen von " + tier1Media + " aus und gleiche Fakten über " + verificationAgencies + " ab.",
-          "2. AUSFÜHRLICHE ERKLÄRUNG ('contextExplanation'): Schreibe für JEDEN Artikel und JEDE Kachel 4 bis 5 ausführliche Sätze (mindestens 70-100 Wörter), die verständlich erklären, WARUM das genau jetzt passiert und wie die Faktoren zusammenhängen.",
-          "3. UNTERSCHIEDLICHE NARRATIVE ('hasDivergingNarratives' & 'narrativeComparison'): Setze 'hasDivergingNarratives' NUR DANN auf true, wenn US-Medien (z.B. WSJ), europäische Medien (z.B. Handelsblatt/FT) oder asiatische Medien das Thema tatsächlich unterschiedlich oder kontrovers bewerten. Erkläre den Unterschied dann in 'narrativeComparison'. Wenn Einigkeit besteht, setze 'hasDivergingNarratives': false und 'narrativeComparison': ''.",
-          "4. THESE & ANTITHESE ('thesis' & 'bearCase'): Liefere für jede Markt-Kachel in 'thesis' den 5-Jahres-Bull-Case und in 'bearCase' das wichtigste strukturelle Gegenrisiko.",
-          "5. UMFANG: Erstelle EXAKT 6 'worldNews'-Dossiers und EXAKT 6 'cards' (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML oder XETR:SAP; 3x category 'commodities' zu Gold TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD).",
-          "6. ZUSATZ-DIREKTIVE: " + userDirective,
-          "",
-          "Halte dich exakt an die JSON-Felder: morningSynthesis, intermarket (title, summary, contextExplanation, bearCase, hasDivergingNarratives, narrativeComparison, bullets, symbol, sources), macroCalendar (date, event, impact), cards (id, category, sectorLabel, ticker, company, direction, directionColor, moatScore, headline, contextExplanation, thesis, bearCase, hasDivergingNarratives, narrativeComparison, bullets, sources, verificationStatus, sparkline), worldNews (region, title, summary, contextExplanation, longTermImpact, hasDivergingNarratives, narrativeComparison, bullets, sources, verificationStatus)."
+        const baseHeader = [
+          "Du bist Meridian, ein präzises Global Intelligence Terminal (Stil: The Economist, Wall Street Journal, Handelsblatt). Heutiges Datum: " + todayStr + ".",
+          "WICHTIG: Verwende innerhalb von JSON-Strings niemals doppelte Anführungszeichen, sondern einfache ('...').",
+          "Leitmedien-Fokus: " + tier1Media,
+          "Verifikations-Institute: " + verificationAgencies,
+          "Zusatz-Direktive: " + userDirective,
+          rssData.count > 0 ? ("AKTUELLE LIVE-HEADLINES:\n" + rssData.headlinesText) : ""
         ].join("\n");
 
-        const result = await callGeminiWithFallback(key, preferredModel, systemPrompt, false);
-        const candidate = result.data?.candidates?.[0];
-        const parts = candidate?.content?.parts || [];
-        const rawText = parts.map(p => p.text || '').join('\n');
-        
-        const parsedState = safeParseGeminiJSON(rawText);
-        if (parsedState && Array.isArray(parsedState.worldNews) && Array.isArray(parsedState.cards)) {
-          const timeStr = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-          parsedState.lastUpdated = todayStr + ", " + timeStr + " Uhr";
-
-          appState = parsedState;
-          localStorage.setItem('intelligence_v10_state', JSON.stringify(appState));
+        // --- CALL 1: 6 World News Dossiers ---
+        stepTitle.textContent = "Erstelle 6 Hintergrund-Dossiers (Welt & Wirtschaft)...";
+        stepBadge.textContent = "Schritt 2 / 4";
+        const worldPrompt = baseHeader + "\n\nAUFGABE: Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers als JSON: {\"worldNews\": [ { \"region\": \"...\", \"title\": \"...\", \"summary\": \"...\", \"contextExplanation\": \"4-5 ausführliche Sätze Hintergrund-Erklärung (warum passiert das jetzt, wie hängen die Faktoren zusammen)\", \"longTermImpact\": \"...\", \"hasDivergingNarratives\": false, \"narrativeComparison\": \"Nur ausfüllen wenn US/EU/Asien-Medien sich widersprechen, sonst leer\", \"bullets\": [\"...\", \"...\", \"...\"], \"sources\": [\"WSJ\", \"Handelsblatt\", \"Reuters\"], \"verificationStatus\": \"Verifiziert · 3 Quellen\" } ]}";
+        const worldRes = await callGeminiJSONOrText(key, preferredModel, worldPrompt, true);
+        if (Array.isArray(worldRes.json?.worldNews) && worldRes.json.worldNews.length > 0) {
+          appState.worldNews = worldRes.json.worldNews;
           renderAll();
-        } else {
-          alert("Die KI-Antwort war unvollständig. Bisherige Dossiers bleiben erhalten.");
         }
+
+        // --- CALL 2: 6 Market Cards ---
+        stepTitle.textContent = "Analysiere globale Aktien, Rohstoffe & Krypto (5Y-Horizont)...";
+        stepBadge.textContent = "Schritt 3 / 4";
+        const cardsPrompt = baseHeader + "\n\nAUFGABE: Erstelle EXAKT 6 detaillierte Markt-Kacheln (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML oder XETR:SAP; 3x category 'commodities' zu Gold TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD) als JSON: {\"cards\": [ { \"id\": \"eq-1\", \"category\": \"equities\", \"sectorLabel\": \"...\", \"ticker\": \"NASDAQ:ASML\", \"company\": \"...\", \"direction\": \"Burggraben wächst\", \"moatScore\": 92, \"headline\": \"...\", \"contextExplanation\": \"4-5 ausführliche Sätze Erklärung\", \"thesis\": \"5-Jahres Bull-Case\", \"bearCase\": \"Wichtigstes Gegenrisiko\", \"hasDivergingNarratives\": false, \"narrativeComparison\": \"\", \"bullets\": [\"...\", \"...\", \"...\"], \"sources\": [\"WSJ\", \"Reuters\"], \"verificationStatus\": \"Verifiziert\", \"sparkline\": [45, 50, 55, 60, 65, 70, 75, 85] } ]}";
+        const cardsRes = await callGeminiJSONOrText(key, preferredModel, cardsPrompt, true);
+        if (Array.isArray(cardsRes.json?.cards) && cardsRes.json.cards.length > 0) {
+          appState.cards = cardsRes.json.cards.map((c, idx) => ({ ...c, id: c.id || ("card-" + idx) }));
+          renderAll();
+        }
+
+        // --- CALL 3: Morning Synthesis, Intermarket & Macro Calendar ---
+        stepTitle.textContent = "Finalisiere Tages-Synthese & Anleihen-Radar...";
+        stepBadge.textContent = "Schritt 4 / 4";
+        const overviewPrompt = baseHeader + "\n\nAUFGABE: Erstelle die Tages-Synthese, das Anleihen/Intermarket-Dossier und 4 Makro-Zyklen als JSON: {\"morningSynthesis\": \"1-2 prägnante Sätze zum Hauptthema des Tages\", \"intermarket\": { \"title\": \"...\", \"summary\": \"...\", \"contextExplanation\": \"4-5 Sätze Hintergrund\", \"bearCase\": \"...\", \"hasDivergingNarratives\": false, \"narrativeComparison\": \"\", \"bullets\": [\"...\", \"...\", \"...\"], \"symbol\": \"TVC:US10Y\", \"sources\": [\"WSJ\", \"FT\", \"Reuters\"] }, \"macroCalendar\": [ { \"date\": \"...\", \"event\": \"...\", \"impact\": \"...\" } ]}";
+        const overviewRes = await callGeminiJSONOrText(key, preferredModel, overviewPrompt, true);
+        if (overviewRes.json?.morningSynthesis) {
+          appState.morningSynthesis = overviewRes.json.morningSynthesis;
+        }
+        if (overviewRes.json?.intermarket) {
+          appState.intermarket = overviewRes.json.intermarket;
+        }
+        if (Array.isArray(overviewRes.json?.macroCalendar)) {
+          appState.macroCalendar = overviewRes.json.macroCalendar;
+        }
+
+        const timeStr = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+        appState.lastUpdated = todayStr + ", " + timeStr + " Uhr";
+        localStorage.setItem('meridian_v1_state', JSON.stringify(appState));
+        renderAll();
       } catch (e) {
-        alert("API-Hinweis: " + e.message);
+        alert("Hinweis beim Update: " + e.message);
       } finally {
         banner.classList.add('hidden');
         refreshIcon.classList.remove('animate-spin');
