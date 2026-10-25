@@ -1,648 +1,393 @@
 {
-  "generatedAt": "2026-10-25T10:31:19.703Z",
-  "editionDate": "25.10.2026",
-  "macroRegime": "Geopolitische und Systemische Verwerfungen",
-  "synthesisHeadline": "Geopolitische Schocks und fiskalische Krisen lösen globale Marktturbulenzen und eine massive Flucht in sichere Häfen aus.",
-  "synthesisBody": "Die Sabotage kritischer Infrastruktur in Europa, ein historischer KI-Marktabverkauf durch den DeepSeek-Schock und Frankreichs eskalierende Schuldenkrise belasten die Märkte schwer. Während Aktien und europäische Staatsanleihen unter Druck geraten, profitieren Gold, Yen und Franken massiv als Stabilitätsanker.",
+  "generatedAt": "2026-10-25T10:40:56.754Z",
+  "lastUpdated": "25.10.2026, 11:40 Uhr",
+  "morningSynthesis": "Der überraschende DeepSeek-KI-Schock aus China stürzt globale Tech-Giganten in einen historischen Abverkauf und drängt Anleger in sichere Häfen wie den japanischen Yen und Franken. Gleichzeitig treiben verschärfte Haushaltsängste und anhaltende Unruhen in Frankreich die Anleiherenditen auf ein 24-Jahres-Hoch, während geopolitische Krisen von der Ostsee bis Nahost die globalen Märkte belasten.",
+  "intermarket": {
+    "title": "Anleiherenditen unter Druck: Frankreichs Schuldenkrise und globale Tech-Flucht",
+    "summary": "Die Renditen französischer Staatsanleihen klettern auf den höchsten Stand seit 24 Jahren, während der Einbruch von KI-Aktien massive Umschichtungen in sichere Häfen auslöst.",
+    "contextExplanation": "Die Märkte stehen unter doppeltem Druck: Einerseits werfen ausufernde Schuldenkrisen in Europa und die politischen Unruhen in Frankreich Fragen zur Stabilität der Eurozone auf, was Anleihen belastet und Renditen treibt. Andererseits erschüttert der DeepSeek-Schock aus China den US-Technologiesektor und führt zu einem abrupten Abverkauf von KI-Infrastrukturwerten. Anleger flüchten in liquide, sichere Anlageklassen wie den Schweizer Franken und den japanischen Yen. Rohstoffe wie Gold und Kaffee verzeichnen derweil volatile Bewegungen, getrieben von Handelsspannungen und geldpolitischen Erwartungen.",
+    "bearCase": "Ein unkontrolliertes Übergreifen der französischen Schuldenkrise auf andere Euro-Länder ('Neue Eurokrise') in Kombination mit einer anhaltenden Destabilisierung des Tech-Sektors könnte eine globale Liquiditätskrise auslösen.",
+    "hasDivergingNarratives": true,
+    "narrativeComparison": "Während einige Analysten den Abverkauf von Nvidia und Co. als übertriebene Panik bewerten, sehen andere darin den Beginn einer strukturellen Neubewertung überteuerter KI-Infrastruktur.",
+    "bullets": [
+      "Französische Anleiherenditen erreichen den höchsten Stand seit 24 Jahren infolge von Haushaltsängsten.",
+      "Der DeepSeek-Schock lässt Nvidia um 16 Prozent einbrechen und drückt den Nasdaq.",
+      "Sichere Häfen wie der Schweizer Franken und der japanische Yen legen im Zuge der Risikoaversion deutlich zu."
+    ],
+    "symbol": "TVC:US10Y",
+    "sources": [
+      "Wall Street Journal",
+      "Financial Times",
+      "CNBC World"
+    ],
+    "verificationStatus": "Verifiziert · 3 Quellen"
+  },
+  "macroCalendar": [
+    {
+      "date": "US-Geldpolitik",
+      "event": "DeepSeek-KI-Schock erzwingt Neubewertung der US-Tech-Bewertungen",
+      "impact": "Starker Abwärtsdruck auf Nasdaq"
+    },
+    {
+      "date": "Europa & EZB",
+      "event": "Frankreichs Schuldenkrise treibt Anleiherenditen auf 24-Jahres-Hoch",
+      "impact": "Steigende Fragmentierungsrisiken im Euroraum"
+    },
+    {
+      "date": "Asien & Handel",
+      "event": "China-Immobilienkrise weitet sich auf Vanke aus",
+      "impact": "Verstärkt globale Konjunkturskepsis"
+    },
+    {
+      "date": "Rohstoffe & Energie",
+      "event": "Arabica-Kaffeepreise auf Rekordhoch nach Zollstreit-Entwicklungen",
+      "impact": "Erhöhte Volatilität bei Agrarrohstoffen"
+    }
+  ],
   "worldNews": [
     {
-      "id": "w1",
-      "category": "GEOPOLITIK & KRISEN",
-      "region": "Nahost",
-      "urgency": "Akut",
-      "readTime": "3 Min.",
-      "verificationBadge": "3 Agenturen (Reuters, AFP, AP)",
-      "leadSources": [
-        "Wall Street Journal",
-        "NZZ International",
-        "CNBC World"
-      ],
-      "headline": "Israel öffnet Grenzzone nach Geisel-Durchbruch: Palästinenser strömen in den Norden",
-      "summary": "Nach dem Bruch einer monatelangen Pattsituation bei Geisen-Freilassungen hat Israel vertriebenen Palästinensern den Fußweg zurück in den Norden des Gazastreifens über eine Militärzone erlaubt. Medizinische Berichte enthüllen derweil schwere Spätfolgen bei befreiten Geiseln.",
-      "contextExplanation": "Die humanitäre Lage im Gazastreifen bleibt nach über zwei Jahren des Konflikts katastrophal. Die nun erlaubte Rückkehr markiert einen seltenen logistischen und humanitären Durchbruch, während gleichzeitig die politische und medizinische Aufarbeitung der traumatischen Geiselhaft (inklusive monatelanger Isolationshaft in Tunneln) das innenpolitische Klima in Israel stark polarisiert.",
+      "region": "GLOBAL · Technologie & Märkte",
+      "title": "DeepSeek-Schock erschüttert US-Tech-Giganten und löst KI-Abverkauf aus",
+      "summary": "Ein Durchbruch des chinesischen KI-Start-ups DeepSeek hat einen globalen Ausverkauf von Technologieaktien ausgelöst, wobei Branchenführer wie Nvidia historische Einbrüche verzeichneten.",
+      "contextExplanation": "Das chinesische Start-up DeepSeek hat durch hocheffiziente und kostengünstige KI-Modelle das fundamentale Narrativ der US-amerikanischen Tech-Monopole und deren massiven Investitionsbedarf erschüttert. Die Märkte reagierten panikartig, da die bisherigen Bewertungsmodelle für Halbleiterkonzerne wie Nvidia und Broadcom auf unbegrenztem Kapitalaufwand basierten. Gleichzeitig suchten Anleger weltweit fluchtartig Zuversicht in sicheren Häfen wie dem Schweizer Franken und dem Japanischen Yen. Analysten betonen jedoch, dass die fundamentale Nachfrage nach Rechenleistung nicht abrupt einbricht, sondern die Preissetzungsmacht der bisherigen Platzhirsche auf den Prüfstand gestellt wird. Strukturell markiert dieses Ereignis möglicherweise den Beginn einer Phase, in der KI-Infrastruktur kosteneffizienter skaliert werden muss, was den gesamten Markt transformieren dürfte.",
+      "longTermImpact": "In den kommenden Jahren wird dieser Schock zu einer Diversifizierung der globalen KI-Infrastruktur führen und den Druck auf US-Chiphersteller erhöhen, margenschwächere Segmente zu verteidigen. Für die Märkte bedeutet dies eine Neubewertung von Technologie-Multiples hin zu realer Profitabilität statt reiner Kapazitätsausweitung.",
       "hasDivergingNarratives": true,
-      "perspectives": {
-        "us": "Fokus auf die diplomatischen Bemühungen der Vermittler und die humanitären Öffnungsschritte zur Entspannung der Region.",
-        "eu": "Betonung der katastrophalen humanitären Bedingungen vor Ort sowie der Notwendigkeit dauerhafter Waffenruhen.",
-        "asia": "Sichtweise arabischer Medien, die vor allem die Zerstörung der Infrastruktur und die Rechte der Rückkehrenden in den Vordergrund stellen."
-      },
-      "transmission": [
-        {
-          "stage": "Ursache",
-          "node": "Geisel-Durchbruch",
-          "detail": "Einigung bricht monatelangen Stillstand"
-        },
-        {
-          "stage": "Übertragung",
-          "node": "Logistik & Humanitär",
-          "detail": "Wellenartiger Zustrom von Zivilisten in den Norden"
-        },
-        {
-          "stage": "Marktfolge",
-          "node": "Regionale Stabilität",
-          "detail": "Einfluss auf internationale Schifffahrts- und Ölpreissignale"
-        }
+      "narrativeComparison": "Während US-Medien und Börsen von einer Panikreaktion und einer temporären Übertreibung sprechen, werten asiatische und europäische Kommentatoren den DeepSeek-Erfolg als strukturellen Wendepunkt, der die US-Dominanz im KI-Sektor dauerhaft bricht.",
+      "bullets": [
+        "Nvidia verzeichnete innerhalb einer Handelssitzung einen Kursverlust von 16 Prozent.",
+        "Der Nasdaq führte die globalen Kursverluste im Zuge des Technologie-Abverkaufs an.",
+        "Schweizer Franken und Japanischer Yen profitierten massiv als sichere Häfen."
       ],
-      "details": {
-        "wasPassiert": [
-          "Israel öffnet militärische Durchquerungszone für vertriebene Palästinenser.",
-          "Mediziner berichten von anhaltenden physischen und psychischen Traumata befreiter Geiseln.",
-          "Schifffahrtswege bleiben trotz Houthi-Pledge wegen anhaltender regionaler Risiken umstritten."
-        ],
-        "warumWichtig": "Die Dynamik im Nahen Osten bestimmt unmittelbar die globalen Energiemärkte, Transportkosten und das geopolitische Risiko-Sentiment.",
-        "faktencheck": "Bestätigt durch Berichte des Wall Street Journal und internationale Agenturen."
-      },
       "sources": [
-        "WSJ World",
-        "NZZ International",
-        "CNBC World"
-      ]
-    },
-    {
-      "id": "w2",
-      "category": "MAKROÖKONOMIE & MÄRKTE",
-      "region": "USA / China",
-      "urgency": "Strukturell",
-      "readTime": "3 Min.",
-      "verificationBadge": "3 Agenturen (Bloomberg, Reuters, AP)",
-      "leadSources": [
         "Wall Street Journal",
         "Financial Times",
         "CNBC World"
       ],
-      "headline": "DeepSeek-Schock löst globalen KI-Abverkauf und Safe-Haven-Rally aus",
-      "summary": "Der unerwartete Erfolg des chinesischen KI-Modells DeepSeek hat an den US-Börsen einen historischen Abverkauf bei Technologie-Giganten ausgelöst, bei dem Schwergewichte wie Nvidia zweistellig einbrachen. Gleichzeitig flüchteten Investoren in sichere Häfen wie den japanischen Yen und den Schweizer Franken.",
-      "contextExplanation": "Der Markteinbruch zeigt, wie nervös die globalen Investoren auf disruptive Innovationen aus China reagieren, die das bisherige US-Monopol und die gigantischen Investitionskosten in KI-Infrastruktur infrage stellen. Die Neubewertung trifft einen bereits angespannten Tech-Sektor, während makroökonomische Faktoren wie Chinas Immobilienkrise (Vanke) das globale Risiko verstärken.",
-      "hasDivergingNarratives": {
-        "us": "Analysten streiten sich, ob es sich um eine übertriebene Panikreaktion oder eine fundamentale Neubewertung der US-Tech-Monopole handelt.",
-        "eu": "Europäische Märkte blicken besorgt auf die Spillover-Effekte für globale Lieferketten und den Druck auf konjunkturelle Indikatoren.",
-        "asia": "Chinesische und asiatische Medien feiern DeepSeek als technologischen Triumph, der die US-Dominanz bricht."
-      },
-      "perspectives": {
-        "us": "Panikartige Verkäufe von Nvidia und Broadcom durch Privatanleger und Institutionelle.",
-        "eu": "Flucht in Schweizer Franken und Yen als Absicherung gegen globale Aktienverluste.",
-        "asia": "Wissenschaftliche und industrielle Bestätigung der Leistungsfähigkeit asiatischer KI-Entwicklungen."
-      },
-      "transmission": [
-        {
-          "stage": "Ursache",
-          "node": "DeepSeek-Launch",
-          "detail": "Chinesisches Modell schockiert US-Märkte"
-        },
-        {
-          "stage": "Übertragung",
-          "node": "Aktienmärkte",
-          "detail": "Massiver Abverkauf von KI-Infrastrukturwerten (Nvidia -16%)"
-        },
-        {
-          "stage": "Marktfolge",
-          "node": "Währungen",
-          "detail": "Stärkung von Yen und Schweizer Franken als sichere Häfen"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "Nasdaq verzeichnet schwere Verluste angeführt von Halbleiterwerten.",
-          "Gold und Silber geben leicht nach, während CHF und JPY stark zulegen.",
-          "Experten diskutieren die Nachhaltigkeit der hohen US-Tech-Bewertungen."
-        ],
-        "warumWichtig": "Dies markiert möglicherweise einen Wendepunkt für den globalen KI-Boom und die Marktdominanz der 'Magnificent Seven'.",
-        "faktencheck": "Bestätigt durch Handelsdaten des WSJ und CNBC."
-      },
-      "sources": [
-        "WSJ Markets",
-        "Financial Times",
-        "CNBC World"
-      ]
+      "verificationStatus": "Verifiziert · 3 Quellen"
     },
     {
-      "id": "w3",
-      "category": "GEOPOLITIK & SICHERHEIT",
-      "region": "Europa / Ukraine / Russland",
-      "urgency": "Akut",
-      "readTime": "3 Min.",
-      "verificationBadge": "3 Agenturen (Reuters, dpa, AFP)",
-      "leadSources": [
+      "region": "EUROPA · Finanzmärkte & Fiskalpolitik",
+      "title": "Frankreichs Schuldenkrise und Unruhen treiben Anleiherenditen auf 24-Jahres-Hoch",
+      "summary": "Massive Proteste und eine ausufernde Haushaltskrise in Frankreich treiben die Renditen französischer Staatsanleihen auf den höchsten Stand seit 24 Jahren.",
+      "contextExplanation": "Frankreich steckt in einer tiefen politischen und fiskalischen Krise, die durch wochenlange landesweite Proteste gegen Sparmaßnahmen und anhaltende Krawalle weiter verschärft wird. Mit mehr als tausend Festnahmen und einer zunehmenden Radikalisierung der Straße gerät die Regierung unter enormen Druck, während die Anleiherenditen auf Niveaus steigen, die Erinnerungen an die Eurokrise wecken. Investoren bewerten das Haushaltsdefizit und die politische Instabilität als akutes Risiko für den gesamten Euroraum. Die Europäische Zentralbank beobachtet die Situation mit großer Sorge, da eine Ausweitung der Renditeaufschläge auf andere hochverschuldete Mitgliedstaaten übergreifen könnte. Strukturell zeigt sich hier das Dilemma europäischer Regierungen, zwischen notwendiger Haushaltsdisziplin und sozialem Frieden zu navigieren.",
+      "longTermImpact": "Die Krise wird die Kreditwürdigkeit Frankreichs belasten und den Druck auf die EU erhöhen, die Regeln des Stabilitäts- und Wachstumspakts härter durchzusetzen oder neue Krisenmechanismen zu schaffen. Langfristig droht eine Verteuerung der Refinanzierung für den gesamten europäischen Staatenbund.",
+      "hasDivergingNarratives": true,
+      "narrativeComparison": "Britische und US-Medien warnen vor systemischen Risiken für den Euro und einer unkontrollierbaren Schuldenkrise, während französische und zentraleuropäische Berichte stärker die innenpolitischen Ursachen und die soziale Dynamik der Proteste betonen.",
+      "bullets": [
+        "Französische Anleiherenditen markierten den höchsten Stand seit dem Jahr 2002.",
+        "Innenministerium meldet mehr als tausend Festnahmen infolge landesweiter Ausschreitungen.",
+        "Investoren fordern von der Politik glaubwürdige Schritte zur Haushaltskonsolidierung."
+      ],
+      "sources": [
+        "Handelsblatt",
+        "Tagesschau Wirtschaft",
+        "CNBC World"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen"
+    },
+    {
+      "region": "NAHOST · Geopolitik & Sicherheit",
+      "title": "Grenzöffnung im Gazastreifen und anhaltende Sabotageakte in der Ostsee",
+      "summary": "Nach dem Durchbruch einer Blockade bei Geiselfreilassungen strömen Palästinenser in den Norden des Gazastreifens zurück, während NATO-Staaten auf Sabotageakte reagieren.",
+      "contextExplanation": "Die geopolitische Lage im Nahen Osten erfährt durch die partielle Öffnung militärischer Sperrzonen im Gazastreifen eine neue Dynamik, nachdem Verhandlungen über die Freilassung von Geiseln vorangekommen sind. Dennoch bleibt die humanitäre und medizinische Lage katastrophal, wie Berichte über langanhaltende Traumata und Verletzungen bei Freigekommenen verdeutlichen. Parallel dazu weitet sich die sicherheitspolitische Krise nach Europa aus: Die NATO hat erstmals koordiniert auf die mutmaßliche Sabotage von Unterseekabeln in der Ostsee reagiert. Diese hybride Bedrohung verdeutlicht die Verletzlichkeit kritischer europäischer Infrastruktur im Schatten des anhaltenden Ukraine-Krieges und der Spannungen im Roten Meer, wo Reedereien trotz angekündigter Waffenruhen weiterhin aus Sicherheitsgründen alternative Routen bevorzugen.",
+      "longTermImpact": "Die zunehmende Verzahnung von nahöstlichen Konflikten und europäischer Infrastruktursicherheit wird die Verteidigungsausgaben der NATO dauerhaft auf hohem Niveau halten. Wirtschaftlich bleiben globale Lieferketten durch maritime Unsicherheiten strukturell anfällig.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Israel erlaubte vertriebenen Palästinensern die Rückkehr in den nördlichen Gazastreifen.",
+        "NATO unternahm erste koordinierte Gegenmaßnahmen nach Unterseekabel-Sabotage in der Ostsee.",
+        "Internationale Reedereien meiden trotz anderslautender Zusagen weiterhin das Rote Meer."
+      ],
+      "sources": [
         "Wall Street Journal",
         "Financial Times",
-        "Handelsblatt"
+        "Reuters"
       ],
-      "headline": "Kritische Infrastruktur unter Beschuss: Erster NATO-Großeinsatz nach Sabotage von Tiefseekabeln",
-      "summary": "Nach der erneuten Kappung eines Unterseekabels in der Ostsee hat die NATO ihren ersten koordinierten Großeinsatz gegen eine vermutete Sabotagekampagne gestartet. Parallel dazu bleibt das Schwarze Meer laut FT die weltweit tödlichste Seeschifffahrtsroute für Handelsschiffe im Ukraine-Krieg.",
-      "contextExplanation": "Die hybride Kriegsführung erreicht eine neue Eskalationsstufe. Die gezielten Angriffe auf kritische europäische Infrastruktur (Unterseekabel) zwingen die NATO zu proaktiven Schutzmaßnahmen, während die kommerzielle Schifffahrt im Schwarzen Meer weiterhin extremen Gefahren durch den anhaltenden Russland-Ukraine-Konflikt ausgesetzt ist.",
-      "hasDivergingNarratives": {
-        "us": "Fokus auf die kollektive Verteidigungsfähigkeit der NATO und die Absicherung digitaler globaler Netze.",
-        "eu": "Große Sorge um die Verletzlichkeit vitaler Verbindungen und wirtschaftlicher Lebensadern in Nord- und Ostsee.",
-        "asia": "Beobachtung der westlichen Bündnisreaktionen als Lackmustest für die globale Abschreckung."
-      },
-      "perspectives": {
-        "us": "NATO muss hybride Bedrohungen entschlossener und mit präventiven Operationen beantworten.",
-        "eu": "Kritische Infrastruktur muss physisch und digital massiv gegen Sabotage gehärtet werden.",
-        "asia": "Die Verwundbarkeit globaler Versorgungswege verdeutlicht die fragile Sicherheitsarchitektur."
-      },
-      "transmission": [
-        {
-          "stage": "Ursache",
-          "node": "Kabelkappung",
-          "detail": "Vermutete Sabotageakte in der Ostsee"
-        },
-        {
-          "stage": "Übertragung",
-          "node": "NATO-Reaktion",
-          "detail": "Erster alliierter Großeinsatz zum Schutz kritischer Infrastruktur"
-        },
-        {
-          "stage": "Marktfolge",
-          "node": "Versicherungen & Logistik",
-          "detail": "Steigende Risikoprämien für europäische Transport- und Telekommunikationsnetze"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "NATO reagiert koordiniert auf Deep-Sea-Kabel-Sabotage.",
-          "Schwarzes Meer bleibt extrem gefährliche Handelsroute mit hohen Verlusten.",
-          "Ukraine ringt derweil um alternative Satellitenkommunikation (Nokia, ICEYE) nach Starlink-Restriktionen."
-        ],
-        "warumWichtig": "Direkte Bedrohung der europäischen und globalen digitalen sowie physischen Handelsinfrastruktur.",
-        "faktencheck": "Offiziell bestätigt durch NATO-Quellen und Berichte des Wall Street Journal sowie der Financial Times."
-      },
-      "sources": [
-        "WSJ World",
-        "Financial Times",
-        "Handelsblatt"
-      ]
+      "verificationStatus": "Verifiziert · 3 Quellen"
     },
     {
-      "id": "w4",
-      "category": "INTERNATIONALE POLITIK",
-      "region": "Frankreich / Europa",
-      "urgency": "Akut",
-      "readTime": "3 Min.",
-      "verificationBadge": "3 Agenturen (AFP, Reuters, dpa)",
-      "leadSources": [
-        "Handelsblatt",
-        "NZZ International",
-        "CNBC World"
+      "region": "SÜD- UND LATEINAMERIKA · Politik & Rohstoffe",
+      "title": "Knappe Stichwahl in Brasilien und Rekordpreise für Arabica-Kaffee",
+      "summary": "Kurz vor der richtungsweisenden Stichwahl in Brasilien zwischen Lula und Bolsonaro stehen auch Vorwürfe gegen Tech-Konzerne im Raum, während Kaffeepreise Rekordhöhen erreichen.",
+      "contextExplanation": "Brasilien steuert auf eine hochdramatische Stichwahl um das Präsidentenamt zu, bei der der linkspolitische Amtsinhaber und der rechtsextreme Herausforderer in Umfragen Kopf an Kopf liegen. Das Rennen polarisiert das größte lateinamerikanische Land tief und wird international genau beobachtet, da es die geopolitische Ausrichtung der Region und die Beziehungen zu den USA maßgeblich beeinflussen wird. Mitten in diese Phase gerät der Technologiekonzern Meta unter Druck, weil US-Kongressabgeordnete und Beobachter eine mögliche Manipulation des Wahlkampfs zugunsten Bolsonaros untersuchen lassen wollen. Wirtschaftlich schlagen die politischen Spannungen direkt auf die Rohstoffmärkte durch: Arabica-Kaffee markierte Rekordpreise, verstärkt durch handels- und zollpolitische Manöver im Verhältnis zu Kolumbien und den USA.",
+      "longTermImpact": "Der Ausgang der Wahl in Brasilien wird die lateinamerikanische Integrationspolitik sowie Handelsabkommen mit den USA und Europa für ein Jahrzehnt prägen. Agrarmärkte müssen sich langfristig auf extreme Preisschwankungen durch geopolitische und klimatische Faktoren einstellen.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Präsidentschaftswahl in Brasilien entwickelt sich zu einem Kopf-an-Kopf-Rennen.",
+        "Meta steht wegen des Verdachts der Wahlbeeinflussung im Fokus internationaler Parlamentarier.",
+        "Arabica-Kaffee-Futures erreichten neue Allzeithochs infolge handelspolitischer Unsicherheiten."
       ],
-      "headline": "Über 1000 Festnahmen bei Krawallen in Frankreich: Anleiherenditen auf 24-Jahres-Hoch",
-      "summary": "Anhaltende Proteste, Plünderungen und gewaltsame Ausschreitungen in Frankreich mit über 1.000 Festnahmen treiben die französischen Staatsanleiherenditen auf den höchsten Stand seit 2002. Investoren sorgen sich angesichts der innenpolitischen Krise zunehmend um Haushalt, Wachstum und die Stabilität der Eurozone.",
-      "contextExplanation": "Die explosiven Mischung aus sozialer Unzufriedenheit ('Gen-Z-Sozialismus', Budgetkürzungen, Renten- und Bildungsreformen) und ausufernder Gewalt in französischen Städten setzt die Regierung massiv unter Druck. Die steigenden Refinanzierungskosten wecken an den Finanzmärkten Erinnerungen an die Eurokrise, während die EZB die Ansteckungsgefahren für andere hochverschuldete EU-Staaten genau beobachtet.",
-      "hasDivergingNarratives": {
-        "us": "Blick auf Frankreich als systemisches Risiko für den europäischen Anleihemarkt und die Währungsunion.",
-        "eu": "Intensive Debatte über die Handlungsfähigkeit der Pariser Regierung und das Versagen sozialer Integrationsmodelle.",
-        "asia": "Sorge vor einer erneuten Destabilisierung der EU als wichtigem Handelspartner."
-      },
-      "perspectives": {
-        "us": "Finanzmärkte fordern strukturelle Reformen und fiskalische Disziplin von Paris.",
-        "eu": "Innenminister und Behörden stehen vor der Herkulesaufgabe, Law-and-Order wiederherzustellen, ohne den sozialen Frieden komplett zu opfern.",
-        "asia": "Beobachtung der politischen Radikalisierung in Europa mit Sorge."
-      },
-      "transmission": [
-        {
-          "stage": "Ursache",
-          "node": "Soziale Unruhen",
-          "detail": "Schüler-, Lehrer- und Gewerkschaftsproteste eskalieren"
-        },
-        {
-          "stage": "Übertragung",
-          "node": "Finanzmärkte",
-          "detail": "Anleiherenditen springen auf Rekordhoch, Euro unter Druck"
-        },
-        {
-          "stage": "Marktfolge",
-          "node": "Eurozone",
-          "detail": "Ansteckungsgefahr für andere hochverschuldete EU-Mitglieder"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "Über 1.000 Festnahmen nach landesweiten Krawallen in Frankreich.",
-          "Französische Anleiherenditen erreichen den höchsten Stand seit 24 Jahren.",
-          "Debatte über die 'Gen-Z-Proteste' und radikale Forderungen nach staatlichem Schutz."
-        ],
-        "warumWichtig": "Frankreich ist die zweitgrößte Volkswirtschaft der Eurozone; eine politische und fiskalische Krise dort gefährdet die Stabilität der gesamten Währungsunion.",
-        "faktencheck": "Bestätigt durch Handelsblatt, NZZ und CNBC World."
-      },
-      "sources": [
-        "Handelsblatt",
-        "NZZ International",
-        "CNBC World"
-      ]
-    },
-    {
-      "id": "w5",
-      "category": "GLOBALER HANDEL & AUTOINDUSTRIE",
-      "region": "USA / Deutschland / Lateinamerika",
-      "urgency": "Strukturell",
-      "readTime": "3 Min.",
-      "verificationBadge": "3 Agenturen (Reuters, Bloomberg, dpa)",
-      "leadSources": [
-        "Handelsblatt",
-        "Financial Times",
-        "CNBC World"
-      ],
-      "headline": "Audi baut 4-Milliarden-Werk in den USA: Trump bestätigt Handelsblatt-Bericht",
-      "summary": "US-Präsident Donald Trump hat offizielle Pläne bestätigt, wonach Audi (VW-Konzern) ein neues, 4 Milliarden Dollar schweres SUV-Werk im US-Bundesstaat Georgia errichten wird. Im Gegenzug setzt der Konzern auf Zoll-Erleichterungen, während die IG Metall harte Bedingungen stellt.",
-      "contextExplanation": "Der Schritt verdeutlicht den massiven Druck auf europäische Automobilkonzerne, ihre Produktion direkt in den US-Dollar-Raum zu verlagern, um drohenden protektoistischen Zöllen unter der US-Regierung zu entgehen. Gleichzeitig kämpft die deutsche Heimatbasis mit enormen Transformationsschmerzen, hohen Energiepreisen und harten Sparrunden (wie bei Volkswagen und Zulieferern wie Stihl).",
-      "hasDivergingNarratives": {
-        "us": "Feier des Investitionserfolgs als Beweis für die Wirksamkeit protektionistischer US-Handelspolitik.",
-        "eu": "Sorge vor einer schleichenden Deindustrialisierung Deutschlands und dem Abfluss von Schlüsseltechnologien in die USA.",
-        "asia": "Analyse der globalen Wettbewerbsfähigkeit europäischer Autohersteller im Schatten des US-China-Technologiewechsels."
-      },
-      "perspectives": {
-        "us": "Schaffung von Tausenden Arbeitsplätzen in Georgia und Stärkung der US-Automobilbasis.",
-        "eu": "Gewerkschaften fordern Garantien für europäische Standorte und kritisieren die Verlagerung in den Dollar-Raum.",
-        "asia": "Beurteilung des VW-Schritts als notwendige, aber schmerzhafte Anpassung an den Protektionismus."
-      },
-      "transmission": [
-        {
-          "stage": "Ursache",
-          "node": "US-Handelspolitik",
-          "detail": "Drohende Zölle zwingen Autobauer zu lokalen Investitionen"
-        },
-        {
-          "stage": "Übertragung",
-          "node": "Direktinvestitionen",
-          "detail": "Audi plant 4-Milliarden-Dollar-Fabrik in Georgia"
-        },
-        {
-          "stage": "Marktfolge",
-          "node": "Deindustrialisierung",
-          "detail": "Erhöht den Druck auf deutsche Standorte und Arbeitsplätze"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "Audi baut neues SUV-Werk für 200.000 Fahrzeuge jährlich in Georgia.",
-          "IG Metall fordert klare Standort- und Beschäftigungsgarantien in Deutschland.",
-          "Stihl und Volkswagen kämpfen parallel mit massiven Umstrukturierungen."
-        ],
-        "warumWichtig": "Die Abwanderung deutscher Kernindustrien in die USA verändert die europäische Wirtschaftsstruktur nachhaltig.",
-        "faktencheck": "Exklusiv bestätigt durch das Handelsblatt und CNBC World."
-      },
       "sources": [
         "Handelsblatt",
         "Financial Times",
-        "CNBC World"
-      ]
+        "Wall Street Journal"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen"
     },
     {
-      "id": "w6",
-      "category": "GEOPOLITIK & LATEINAMERIKA",
-      "region": "Brasilien / Kolumbien",
-      "urgency": "Akut",
-      "readTime": "3 Min.",
-      "verificationBadge": "3 Agenturen (Reuters, AFP, EFE)",
-      "leadSources": [
-        "Financial Times",
+      "region": "ASIEN · Industriepolitik & Immobilien",
+      "title": "Chinesische Immobilienkrise greift auf Vanke über; Japan ringt um Industriestrategie",
+      "summary": "Schwerwiegende Verluste beim Immobilienriesen Vanke nähren Zweifel an der Wirksamkeit staatlicher Stützungsmaßnahmen, während Japan seine industrielle Wachstumsstrategie schärft.",
+      "contextExplanation": "Die Krise des chinesischen Immobiliensektors erfasst mit dem massiven Verlustbericht des Leitentwicklers Vanke nun auch Unternehmen, die bislang als stabil galten. Dies wirft an den internationalen Finanzmärkten erneut die Frage auf, ob die Interventionen der Pekinger Zentralregierung ausreichen, um eine systemische Pleitewelle abzuwenden. Parallel dazu steht Asiens drittgrößte Volkswirtschaft Japan vor strategischen Herausforderungen: Premierministerin Sanae Takaichi kämpft mit einer unzureichenden Fokussierung ihrer industriepolitischen Agenda, während japanische Automobil- und Industrieunternehmen unter dem harten Konkurrenzdruck chinesischer Elektrofahrzeuge in Südostasien leiden und gezwungen sind, risikoreiche Kurswechsel vorzunehmen. Strukturell verdeutlichen diese Entwicklungen die schmerzhaften Transformationsprozesse in den asiatischen Schlüsselmärkten.",
+      "longTermImpact": "Die anhaltende Immobilienkrise in China dämpft das langfristige Wachstumspotenzial des Landes spürbar und zwingt globale Rohstoffmärkte zur Neuausrichtung. Japans Industrie muss sich technologisch schneller anpassen, um im globalen Wettbewerb gegen China zu bestehen.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Vanke meldete immense Verluste und verstärkt die Sorgen um den chinesischen Häusermarkt.",
+        "Analysten kritisieren mangelnde Fokussierung in der japanischen Industriepolitik.",
+        "Japanische Konzerne reagieren auf chinesische E-Auto-Konkurrenz in Südostasien mit Neuausrichtungen."
+      ],
+      "sources": [
         "Wall Street Journal",
-        "CNBC World"
+        "Nikkei Asia",
+        "Financial Times"
       ],
-      "headline": "Richtungsentscheidung in Brasilien: Bolsonaro und Lula liefern sich Kopf-an-Kopf-Rennen",
-      "summary": "Am Vorabend der Stichwahl um das Präsidentenamt in Lateinamerikas größtem Land liefern sich der linksoffizielle Amtsinhaber Lula da Silva und der rechtsgerichtete Herausforderer Jair Bolsonaro ein extrem knappen Wahlkampf. Das Ergebnis wird Lateinamerikas geopolitische Ausrichtung maßgeblich prägen.",
-      "contextExplanation": "Die Wahl in Brasilien findet vor dem Hintergrund latenter sozialer Spannungen, wirtschaftlicher Herausforderungen und geopolitischer Neuausrichtungen statt. Während Bolsonaro die Annäherung an die USA unter Trump sucht, verteidigt Lula Brasiliens Rolle in den BRICS. Parallel dazu destabilisieren in Nachbarländern wie Kolumbien kokainfinanzierte Milizen trotz früherer Friedensabkommen den Staat.",
-      "hasDivergingNarratives": {
-        "us": "Fokus auf die Frage, ob Brasilien sich wieder stärker an die westliche US-Handelspolitik anlehnt oder den multipolaren BRICS-Kurs fortsetzt.",
-        "eu": "Beobachtung mit Augenmerk auf Klima-, Amazonas- und Umweltschutzpolitik sowie Handelsabkommen (Mercosur).",
-        "asia": "Interesse an der Stabilität des wichtigsten lateinamerikanischen Partners im BRICS-Bündnis."
-      },
-      "perspectives": {
-        "us": "Ein Sieg Bolsonaros könnte Washingtons Einfluss in Südamerika stärken.",
-        "eu": "Sorge vor Rückschritten beim Wald- und Klimaschutz bei einem Regierungswechsel.",
-        "asia": "Kontinuität im rohstoffintensiven Handel mit China bei einem Sieg Lulas."
-      },
-      "transmission": [
-        {
-          "stage": "Ursache",
-          "node": "Präsidentschaftswahl",
-          "detail": "Polarisierte Stichwahl zwischen Lula und Bolsonaro"
-        },
-        {
-          "stage": "Übertragung",
-          "node": "Regionale Politik",
-          "detail": "Weichenstellung für Brasiliens Außen- und Wirtschaftskurs"
-        },
-        {
-          "stage": "Marktfolge",
-          "node": "Rohstoffmärkte",
-          "detail": "Auswirkungen auf Agrar-, Kaffee- und Energiemärkte sowie den Mercosur"
-        }
+      "verificationStatus": "Verifiziert · 3 Quellen"
+    },
+    {
+      "region": "DEUTSCHLAND · Strukturwandel & Regulierung",
+      "title": "Berlin plant strengere Hürden für Vergesellschaftungen im Schatten des Regierungswechsels",
+      "summary": "Im Eilverfahren vor einer neuen Regierungsbildung will die Bundesrepublik Enteignungen und Vergesellschaftungen erschweren, während die deutsche Industrie über den Standort klagt.",
+      "contextExplanation": "Die noch amtierende Bundesregierung unternimmt einen wettlaufartigen Versuch, kurz vor einer Neuformierung in Berlin gesetzliche Hürden für Vergesellschaftungen drastisch anzuheben. Dieser Vorstoß, maßgeblich von Politikern wie Alexander Dobrindt vorangetrieben, zielt darauf ab, sozialistisch oder populistisch motivierte Enteignungsdebatten langfristig rechtlich abzusichern und zu verkomplizieren. Gleichzeitig leidet der deutsche Industriestandort unter strukturellen Defiziten: Führende Mittelständler und Weltmarktführer wie der Motorsägen-Hersteller Stihl kritisieren offene Standortnachteile, hohe Energie- und Regulierungskosten und wandern mit Zukunftsinvestitionen ins Ausland ab. Trotz vereinzelter Lichtblicke im Baugewerbe durch Großaufträge bleibt die wirtschaftliche Grundstimmung in Deutschland von Skepsis geprägt.",
+      "longTermImpact": "Die regulatorischen Änderungen bei Vergesellschaftungen schaffen langfristig Rechtssicherheit für Investoren, können aber politische Konflikte auf kommunaler Ebene verschärfen. Die anhaltende Investitionsflaute in der produzierenden Industrie gefährdet Deutschlands Status als Export- und Innovationsnation.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Bundesregierung plant Gesetzesverschärfung gegen einfache Vergesellschaftungen.",
+        "Industrievertreter bemängeln fehlende Rahmenbedingungen für Neuinvestitionen in Deutschland.",
+        "Baubranche verzeichnet zwar Rekordanstieg bei Großaufträgen, der Mietmarkt bleibt jedoch angespannt."
       ],
-      "details": {
-        "wasPassiert": [
-          "Letzte Kundgebungen und Kopf-an-Kopf-Umfragen vor der brasilianischen Stichwahl.",
-          "Kolumbien kämpft parallel mit wachsendem Druck durch bewaffnete Kokain-Gangs.",
-          "Kaffeemärkte reagieren volatil auf Handels- und Zollsorgen in der Region."
-        ],
-        "warumWichtig": "Brasilien ist die zehntgrößte Volkswirtschaft der Welt und ein zentraler Akteur im globalen Rohstoffhandel und der Klimadiplomatie.",
-        "faktencheck": "Bestätigt durch Berichte der Financial Times und des Wall Street Journal."
-      },
       "sources": [
-        "Financial Times",
-        "WSJ World",
-        "CNBC World"
-      ]
+        "Handelsblatt",
+        "Tagesschau Wirtschaft",
+        "dpa"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen"
     }
   ],
-  "marketNews": [
+  "cards": [
     {
-      "id": "m1",
-      "assetClass": "AKTIEN GLOBAL",
-      "ticker": "NDX",
-      "horizon": "5J+ Strukturtrend",
-      "impact": "Vorsicht",
-      "impactTone": "neutral",
-      "verificationBadge": "Marktdaten & Leitmedien",
-      "leadSources": [
-        "WSJ Markets",
-        "Financial Times"
+      "id": "card-1",
+      "category": "equities",
+      "sectorLabel": "Halbleiter / Künstliche Intelligenz",
+      "ticker": "NASDAQ:NVDA",
+      "company": "NVIDIA Corporation",
+      "direction": "Kurzfristiger Schock / Langfristiger Burggraben",
+      "isPositive": true,
+      "moatScore": 95,
+      "headline": "DeepSeek-Schock erschüttert Tech-Giganten: KI-Infrastruktur im harten Praxistest",
+      "contextExplanation": "Das Aufkommen des chinesischen KI-Modells DeepSeek hat an den globalen Börsen einen massiven Ausverkauf ausgelöst, der besonders Chip-Schwergewichte wie Nvidia hart traf. Anleger sorgen sich, dass effizientere Algorithmen den schier unendlichen Bedarf an Rechenleistung und teuren Grafikprozessoren dämpfen könnten. Dennoch bleibt der strukturelle Hunger nach Cloud-Infrastruktur und autonomer Rechenkapazität auf 5-Jahres-Sicht ungebrochen. Korrekturen dieser Art bieten langfristig orientierten Investoren Einstiegsgelegenheiten in absolute Marktmonopole.",
+      "thesis": "Die technologische Führung und das Software-Ökosystem von Nvidia lassen sich nicht so leicht durch algorithmische Effizienz ersetzen; der globale Wettlauf um souveräne KI-Systeme läuft auf Hochtouren.",
+      "bearCase": "Sollten chinesische Start-ups mit Bruchteilen der Kosten vergleichbare Ergebnisse erzielen, könnten die margenstarken Budgets der westlichen Hyperscaler empfindlich unter Druck geraten.",
+      "hasDivergingNarratives": true,
+      "narrativeComparison": "Während Marktteilnehmer panisch auf kurzfristige Margenrisiken durch Billig-KI blicken, betonen Industrie-Insider, dass effizientere Modelle den Gesamtmarkt für KI-Anwendungen erst recht explosionsartig vergrößern.",
+      "bullets": [
+        "Nvidia-Aktie verzeichnet im Zuge des DeepSeek-Ausverkaufs zweistellige Kursverluste",
+        "Sich ändernde KI-Infrastruktur-Budgets der Hyperscaler erfordern genaue Marktbeobachtung",
+        "Langfristiger Secular Growth Trend intakt"
       ],
-      "headline": "KI-Infrastruktur-Rout: Ende des Hypes oder gesunde Konsolidierung?",
-      "summary": "Der massive Abverkauf bei KI-Titeln wie Nvidia infolge des DeepSeek-Modell-Schocks markiert eine Zäsur für die Bewertung von KI-Infrastruktur. Langfristig müssen sich Unternehmen nun an realen Margen statt an Wachstumsfantasien messen lassen.",
-      "contextExplanation": "Die bisherige Bewertung basierte auf einer exponentiellen Nachfrageerwartung. Der Markteintritt effizienterer, günstigerer KI-Modelle wie DeepSeek untergräbt das Monopol der bisherigen Hardware-Giganten und zwingt zu einer Neubewertung der Investitionsrenditen (ROI) bei KI-Infrastruktur.",
-      "bullCase": "Die technologische Disruption durch DeepSeek beschleunigt die KI-Adoption in der Realwirtschaft und schafft neue, breitere Umsatzquellen für Hardware-Anbieter.",
-      "bearCase": "Die Margen der Halbleiter-Giganten könnten durch den zunehmenden Wettbewerb und sinkende Preise für Rechenleistung dauerhaft unter Druck geraten.",
-      "transmission": [
-        {
-          "stage": "Treiber",
-          "node": "Technologie",
-          "detail": "Disruptive KI-Modell-Effizienz"
-        },
-        {
-          "stage": "Bilanz",
-          "node": "Unternehmen",
-          "detail": "Margenkompression bei Hardware-Herstellern"
-        },
-        {
-          "stage": "Allokation",
-          "node": "Portfolio",
-          "detail": "Umschichtung von Hardware zu KI-Anwendungssoftware"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "16% Kursverlust bei Nvidia",
-          "Hohe Volatilität bei KI-Infrastruktur-Werten"
-        ],
-        "warumWichtig": "Die Bewertung von KI-Werten war historisch hoch; eine Normalisierung ist für die langfristige Stabilität des Marktes notwendig.",
-        "faktencheck": "Marktdaten zeigen eine Korrelation zwischen DeepSeek-News und Tech-Selloff."
-      },
       "sources": [
-        "WSJ Markets",
-        "CNBC World"
-      ]
-    },
-    {
-      "id": "m2",
-      "assetClass": "ZINSEN",
-      "ticker": "BUND",
-      "horizon": "5J+ Strukturtrend",
-      "impact": "Vorsicht",
-      "impactTone": "negative",
-      "verificationBadge": "Marktdaten & Leitmedien",
-      "leadSources": [
-        "Tagesschau Wirtschaft",
-        "CNBC World"
-      ],
-      "headline": "Frankreichs Schuldenkrise: Systemisches Risiko für die Eurozone",
-      "summary": "Die steigenden Anleiherenditen in Frankreich signalisieren eine wachsende Fiskalkrise, die das Vertrauen in die Euro-Stabilität langfristig belasten könnte. Investoren müssen das Risiko einer erneuten Euro-Krise in ihre Allokation einpreisen.",
-      "contextExplanation": "Frankreichs Haushaltsdefizit und die sozialen Unruhen führen zu einer Risikoaufschlag-Ausweitung. Dies zwingt die EZB in ein Dilemma zwischen Inflationsbekämpfung und der Stützung hochverschuldeter Mitgliedsstaaten.",
-      "bullCase": "Die EZB interveniert entschlossen mit neuen Stabilitätsmechanismen, um die Anleihemärkte der Eurozone zu beruhigen.",
-      "bearCase": "Politische Instabilität in Frankreich und Italien führt zu einer dauerhaften Fragmentierung der Euro-Anleihemärkte.",
-      "transmission": [
-        {
-          "stage": "Treiber",
-          "node": "Politik",
-          "detail": "Soziale Unruhen und Haushaltsdefizite"
-        },
-        {
-          "stage": "Bilanz",
-          "node": "Unternehmen",
-          "detail": "Steigende Refinanzierungskosten für europäische Firmen"
-        },
-        {
-          "stage": "Allokation",
-          "node": "Portfolio",
-          "detail": "Übergewichtung von Core-Staaten (Bunds) gegenüber Peripherie"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "Anleiherenditen auf 24-Jahres-Hoch",
-          "Massive soziale Proteste in Frankreich"
-        ],
-        "warumWichtig": "Die Fiskalpolitik ist der größte Unsicherheitsfaktor für europäische Staatsanleihen.",
-        "faktencheck": "Renditedaten der französischen Staatsanleihen bestätigen den Trend."
-      },
-      "sources": [
-        "Tagesschau Wirtschaft",
-        "CNBC World"
-      ]
-    },
-    {
-      "id": "m3",
-      "assetClass": "AKTIEN GLOBAL",
-      "ticker": "LUXURY",
-      "horizon": "5J+ Strukturtrend",
-      "impact": "Vorsicht",
-      "impactTone": "negative",
-      "verificationBadge": "Marktdaten & Leitmedien",
-      "leadSources": [
-        "Financial Times"
-      ],
-      "headline": "Struktureller Nachfragerückgang in China belastet Luxussektor",
-      "summary": "Der massive Wertverlust bei Luxusgüterherstellern reflektiert eine strukturelle Abkühlung der chinesischen Konsumnachfrage. Das Geschäftsmodell 'Wachstum durch China' steht vor einer langjährigen Korrektur.",
-      "contextExplanation": "Die Immobilienkrise in China (Vanke-Problematik) entzieht der Mittelschicht Kaufkraft und Vertrauen. Luxusmarken müssen ihre Abhängigkeit von diesem Markt überdenken und ihre Margenstrukturen anpassen.",
-      "bullCase": "Luxusmarken diversifizieren erfolgreich in aufstrebende Märkte wie Indien und Südostasien.",
-      "bearCase": "Die strukturelle Schwäche in China ist dauerhaft und führt zu einer langfristigen Neubewertung der Luxus-Multiples.",
-      "transmission": [
-        {
-          "stage": "Treiber",
-          "node": "Makro-Faktor",
-          "detail": "Immobilienkrise in China"
-        },
-        {
-          "stage": "Bilanz",
-          "node": "Unternehmen",
-          "detail": "Rückgang der operativen Margen"
-        },
-        {
-          "stage": "Allokation",
-          "node": "Portfolio",
-          "detail": "Untergewichtung von zyklischen Konsumgütern"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "250 Mrd. Euro Wertverlust im Luxussektor",
-          "Vanke-Krise verschärft sich"
-        ],
-        "warumWichtig": "China war der primäre Wachstumstreiber für den Luxussektor der letzten Dekade.",
-        "faktencheck": "Finanzberichte der großen Luxuskonzerne zeigen sinkende Umsätze in Asien."
-      },
-      "sources": [
+        "Wall Street Journal",
         "Financial Times",
-        "WSJ"
-      ]
-    },
-    {
-      "id": "m4",
-      "assetClass": "ROHSTOFFE",
-      "ticker": "GOLD",
-      "horizon": "5J+ Strukturtrend",
-      "impact": "Konstruktiv",
-      "impactTone": "positive",
-      "verificationBadge": "Marktdaten & Leitmedien",
-      "leadSources": [
-        "WSJ Markets"
-      ],
-      "headline": "Geopolitische Instabilität stützt Gold als langfristigen Anker",
-      "summary": "Trotz kurzfristiger Gewinnmitnahmen bleibt Gold aufgrund der globalen geopolitischen Fragmentierung (Nahost, Ukraine, NATO-Sabotage) ein essenzieller Bestandteil zur Absicherung gegen systemische Risiken.",
-      "contextExplanation": "Die Zunahme von Sabotageakten an kritischer Infrastruktur und die Ausweitung regionaler Konflikte erhöhen die Nachfrage nach physischen Safe-Haven-Assets, unabhängig von kurzfristigen Zinsbewegungen.",
-      "bullCase": "Zentralbanken setzen ihre Goldkäufe fort, um sich von der Abhängigkeit des US-Dollars zu lösen.",
-      "bearCase": "Stark steigende Realzinsen könnten die Opportunitätskosten für Goldbesitz kurzfristig erhöhen.",
-      "transmission": [
-        {
-          "stage": "Treiber",
-          "node": "Politik",
-          "detail": "Geopolitische Konflikte und Sabotage"
-        },
-        {
-          "stage": "Bilanz",
-          "node": "Unternehmen",
-          "detail": "Absicherung gegen Währungsrisiken"
-        },
-        {
-          "stage": "Allokation",
-          "node": "Portfolio",
-          "detail": "Erhöhung der Gold-Allokation zur Volatilitätsreduktion"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "Gold-Korrektur nach Rekordhochs",
-          "NATO-Reaktion auf Sabotage"
-        ],
-        "warumWichtig": "Gold dient als Versicherung gegen das Versagen geopolitischer Sicherheitsarchitekturen.",
-        "faktencheck": "Historische Korrelation zwischen geopolitischen Krisen und Goldpreis."
-      },
-      "sources": [
-        "WSJ Markets",
-        "NZZ International"
-      ]
-    },
-    {
-      "id": "m5",
-      "assetClass": "AKTIEN GLOBAL",
-      "ticker": "AUTO",
-      "horizon": "5J+ Strukturtrend",
-      "impact": "Vorsicht",
-      "impactTone": "negative",
-      "verificationBadge": "Marktdaten & Leitmedien",
-      "leadSources": [
-        "Handelsblatt",
-        "CNBC World"
-      ],
-      "headline": "Automobilindustrie im Transformations-Dilemma: USA vs. Europa",
-      "summary": "Die Verlagerung von Produktionskapazitäten in die USA (Audi/VW) unterstreicht den Druck auf den Standort Deutschland. Die Transformation zur E-Mobilität bei gleichzeitigem Margendruck durch Handelskonflikte bleibt eine enorme Herausforderung.",
-      "contextExplanation": "Die Kombination aus hohen Energiekosten in Deutschland und dem Zwang zur Lokalisierung in den USA (Trump-Politik) zwingt deutsche Autobauer zu massiven Investitionen bei gleichzeitig sinkender Profitabilität im Heimatmarkt.",
-      "bullCase": "Erfolgreiche Skalierung der E-Mobilität durch neue Modelle führt zu einer Erholung der Margen ab 2027.",
-      "bearCase": "Strukturelle Überkapazitäten und Streiks (IG Metall) führen zu dauerhaftem Margenverfall.",
-      "transmission": [
-        {
-          "stage": "Treiber",
-          "node": "Politik",
-          "detail": "Handelspolitik und Standortwettbewerb"
-        },
-        {
-          "stage": "Bilanz",
-          "node": "Unternehmen",
-          "detail": "Hohe Investitionslast bei sinkenden Margen"
-        },
-        {
-          "stage": "Allokation",
-          "node": "Portfolio",
-          "detail": "Selektive Auswahl von Autobauern mit hoher US-Präsenz"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "Audi baut neues Werk in den USA",
-          "Drohende Streiks bei VW"
-        ],
-        "warumWichtig": "Die Automobilbranche ist das Rückgrat der deutschen Industrie und ein Indikator für die globale Wettbewerbsfähigkeit.",
-        "faktencheck": "Investitionspläne der Automobilkonzerne bestätigen den Trend zur Regionalisierung."
-      },
-      "sources": [
-        "Handelsblatt",
-        "CNBC World"
-      ]
-    },
-    {
-      "id": "m6",
-      "assetClass": "WÄHRUNGEN",
-      "ticker": "JPY / CHF",
-      "horizon": "5J+ Strukturtrend",
-      "impact": "Konstruktiv",
-      "impactTone": "positive",
-      "verificationBadge": "Marktdaten & Leitmedien",
-      "leadSources": [
-        "WSJ Markets"
-      ],
-      "headline": "Flucht in Safe-Haven-Währungen: Yen und Franken als Stabilitätsanker",
-      "summary": "Die Aufwertung von Yen und Schweizer Franken unterstreicht die Rolle dieser Währungen als ultimative Absicherung in Zeiten globaler Unsicherheit. Investoren nutzen diese als Hedge gegen Tech-Rout und geopolitische Eskalation.",
-      "contextExplanation": "In Phasen hoher Unsicherheit (DeepSeek-Schock, NATO-Sabotage) fungieren JPY und CHF als Liquiditätsanker. Die strukturelle Nachfrage bleibt hoch, solange die globalen Risiken nicht abnehmen.",
-      "bullCase": "Anhaltende geopolitische Spannungen führen zu einer weiteren Flucht in sichere Währungsräume.",
-      "bearCase": "Eine unerwartete Normalisierung der Geldpolitik in Japan könnte den Yen-Carry-Trade wieder befeuern.",
-      "transmission": [
-        {
-          "stage": "Treiber",
-          "node": "Makro-Faktor",
-          "detail": "Globale Risikoaversion"
-        },
-        {
-          "stage": "Bilanz",
-          "node": "Unternehmen",
-          "detail": "Währungsbedingte Ertragsschwankungen bei Exporteuren"
-        },
-        {
-          "stage": "Allokation",
-          "node": "Portfolio",
-          "detail": "Absicherung von Währungsrisiken durch JPY/CHF-Positionen"
-        }
-      ],
-      "details": {
-        "wasPassiert": [
-          "Yen und Franken steigen gegenüber dem Dollar",
-          "Marktvolatilität nimmt zu"
-        ],
-        "warumWichtig": "Währungen sind der erste Indikator für die globale Risikowahrnehmung der institutionellen Investoren.",
-        "faktencheck": "Devisenmarktdaten zeigen klare Fluchtbewegungen in Safe-Haven-Währungen."
-      },
-      "sources": [
-        "WSJ Markets",
         "Bloomberg"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen",
+      "sparkline": [
+        120,
+        135,
+        142,
+        138,
+        125,
+        110,
+        118,
+        124
       ]
-    }
-  ],
-  "intermarketMatrix": [
-    {
-      "trigger": "DeepSeek-Schock und KI-Abverkauf",
-      "channel": "Sektorweite Neubewertung von Technologie- und Infrastrukturwerten",
-      "assetImpact": "Starke Kursverluste bei KI- und Halbleiter-Aktien, Umschichtung in defensive Sektoren",
-      "confidence": "Hoch"
     },
     {
-      "trigger": "Krawalle und Schuldenkrise in Frankreich",
-      "channel": "Ausverkauf französischer Staatsanleihen treibt Renditen auf 24-Jahres-Hoch",
-      "assetImpact": "Steigende Risikoaufschläge (Spreads) in der Eurozone, Flucht in den Schweizer Franken",
-      "confidence": "Hoch"
+      "id": "card-2",
+      "category": "equities",
+      "sectorLabel": "Industrietechnik / Elektromobilität",
+      "ticker": "XETR:STHL",
+      "company": "Andreas Stihl AG & Co. KG (Vergleichsmarkt / Industrie)",
+      "direction": "Struktureller Umbau / Standortrisiko",
+      "isPositive": false,
+      "moatScore": 72,
+      "headline": "Motorenwerke unter Druck: Stihl sieht für klassische Fertigung in Deutschland schwarz",
+      "contextExplanation": "Der weltweite Wandel hin zu kabelloser Elektrotechnik stellt Traditionskonzerne vor gewaltige Transformationen. Am Beispiel des Motorsägen-Weltmarktführers Stihl zeigt sich, wie stark hohe Energiepreise, Regulierung und Lohnkosten den Standort Deutschland belasten. Während die Kernkompetenz bei Akku-Geräten global gefragt ist, wandert die Fertigung zunehmend in kosteneffizientere Regionen ab. Für den Kapitalmarkt bedeutet dies, dass industrielle Dickschiffe ihre Margen nur durch radikale Restrukturierungen sichern können.",
+      "thesis": "Wer den Sprung von fossiler Verbrennertechnik zur hocheffizienten Akkutechnologie vollzieht, sichert sich langfristig margenstarke Marktanteile im professionellen Segment.",
+      "bearCase": "Hohe Standortkosten und verfehlte europäische Energie- und Industriepolitik könnten deutsche Industrie-Ikonen dauerhaft in ihrer internationalen Wettbewerbsfähigkeit schwächen.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Management warnt offen vor fehlender Zukunftsfähigkeit klassischer deutscher Produktionsstrukturen",
+        "Kräftiger Investitionsbedarf in alternative Antriebskonzepte und globale Lieferketten",
+        "Verlagerung von Fertigungskapazitäten ins Ausland nimmt zu"
+      ],
+      "sources": [
+        "Handelsblatt",
+        "Financial Times",
+        "Reuters"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen",
+      "sparkline": [
+        80,
+        78,
+        75,
+        72,
+        70,
+        68,
+        65,
+        63
+      ]
     },
     {
-      "trigger": "Sabotage von Tiefseekabeln und NATO-Großeinsatz",
-      "channel": "Erhöhte geopolitische Risikoprämien",
-      "assetImpact": "Starke Nachfrage nach Gold und sicheren Währungen (Yen, Franken)",
-      "confidence": "Hoch"
+      "id": "card-3",
+      "category": "commodities",
+      "sectorLabel": "Edelmetalle / Monetäre Sicherheit",
+      "ticker": "TVC:GOLD",
+      "company": "Gold Spot",
+      "direction": "Inflationärer Schutz / Geopolitischer Anker",
+      "isPositive": true,
+      "moatScore": 91,
+      "headline": "Gold und Silber unter Druck: Gewinnmitnahmen nach Rekordjagd",
+      "contextExplanation": "Trotz massiver geopolitischer Krisenherde – vom andauernden Nahostkonflikt über Sabotageakte an Unterseekabeln in der Ostsee bis hin zu Handelsspannungen – mussten die Edelmetalle kurzfristige Rücksetzer hinnehmen. Gold und Silber gerieten nach Gewinnmitnahmen in den letzten Handelssitzungen unter Druck. Langfristig bleibt Gold jedoch der ultimative Krisenpfeiler und sicherer Hafen für institutionelle Investoren und Zentralbanken, die sich gegen ausufernde Staatsverschuldungen absichern.",
+      "thesis": "Anhaltende geopolitische Fragmentierung und strukturelle Inflation stützen den physischen Goldbedarf der Notenbanken weltweit nachhaltig.",
+      "bearCase": "Ein überraschend starker US-Dollar und länger als erwartete Hochzinsphasen können kurzfristig opportunistische Kapitalabflüsse aus Edelmetallen auslösen.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Gold verzeichnet moderate Kursverluste, bleibt aber auf hohem Niveau stabil",
+        "Zentralbanken weltweit bauen ihre Goldreserven strategisch weiter aus",
+        "Absicherung gegen geldpolitische Unwägbarkeiten und Staatsschuldenkrisen"
+      ],
+      "sources": [
+        "Wall Street Journal",
+        "Bloomberg",
+        "AP"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen",
+      "sparkline": [
+        2000,
+        2080,
+        2150,
+        2220,
+        2300,
+        2410,
+        2380,
+        2350
+      ]
+    },
+    {
+      "id": "card-4",
+      "category": "commodities",
+      "sectorLabel": "Industriemetalle / Grüne Transformation",
+      "ticker": "COMEX:HG1!",
+      "company": "Kupfer Future",
+      "direction": "Elektrifizierung / Defizitärer Markt",
+      "isPositive": true,
+      "moatScore": 88,
+      "headline": "Kupfer als Rückgrat der globalen Energiewende und KI-Infrastruktur",
+      "contextExplanation": "Kupfer bleibt das unverzichtbare Master-Metall für die globale Energiewende, den Netzausbau und die stromhungrigen Rechenzentren der Künstlichen Intelligenz. Trotz kurzfristiger makroökonomischer Dämpfer durch die schwächelnde Bauwirtschaft in China und globale Handelskonflikte zeigt die langfristige Angebotsperspektive gravierende Defizite. Da neue Minenprojekte jahrelanger Vorlaufzeiten bedürfen, droht ab Ende des Jahrzehnts eine massive Unterversorgung, die die Preise strukturell nach oben treiben dürfte.",
+      "thesis": "Das strukturelle Defizit zwischen sinkenden Erzgehalten in Minen und explodierender Nachfrage durch E-Mobilität und KI garantiert langfristig attraktive Erlöse.",
+      "bearCase": "Eine drastische, globale Rezession oder ein noch tieferer Einbruch des chinesischen Immobiliensektors könnten die Industrienachfrage kurzfristig empfindlich dämpfen.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Angebotsengpässe durch alternde Minenstrukturen und fehlende Neuinvestitionen",
+        "Massiver Zusatzbedarf durch den weltweiten Ausbau von Rechenzentren und Stromnetzen",
+        "Schlüsselrohstoff für Dekarbonisierung und Automatisierung"
+      ],
+      "sources": [
+        "Bloomberg",
+        "Financial Times",
+        "Reuters"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen",
+      "sparkline": [
+        3.8,
+        3.9,
+        4.1,
+        4.3,
+        4.2,
+        4.5,
+        4.7,
+        4.6
+      ]
+    },
+    {
+      "id": "card-5",
+      "category": "commodities",
+      "sectorLabel": "Energie / Nukleartechnologie",
+      "ticker": "NYSE:CCJ",
+      "company": "Cameco Corporation / Uranmarkt",
+      "direction": "Atom-Renaissance / Angebotsdefizit",
+      "isPositive": true,
+      "moatScore": 89,
+      "headline": "Atom-Renaissance: Finnland öffnet Endlager, globale Kernkraft-Nachfrage steigt",
+      "contextExplanation": "Die globale Kernenergie erlebt eine beispiellose Renaissance. Während Finnland grünes Licht für den Betrieb seines unterirdischen Atommüll-Endlagers gibt, suchen Industrienationen weltweit nach verlässlicher, CO2-freier Grundlastenergie – insbesondere zur Befeuerung des gigantischen Energiebedarfs von KI-Rechenzentren. Der Uranmarkt leidet seit Jahren unter einem strukturellen Angebotsdefizit, da die Primärförderung den wachsenden Bedarf durch Reaktorneubauten und Laufzeitverlängerungen bei Weitem nicht decken kann.",
+      "thesis": "Langfristige Lieferverträge zu steigenden Preisen sichern etablierten Uranproduzenten wie Cameco über Jahre hinweg hochviskose Cashflows.",
+      "bearCase": "Politische Verzögerungen bei Reaktorprojekten oder unvorhergesehene regulatorische Hürden im Minenbetrieb könnten den Markt temporär belasten.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Finnland setzt mit Inbetriebnahme des Endlagers Maßstäbe für sichere Nuklearentsorgung",
+        "Technologieriesen sichern ihren Strombedarf zunehmend direkt über Atomkraft",
+        "Angebotsknappheit bei angereichertem Uran treibt die Marktpreise"
+      ],
+      "sources": [
+        "Tagesschau",
+        "Bloomberg",
+        "Wall Street Journal"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen",
+      "sparkline": [
+        30,
+        35,
+        42,
+        48,
+        55,
+        62,
+        70,
+        75
+      ]
+    },
+    {
+      "id": "card-6",
+      "category": "crypto",
+      "sectorLabel": "Digitale Assets / Monetäres Netzwerk",
+      "ticker": "BITSTAMP:BTCUSD",
+      "company": "Bitcoin",
+      "direction": "Digitales Gold / Makro-Hedge",
+      "isPositive": true,
+      "moatScore": 86,
+      "headline": "Kryptomärkte im Spannungsfeld von Makro-Liquidität und Tech-Rout",
+      "contextExplanation": "Bitcoin bewegt sich weiterhin im dynamischen Spannungsfeld zwischen traditionellen Risiko-Assets und der Rolle als digitaler Wertspeicher. Während jüngste Tech-Abverkäufe und makroökonomische Turbulenzen auch den Kryptomarkt kurzfristig erfassten, bleibt die fundamentale Akzeptanz durch institutionelle Investoren und globale Zahlungsnetzwerke stark. In einer Welt zunehmender geopolitischer Fragmentierung, steigender Staatsschulden und digitaler Währungsreformen fungiert Bitcoin zunehmend als unzensierbare, dezentrale Versicherung.",
+      "thesis": "Die algorithmisch begrenzte Maximalmenge von 21 Millionen Coins schützt langfristig vor expansiver Geldmengen-Ausweitung der Zentralbanken.",
+      "bearCase": "Verschärfte regulatorische Eingriffe globaler Regulierungsbehörden und temporäre Liquiditätsengpässe an den Derivatemärkten bergen erhebliche Korrekturrisiken.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Institutionelle Adoption durch ETFs und globale Treasury-Strategien stützt das Fundament",
+        "Korrelation mit Tech-Aktien bricht in Stressphasen zeitweise auf",
+        "Dezentrale Netzwerksicherheit erreicht historische Höchststände"
+      ],
+      "sources": [
+        "Bloomberg",
+        "Wall Street Journal",
+        "Financial Times"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen",
+      "sparkline": [
+        40000,
+        45000,
+        52000,
+        60000,
+        65000,
+        72000,
+        68000,
+        71000
+      ]
     }
   ]
 }
