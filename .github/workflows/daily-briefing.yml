@@ -2,8 +2,7 @@ name: Meridian Daily Briefing
 
 on:
   schedule:
-    # Startet täglich um 04:45 UTC und 05:45 UTC (deckt 06:45 Uhr deutscher Sommer- & Winterzeit ab)
-    - cron: '45 5 * * *'
+    - cron: '45 5 * * *' # Täglich exakt 1x um 06:45 Uhr deutscher Zeit
   workflow_dispatch:
 
 permissions:
@@ -21,7 +20,7 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Briefing via RSS & Gemini 3-Step-Pipeline generieren
+      - name: Briefing mit 14-Tage-Rotationsfilter generieren
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -30,9 +29,26 @@ jobs:
 
           const API_KEY = process.env.GEMINI_API_KEY;
           if (!API_KEY) {
-            console.error('FEHLER: GEMINI_API_KEY ist nicht in den GitHub Secrets hinterlegt!');
+            console.error('FEHLER: GEMINI_API_KEY fehlt!');
             process.exit(1);
           }
+
+          // 1. Frühere Ticker & Themen der letzten 14 Tage aus briefing.json einlesen (Cooldown)
+          let recentHistory = [];
+          try {
+            const oldBriefing = JSON.parse(await fs.readFile('briefing.json', 'utf-8'));
+            if (Array.isArray(oldBriefing.recentHistory)) {
+              recentHistory = oldBriefing.recentHistory.slice(-14);
+            } else if (Array.isArray(oldBriefing.cards)) {
+              recentHistory = oldBriefing.cards.map(c => c.company || c.ticker);
+            }
+          } catch (e) {
+            recentHistory = [];
+          }
+
+          const blacklistPrompt = recentHistory.length > 0 
+            ? `\nBEREITS BEHANDELTE THEMEN/UNTERNEHMEN DER LETZTEN TAGE (STRIKT GESPERRT, WÄHLE ZWINGEND ANDERE!): ${recentHistory.join(', ')}\n`
+            : '';
 
           const RSS_SOURCES = [
             { name: 'WSJ World', url: 'https://feeds.a.dj.com/rss/RSSWorldNews.xml' },
@@ -64,31 +80,19 @@ jobs:
                   const cleanDesc = desc.replace(/<[^>]+>/g, '').trim().slice(0, 220);
                   if (cleanTitle) headlines.push(`[${src.name}] ${cleanTitle} — ${cleanDesc}`);
                 }
-              } catch (e) {
-                console.warn(`RSS Warnung (${src.name}):`, e.message);
-              }
+              } catch (e) {}
             }
             return headlines.join('\n');
           }
 
-          const MODELS = [
-            'gemini-3.5-flash-lite',
-            'gemini-3.1-flash-lite',
-            'gemini-3.8-flash',
-            'gemini-3.6-flash'
-          ];
+          const MODELS = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-3.8-flash', 'gemini-3.6-flash'];
 
           function safeParseJSON(raw) {
             const cleaned = String(raw || '').replace(/```json/gi, '').replace(/```/g, '').trim();
-            const first = cleaned.indexOf('{');
-            const last = cleaned.lastIndexOf('}');
-            if (first === -1 || last <= first) throw new Error('Kein JSON-Objekt gefunden');
+            const first = cleaned.indexOf('{'), last = cleaned.lastIndexOf('}');
+            if (first === -1 || last <= first) throw new Error('Kein JSON-Objekt');
             const candidate = cleaned.slice(first, last + 1);
-            try {
-              return JSON.parse(candidate);
-            } catch {
-              return JSON.parse(candidate.replace(/,\s*([\]}])/g, '$1'));
-            }
+            try { return JSON.parse(candidate); } catch { return JSON.parse(candidate.replace(/,\s*([\]}])/g, '$1')); }
           }
 
           async function callGeminiJSON(promptText) {
@@ -101,22 +105,14 @@ jobs:
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     contents: [{ parts: [{ text: promptText }] }],
-                    generationConfig: {
-                      temperature: 0.25,
-                      maxOutputTokens: 6000,
-                      responseMimeType: 'application/json'
-                    }
+                    generationConfig: { temperature: 0.25, maxOutputTokens: 6000, responseMimeType: 'application/json' }
                   })
                 });
-                if (!res.ok) {
-                  const errTxt = await res.text();
-                  throw new Error(`HTTP ${res.status} (${model}): ${errTxt.slice(0, 180)}`);
-                }
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
-                const raw = (data?.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || '').join('');
+                const raw = (data?.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('');
                 return safeParseJSON(raw);
               } catch (err) {
-                console.warn(`Modell ${model} fehlgeschlagen:`, err.message);
                 lastErr = err;
               }
             }
@@ -124,152 +120,144 @@ jobs:
           }
 
           async function main() {
-            console.log('1/4 Lade aktuelle RSS-Feeds führender Leitmedien...');
             const rssContext = await fetchRssHeadlines();
             const now = new Date();
             const todayStr = now.toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin', day: '2-digit', month: '2-digit', year: 'numeric' });
             const timeStr = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
 
-            const baseHeader = `Du bist Chefredakteur von 'Meridian' (Global Intelligence Terminal im Stil von The Economist, Wall Street Journal, Handelsblatt). Heute ist der ${todayStr}.
-          WICHTIG: Verwende innerhalb von JSON-Strings keine doppelten Anführungszeichen, sondern einfache ('...').
-          Nutze diese aktuellen Schlagzeilen führender Leitmedien und gleiche Fakten über internationale Agenturen (Reuters, AP, dpa, AFP, Bloomberg) ab:
+            const baseHeader = `Du bist Chefredakteur von 'Meridian' (Global Intelligence). Heute ist der ${todayStr}.
+          Verwende in JSON-Strings einfache Anführungszeichen ('...').
+          ANTI-NOISE-PFLICHT: Keine Gerüchte, kein Daytrading-Rauschen. Nur Fakten, die durch Leitmedien und Agenturen (Reuters, Bloomberg, dpa) gestützt sind.
+          ${blacklistPrompt}
+          AKTUELLE SCHLAGZEILEN:
           ${rssContext}\n\n`;
 
-            console.log('2/4 Generiere 6 Welt- & Wirtschafts-Dossiers...');
-            const worldRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers auf Deutsch als JSON.
-          Pflichtfelder je Eintrag in "worldNews":
-          {
+            console.log('1/3 Welt-Dossiers generieren...');
+            const worldRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 Welt- & Makro-Dossiers mit verschiedenen Weltregionen (max 1 pro Region).
+          JSON: {
             "worldNews": [
               {
-                "region": "REGION · THEMENFELD (z. B. USA · Geldpolitik oder Nahost · Geopolitik)",
-                "title": "Prägnante, aussagekräftige deutsche Überschrift",
-                "summary": "1-2 Sätze Zusammenfassung, was konkret passiert ist.",
-                "contextExplanation": "Ausführliche Hintergrund-Einordnung (4-5 vollständige Sätze): Warum passiert das genau jetzt? Welche wirtschaftlichen, geopolitischen oder strukturellen Mechanismen stecken dahinter?",
-                "longTermImpact": "2-3 Sätze zu den langfristigen Folgen für Wirtschaft und Märkte in den nächsten 1-5 Jahren.",
+                "region": "REGION · THEMENFELD",
+                "title": "Prägnante Überschrift",
+                "summary": "1-2 Sätze, was konkret passiert ist.",
+                "contextExplanation": "4-5 Sätze Tiefenanalyse (Warum jetzt? Welche Mechanismen stecken dahinter?).",
+                "longTermImpact": "2 Sätze zu den 1-5 Jahresfolgen.",
                 "hasDivergingNarratives": false,
-                "narrativeComparison": "Nur ausfüllen (2-3 Sätze), falls US-, europäische und asiatische Medien das Thema unterschiedlich bewerten, sonst leerer String.",
-                "bullets": ["Konkreter Fakt 1", "Konkreter Fakt 2", "Konkreter Fakt 3"],
+                "narrativeComparison": "",
+                "bullets": ["Fakt 1", "Fakt 2", "Fakt 3"],
                 "sources": ["Wall Street Journal", "Handelsblatt", "Reuters"],
                 "verificationStatus": "Verifiziert · 3 Quellen"
               }
             ]
           }`);
 
-            console.log('3/4 Generiere 6 Kapitalmarkt-Kacheln (Aktien, Rohstoffe, Krypto)...');
-            const cardsRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 tiefgehende Kapitalmarkt-Kacheln (Anlagehorizont 5+ Jahre, auch am Wochenende mit Fokus auf die aktuelle Struktur- & Nachrichtenlage) auf Deutsch als JSON:
-          - 2x category "equities" (global führende Unternehmen mit echtem TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML, XETR:SAP, NYSE:ETN)
-          - 3x category "commodities" (Gold mit Ticker TVC:GOLD, Kupfer mit Ticker COMEX:HG1!, Uran mit Ticker NYSE:CCJ)
-          - 1x category "crypto" (Bitcoin mit Ticker BITSTAMP:BTCUSD)
-          Gib NUR valides JSON im exakt folgenden Format zurück:
-          {
+            console.log('2/3 Markt-Kacheln mit rotierender Slot-Architektur generieren...');
+            const cardsRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 Kapitalmarkt-Kacheln (Horizont 5+ Jahre) nach dieser FESTEN SLOT-ARCHITEKTUR:
+          - Slot 1 (equities): Industrie, Automatisierung & Infrastruktur (z.B. Schneider Electric, Siemens, ABB, Deere, Caterpillar, Linde)
+          - Slot 2 (equities): Pharma, Medtech oder Konsumgüter mit Preissetzungsmacht (z.B. Novo Nordisk, Intuitive Surgical, LVMH, Nestlé, Stryker)
+          - Slot 3 (commodities): Rotierender strategischer Rohstoff (z.B. Silber, Erdgas/TTF, Öl/Brent, Lithium, Seltene Erden, Kakao, Weizen)
+          - Slot 4 (commodities): Zweiter Rohstoff oder Frachtraten/Energie
+          - Slot 5 (equities): Finanzen, Zinsen & Kapitalmarktmonopole (z.B. Visa, Berkshire Hathaway, BlackRock, Münchner Rück)
+          - Slot 6 (crypto): Digitales Netzwerk / Asset (Bitcoin, Ethereum L2, Tokenisierte Real-World-Assets)
+
+          Beachte strikt die Blacklist der letzten Tage! Wähle neue, substanzielle Werte.
+          JSON: {
             "cards": [
               {
                 "id": "card-1",
                 "category": "equities",
-                "sectorLabel": "Halbleiter / Infrastruktur / Rohstoffe",
-                "ticker": "NASDAQ:ASML",
-                "company": "Name des Unternehmens oder Rohstoffs",
-                "direction": "Burggraben wächst / Strukturell Bullisch / Fokus",
+                "sectorLabel": "Branche",
+                "ticker": "BÖRSE:SYMBOL (z.B. NYSE:ETN, NASDAQ:ISRG, TVC:GOLD)",
+                "company": "Name",
+                "direction": "Burggraben wächst / Strukturell Bullisch",
                 "isPositive": true,
                 "moatScore": 92,
-                "headline": "Prägnante deutsche Schlagzeile zur aktuellen Lage",
-                "contextExplanation": "4-5 Sätze tiefgehende Erklärung der Marktmechanik, Bewertung und warum dieses Asset über 5+ Jahre relevant ist.",
-                "thesis": "Stärkstes 5-Jahres-Argument (Bull-Case, 2-3 Sätze).",
-                "bearCase": "Wichtigstes Gegenrisiko (Bear-Case, 2-3 Sätze).",
+                "headline": "Prägnante Überschrift",
+                "contextExplanation": "4-5 Sätze tiefgehende Marktmechanik & Burggraben-Erklärung.",
+                "thesis": "5-Jahres Bull-Case (2 Sätze).",
+                "bearCase": "Wichtigstes Gegenrisiko (2 Sätze).",
                 "hasDivergingNarratives": false,
                 "narrativeComparison": "",
                 "bullets": ["Marktfakt 1", "Marktfakt 2", "Marktfakt 3"],
-                "sources": ["Wall Street Journal", "Financial Times", "Reuters"],
-                "verificationStatus": "Verifiziert · 3 Quellen",
-                "sparkline": [45, 50, 54, 58, 63, 70, 78, 86]
+                "sources": ["Financial Times", "Wall Street Journal"],
+                "verificationStatus": "Verifiziert",
+                "sparkline": [45, 50, 55, 62, 69, 75, 82, 88]
               }
             ]
           }`);
 
-            console.log('4/4 Generiere Tages-Synthese, Intermarket & Makro-Zyklen...');
-            const worldTitles = (worldRes.worldNews || []).map(w => w.title || w.headline).join(' | ');
-            const overviewRes = await callGeminiJSON(baseHeader + `Hauptthemen heute: ${worldTitles}
-          AUFGABE: Erstelle die übergreifende Tages-Synthese (morningSynthesis), das Anleihen-/Intermarket-Dossier (intermarket) und 4 Makro-Zyklen (macroCalendar) auf Deutsch als JSON:
-          {
-            "morningSynthesis": "2-3 prägnante Sätze, die das wichtigste rote Band zwischen Weltpolitik und Kapitalmärkten heute auf den Punkt bringen.",
+            console.log('3/3 Tages-Synthese & Makro-Regime-Ampel generieren...');
+            const overviewRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle die Tages-Synthese, das Anleihen-Dossier und die NEUE MAKRO-REGIME & LIQUIDITÄTS-AMPEL (4 messbare Leit-Indikatoren):
+          JSON: {
+            "morningSynthesis": "2-3 Sätze zum roten Faden des Tages.",
             "intermarket": {
-              "title": "Prägnante Überschrift zu Staatsanleihen, Zinsen & Sachwerten",
-              "summary": "2 Sätze Kernaussage zur aktuellen Zins- und Liquiditätslage.",
-              "contextExplanation": "4-5 Sätze verständliche Hintergrund-Erklärung zum Zusammenspiel von Anleiherenditen, Notenbanken, Aktien und Rohstoffen.",
-              "bearCase": "Wichtigstes Gegenszenario für die Zins- und Marktstruktur.",
+              "title": "Überschrift zu Staatsanleihen, Renditen & Sachwerten",
+              "summary": "2 Sätze Kernaussage.",
+              "contextExplanation": "4-5 Sätze verständlicher Hintergrund zum Anleihemarkt.",
+              "bearCase": "Gegenszenario.",
               "hasDivergingNarratives": false,
               "narrativeComparison": "",
-              "bullets": ["Fakt 1 zu Renditen/Notenbanken", "Fakt 2 zu Kapitalflüssen", "Fakt 3 zu Bewertungen"],
+              "bullets": ["Fakt 1", "Fakt 2", "Fakt 3"],
               "symbol": "TVC:US10Y",
-              "sources": ["Wall Street Journal", "Financial Times", "Reuters"],
-              "verificationStatus": "Verifiziert · 3 Quellen"
+              "sources": ["WSJ", "FT", "Reuters"],
+              "verificationStatus": "Verifiziert"
             },
-            "macroCalendar": [
-              { "date": "US-Geldpolitik", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" },
-              { "date": "Europa & EZB", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" },
-              { "date": "Asien & Handel", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" },
-              { "date": "Rohstoffe & Energie", "event": "Konkreter Makro-Treiber", "impact": "Auswirkung (max. 5 Wörter)" }
+            "macroRegime": [
+              {
+                "indicator": "US-Dollar & Liquidität (DXY)",
+                "phase": "Restriktiv / Neutral / Expansiv",
+                "tone": "amber",
+                "detail": "1 prägnanter Satz: Was bedeutet das für Schwellenländer und Rohstoffe?"
+              },
+              {
+                "indicator": "Zinskurve (2Y/10Y Spread)",
+                "phase": "Steiler werdend / Invertiert / Normalisierend",
+                "tone": "green",
+                "detail": "1 prägnanter Satz: Was bedeutet das für Banken und Refinanzierung?"
+              },
+              {
+                "indicator": "Kreditrisiko (High-Yield-Spreads)",
+                "phase": "Eng / Sorglos / Weit / Gestresst",
+                "tone": "green",
+                "detail": "1 prägnanter Satz: Wie liquide und krisensicher ist der Unternehmenssektor?"
+              },
+              {
+                "indicator": "Geopolitische Risikoprämie",
+                "phase": "Erhöht / Mäßig / Gedämpft",
+                "tone": "red",
+                "detail": "1 prägnanter Satz: Auswirkung auf Frachtraten und Versicherungskosten."
+              }
             ]
           }`);
 
-            // Sicherheits-Normalisierung: Garantiert, dass niemals 'undefined' im Frontend landet
-            const cleanWorld = (worldRes.worldNews || []).map((w) => ({
-              region: w.region || 'WELTPOLITIK & MAKRO',
-              title: w.title || w.headline || 'Aktuelle Analyse',
-              summary: w.summary || '',
-              contextExplanation: w.contextExplanation || w.summary || '',
-              longTermImpact: w.longTermImpact || w.details?.warumWichtig || w.summary || '',
-              hasDivergingNarratives: Boolean(w.hasDivergingNarratives && w.narrativeComparison),
-              narrativeComparison: w.narrativeComparison || '',
-              bullets: Array.isArray(w.bullets) ? w.bullets : (w.details?.wasPassiert || []),
-              sources: Array.isArray(w.sources) ? w.sources : (w.leadSources || ['WSJ', 'Handelsblatt', 'Reuters']),
-              verificationStatus: w.verificationStatus || w.verificationBadge || 'Mehrfach verifiziert'
-            }));
-
-            const cleanCards = (cardsRes.cards || []).map((c, idx) => ({
-              id: c.id || `card-${idx + 1}`,
-              category: ['equities', 'commodities', 'crypto'].includes(c.category) ? c.category : (idx < 2 ? 'equities' : idx < 5 ? 'commodities' : 'crypto'),
-              sectorLabel: c.sectorLabel || c.assetClass || 'Kapitalmarkt',
-              ticker: c.ticker || 'NASDAQ:ASML',
-              company: c.company || c.ticker || 'Marktanalyse',
-              direction: c.direction || c.impact || 'Strukturell',
-              isPositive: c.isPositive !== false,
-              moatScore: Number(c.moatScore) || 88,
-              headline: c.headline || c.title || '',
-              contextExplanation: c.contextExplanation || c.summary || '',
-              thesis: c.thesis || c.bullCase || c.summary || '',
-              bearCase: c.bearCase || '',
-              hasDivergingNarratives: Boolean(c.hasDivergingNarratives && c.narrativeComparison),
-              narrativeComparison: c.narrativeComparison || '',
-              bullets: Array.isArray(c.bullets) ? c.bullets : (c.details?.wasPassiert || []),
-              sources: Array.isArray(c.sources) ? c.sources : (c.leadSources || ['WSJ', 'FT', 'Reuters']),
-              verificationStatus: c.verificationStatus || c.verificationBadge || 'Verifiziert',
-              sparkline: Array.isArray(c.sparkline) && c.sparkline.length >= 2 ? c.sparkline : [45, 50, 54, 58, 63, 70, 78, 86]
-            }));
+            // Neue behandelte Ticker & Firmen für das 14-Tage-Gedächtnis sammeln
+            const newlyUsed = (cardsRes.cards || []).map(c => c.company || c.ticker);
+            const updatedHistory = [...new Set([...recentHistory, ...newlyUsed])].slice(-25);
 
             const finalBriefing = {
               generatedAt: now.toISOString(),
               lastUpdated: `${todayStr}, ${timeStr} Uhr`,
-              morningSynthesis: overviewRes.morningSynthesis || overviewRes.synthesisBody || '',
+              morningSynthesis: overviewRes.morningSynthesis || '',
               intermarket: overviewRes.intermarket || null,
-              macroCalendar: Array.isArray(overviewRes.macroCalendar) ? overviewRes.macroCalendar : [],
-              worldNews: cleanWorld,
-              cards: cleanCards
+              macroRegime: overviewRes.macroRegime || [],
+              worldNews: worldRes.worldNews || [],
+              cards: (cardsRes.cards || []).map((c, idx) => ({ ...c, id: c.id || `card-${idx + 1}` })),
+              recentHistory: updatedHistory
             };
 
             await fs.writeFile('briefing.json', JSON.stringify(finalBriefing, null, 2), 'utf-8');
-            console.log('briefing.json erfolgreich mit allen Feldern erstellt!');
+            console.log('briefing.json mit 14-Tage-Historie erfolgreich gespeichert!');
           }
 
           main().catch(err => {
-            console.error('Fehler bei der Briefing-Generierung:', err);
+            console.error('Fehler:', err);
             process.exit(1);
           });
           EOF
           node generate.mjs
           rm generate.mjs
 
-      - name: Neue briefing.json ins Repository speichern
+      - name: Neue briefing.json committen
         run: |
           git config user.name "Meridian Auto-Publisher"
           git config user.email "actions@github.com"
