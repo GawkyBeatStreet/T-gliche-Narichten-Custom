@@ -2,7 +2,7 @@ name: Meridian Daily Briefing
 
 on:
   schedule:
-    - cron: '45 5 * * *' # Täglich exakt 1x um 06:45 Uhr deutscher Zeit
+    - cron: '45 5 * * *' # Täglich um 06:45 Uhr deutscher Zeit
   workflow_dispatch:
 
 permissions:
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Briefing mit 14-Tage-Rotationsfilter generieren
+      - name: Briefing (Werktags vs. Wochenend-Edition) generieren
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -33,12 +33,12 @@ jobs:
             process.exit(1);
           }
 
-          // 1. Frühere Ticker & Themen der letzten 14 Tage aus briefing.json einlesen (Cooldown)
+          // 1. Frühere Ticker der letzten 14 Tage aus briefing.json laden (14-Tage-Cooldown)
           let recentHistory = [];
           try {
             const oldBriefing = JSON.parse(await fs.readFile('briefing.json', 'utf-8'));
             if (Array.isArray(oldBriefing.recentHistory)) {
-              recentHistory = oldBriefing.recentHistory.slice(-14);
+              recentHistory = oldBriefing.recentHistory.slice(-25);
             } else if (Array.isArray(oldBriefing.cards)) {
               recentHistory = oldBriefing.cards.map(c => c.company || c.ticker);
             }
@@ -47,8 +47,15 @@ jobs:
           }
 
           const blacklistPrompt = recentHistory.length > 0 
-            ? `\nBEREITS BEHANDELTE THEMEN/UNTERNEHMEN DER LETZTEN TAGE (STRIKT GESPERRT, WÄHLE ZWINGEND ANDERE!): ${recentHistory.join(', ')}\n`
+            ? `\nBEREITS BEHANDELTE THEMEN/UNTERNEHMEN DER LETZTEN TAGE (STRIKT GESPERRT! WÄHLE ZWINGEND ANDERE!): ${recentHistory.join(', ')}\n`
             : '';
+
+          // 2. Wochentag prüfen: Ist heute Wochenende (Samstag=6 oder Sonntag=0)?
+          const now = new Date();
+          const dayOfWeek = now.getDay();
+          const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+          const todayStr = now.toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin', day: '2-digit', month: '2-digit', year: 'numeric' });
+          const timeStr = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
 
           const RSS_SOURCES = [
             { name: 'WSJ World', url: 'https://feeds.a.dj.com/rss/RSSWorldNews.xml' },
@@ -121,122 +128,140 @@ jobs:
 
           async function main() {
             const rssContext = await fetchRssHeadlines();
-            const now = new Date();
-            const todayStr = now.toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin', day: '2-digit', month: '2-digit', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
 
-            const baseHeader = `Du bist Chefredakteur von 'Meridian' (Global Intelligence). Heute ist der ${todayStr}.
-          Verwende in JSON-Strings einfache Anführungszeichen ('...').
-          ANTI-NOISE-PFLICHT: Keine Gerüchte, kein Daytrading-Rauschen. Nur Fakten, die durch Leitmedien und Agenturen (Reuters, Bloomberg, dpa) gestützt sind.
-          ${blacklistPrompt}
-          AKTUELLE SCHLAGZEILEN:
-          ${rssContext}\n\n`;
+            const editorialRole = isWeekend
+              ? `Du bist Chefredakteur von 'Meridian' und erstellst heute die große WOCHENEND-AUSGABE (Stil: Financial Times Weekend, Handelsblatt Wochenende).`
+              : `Du bist Chefredakteur von 'Meridian' und erstellst das tagesaktuelle BRIEFING (Stil: The Economist, WSJ).`;
 
-            console.log('1/3 Welt-Dossiers generieren...');
-            const worldRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 Welt- & Makro-Dossiers mit verschiedenen Weltregionen (max 1 pro Region).
-          JSON: {
-            "worldNews": [
-              {
-                "region": "REGION · THEMENFELD",
-                "title": "Prägnante Überschrift",
-                "summary": "1-2 Sätze, was konkret passiert ist.",
-                "contextExplanation": "4-5 Sätze Tiefenanalyse (Warum jetzt? Welche Mechanismen stecken dahinter?).",
-                "longTermImpact": "2 Sätze zu den 1-5 Jahresfolgen.",
+            const editorialTask = isWeekend
+              ? `FOKUS WOCHENENDE: Da die Börsen geschlossen sind, erstelle KEINE kurzlebigen Kursmeldungen, sondern eine tiefgehende STRATEGISCHE WOCHEN-SYNTHESE:
+                 1. Was waren die tektonischen Plattenverschiebungen dieser Woche?
+                 2. Worauf blicken globale Investoren in der kommenden Woche (Zinsentscheide, Wahlen, Konjunkturdaten)?`
+              : `FOKUS TAGESBRIEFING: Analysiere die tagesaktuellen wirtschaftlichen und geopolitischen Haupthemen mit 5-Jahres-Relevanz.`;
+
+            const baseHeader = `${editorialRole} Heute ist ${todayStr}.
+            ${editorialTask}
+            Verwende in JSON-Strings einfache Anführungszeichen ('...').
+            ANTI-NOISE: Keine Gerüchte, kein Daytrading-Rauschen. Nur fundierte Bilanzen, Gesetze und verifizierte Daten.
+            ${blacklistPrompt}
+            AKTUELLE LEITMEDIEN-MELDUNGEN:
+            ${rssContext}\n\n`;
+
+            console.log(isWeekend ? '1/3 Wochenend-Dossiers (Megatrends) generieren...' : '1/3 Welt-Dossiers generieren...');
+            const worldPrompt = isWeekend
+              ? `Erstelle EXAKT 6 strategische Wochenend-Dossiers (Megatrends: Deglobalisierung, Demografie, Energie-Infrastruktur, geopolitische Blöcke).`
+              : `Erstelle EXAKT 6 Welt- & Makro-Dossiers mit verschiedenen Weltregionen (max 1 pro Region).`;
+
+            const worldRes = await callGeminiJSON(baseHeader + `AUFGABE: ${worldPrompt}
+            JSON: {
+              "worldNews": [
+                {
+                  "region": "REGION · THEMENFELD",
+                  "title": "Prägnante, analytische Überschrift",
+                  "summary": "1-2 Sätze Kernaussage.",
+                  "contextExplanation": "4-5 Sätze Tiefenanalyse der strukturellen Ursachen und Mechanismen.",
+                  "longTermImpact": "2-3 Sätze zu den 1-5 Jahresfolgen für Wirtschaft und Kapital.",
+                  "hasDivergingNarratives": false,
+                  "narrativeComparison": "",
+                  "bullets": ["Fakt 1", "Fakt 2", "Fakt 3"],
+                  "sources": ["Financial Times", "Handelsblatt", "Reuters"],
+                  "verificationStatus": "Verifiziert · 3 Quellen"
+                }
+              ]
+            }`);
+
+            console.log('2/3 Markt-Kacheln mit rotierender Slot-Architektur generieren...');
+            const marketPrompt = isWeekend
+              ? `Erstelle EXAKT 6 Markt-Kacheln für das Wochenende:
+                 Fokus auf Geschäftsmodelle mit extremem Burggraben (Moat) und die entscheidenden Katalysatoren der kommenden Woche.`
+              : `Erstelle EXAKT 6 Markt-Kacheln (Horizont 5+ Jahre) nach dieser FESTEN SLOT-ARCHITEKTUR:`;
+
+            const cardsRes = await callGeminiJSON(baseHeader + `AUFGABE: ${marketPrompt}
+            - Slot 1 (equities): Industrie, Automatisierung & Infrastruktur (z.B. Schneider Electric, Siemens, ABB, Deere, Caterpillar, Linde)
+            - Slot 2 (equities): Pharma, Medtech oder Konsumgüter mit Preissetzungsmacht (z.B. Novo Nordisk, Intuitive Surgical, LVMH, Nestlé, Stryker)
+            - Slot 3 (commodities): Rotierender strategischer Rohstoff (z.B. Silber, Erdgas/TTF, Öl/Brent, Lithium, Seltene Erden, Kakao, Weizen)
+            - Slot 4 (commodities): Zweiter Rohstoff, Energie oder Frachtraten
+            - Slot 5 (equities): Finanzen, Zinsen & Kapitalmonopole (z.B. Visa, Berkshire Hathaway, BlackRock, Münchner Rück)
+            - Slot 6 (crypto): Digitales Netzwerk / Asset (Bitcoin, Ethereum L2, Tokenisierte Real-World-Assets)
+
+            Beachte strikt die Blacklist! Wähle neue, substanzielle Werte.
+            JSON: {
+              "cards": [
+                {
+                  "id": "card-1",
+                  "category": "equities",
+                  "sectorLabel": "Branche",
+                  "ticker": "BÖRSE:SYMBOL (z.B. NYSE:ETN, NASDAQ:ISRG, TVC:GOLD)",
+                  "company": "Name",
+                  "direction": "Burggraben wächst / Säkularer Trend",
+                  "isPositive": true,
+                  "moatScore": 92,
+                  "headline": "Prägnante Überschrift",
+                  "contextExplanation": "4-5 Sätze Erklärung der Marktmechanik & des Burggrabens.",
+                  "thesis": "5-Jahres Bull-Case (2 Sätze).",
+                  "bearCase": "Wichtigstes Gegenrisiko (2 Sätze).",
+                  "hasDivergingNarratives": false,
+                  "narrativeComparison": "",
+                  "bullets": ["Marktfakt 1", "Marktfakt 2", "Marktfakt 3"],
+                  "sources": ["Financial Times", "Wall Street Journal"],
+                  "verificationStatus": "Verifiziert",
+                  "sparkline": [45, 50, 55, 62, 69, 75, 82, 88]
+                }
+              ]
+            }`);
+
+            console.log('3/3 Synthese & Makro-Regime generieren...');
+            const overviewRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle die Synthese (${isWeekend ? 'Wochen-Resümee & Ausblick' : 'Tages-Synthese'}), das Anleihen-Dossier und die MAKRO-REGIME & LIQUIDITÄTS-AMPEL (4 messbare Leit-Indikatoren):
+            JSON: {
+              "morningSynthesis": "2-3 Sätze zum roten Faden (${isWeekend ? 'Resümee der Woche & Vorschau auf nächste Woche' : 'heutiges Hauptthema'}).",
+              "intermarket": {
+                "title": "Überschrift zu Zinsen, Staatsanleihen & Kapitalflüssen",
+                "summary": "2 Sätze Kernaussage.",
+                "contextExplanation": "4-5 Sätze verständlicher Hintergrund zum Anleihemarkt.",
+                "bearCase": "Gegenszenario.",
                 "hasDivergingNarratives": false,
                 "narrativeComparison": "",
                 "bullets": ["Fakt 1", "Fakt 2", "Fakt 3"],
-                "sources": ["Wall Street Journal", "Handelsblatt", "Reuters"],
-                "verificationStatus": "Verifiziert · 3 Quellen"
-              }
-            ]
-          }`);
-
-            console.log('2/3 Markt-Kacheln mit rotierender Slot-Architektur generieren...');
-            const cardsRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 Kapitalmarkt-Kacheln (Horizont 5+ Jahre) nach dieser FESTEN SLOT-ARCHITEKTUR:
-          - Slot 1 (equities): Industrie, Automatisierung & Infrastruktur (z.B. Schneider Electric, Siemens, ABB, Deere, Caterpillar, Linde)
-          - Slot 2 (equities): Pharma, Medtech oder Konsumgüter mit Preissetzungsmacht (z.B. Novo Nordisk, Intuitive Surgical, LVMH, Nestlé, Stryker)
-          - Slot 3 (commodities): Rotierender strategischer Rohstoff (z.B. Silber, Erdgas/TTF, Öl/Brent, Lithium, Seltene Erden, Kakao, Weizen)
-          - Slot 4 (commodities): Zweiter Rohstoff oder Frachtraten/Energie
-          - Slot 5 (equities): Finanzen, Zinsen & Kapitalmarktmonopole (z.B. Visa, Berkshire Hathaway, BlackRock, Münchner Rück)
-          - Slot 6 (crypto): Digitales Netzwerk / Asset (Bitcoin, Ethereum L2, Tokenisierte Real-World-Assets)
-
-          Beachte strikt die Blacklist der letzten Tage! Wähle neue, substanzielle Werte.
-          JSON: {
-            "cards": [
-              {
-                "id": "card-1",
-                "category": "equities",
-                "sectorLabel": "Branche",
-                "ticker": "BÖRSE:SYMBOL (z.B. NYSE:ETN, NASDAQ:ISRG, TVC:GOLD)",
-                "company": "Name",
-                "direction": "Burggraben wächst / Strukturell Bullisch",
-                "isPositive": true,
-                "moatScore": 92,
-                "headline": "Prägnante Überschrift",
-                "contextExplanation": "4-5 Sätze tiefgehende Marktmechanik & Burggraben-Erklärung.",
-                "thesis": "5-Jahres Bull-Case (2 Sätze).",
-                "bearCase": "Wichtigstes Gegenrisiko (2 Sätze).",
-                "hasDivergingNarratives": false,
-                "narrativeComparison": "",
-                "bullets": ["Marktfakt 1", "Marktfakt 2", "Marktfakt 3"],
-                "sources": ["Financial Times", "Wall Street Journal"],
-                "verificationStatus": "Verifiziert",
-                "sparkline": [45, 50, 55, 62, 69, 75, 82, 88]
-              }
-            ]
-          }`);
-
-            console.log('3/3 Tages-Synthese & Makro-Regime-Ampel generieren...');
-            const overviewRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle die Tages-Synthese, das Anleihen-Dossier und die NEUE MAKRO-REGIME & LIQUIDITÄTS-AMPEL (4 messbare Leit-Indikatoren):
-          JSON: {
-            "morningSynthesis": "2-3 Sätze zum roten Faden des Tages.",
-            "intermarket": {
-              "title": "Überschrift zu Staatsanleihen, Renditen & Sachwerten",
-              "summary": "2 Sätze Kernaussage.",
-              "contextExplanation": "4-5 Sätze verständlicher Hintergrund zum Anleihemarkt.",
-              "bearCase": "Gegenszenario.",
-              "hasDivergingNarratives": false,
-              "narrativeComparison": "",
-              "bullets": ["Fakt 1", "Fakt 2", "Fakt 3"],
-              "symbol": "TVC:US10Y",
-              "sources": ["WSJ", "FT", "Reuters"],
-              "verificationStatus": "Verifiziert"
-            },
-            "macroRegime": [
-              {
-                "indicator": "US-Dollar & Liquidität (DXY)",
-                "phase": "Restriktiv / Neutral / Expansiv",
-                "tone": "amber",
-                "detail": "1 prägnanter Satz: Was bedeutet das für Schwellenländer und Rohstoffe?"
+                "symbol": "TVC:US10Y",
+                "sources": ["WSJ", "FT", "Reuters"],
+                "verificationStatus": "Verifiziert"
               },
-              {
-                "indicator": "Zinskurve (2Y/10Y Spread)",
-                "phase": "Steiler werdend / Invertiert / Normalisierend",
-                "tone": "green",
-                "detail": "1 prägnanter Satz: Was bedeutet das für Banken und Refinanzierung?"
-              },
-              {
-                "indicator": "Kreditrisiko (High-Yield-Spreads)",
-                "phase": "Eng / Sorglos / Weit / Gestresst",
-                "tone": "green",
-                "detail": "1 prägnanter Satz: Wie liquide und krisensicher ist der Unternehmenssektor?"
-              },
-              {
-                "indicator": "Geopolitische Risikoprämie",
-                "phase": "Erhöht / Mäßig / Gedämpft",
-                "tone": "red",
-                "detail": "1 prägnanter Satz: Auswirkung auf Frachtraten und Versicherungskosten."
-              }
-            ]
-          }`);
+              "macroRegime": [
+                {
+                  "indicator": "US-Dollar & Liquidität (DXY)",
+                  "phase": "Restriktiv / Neutral / Expansiv",
+                  "tone": "amber",
+                  "detail": "1 Satz Auswirkung auf Schwellenländer und Rohstoffe."
+                },
+                {
+                  "indicator": "Zinskurve (2Y/10Y Spread)",
+                  "phase": "Steiler werdend / Invertiert / Normalisierend",
+                  "tone": "green",
+                  "detail": "1 Satz Auswirkung auf Banken und Refinanzierungsdruck."
+                },
+                {
+                  "indicator": "Kreditrisiko (High-Yield-Spreads)",
+                  "phase": "Eng / Sorglos / Weit / Gestresst",
+                  "tone": "green",
+                  "detail": "1 Satz zur Liquiditätslage und Stabilität der Unternehmensbilanzen."
+                },
+                {
+                  "indicator": "Geopolitische Risikoprämie",
+                  "phase": "Erhöht / Mäßig / Gedämpft",
+                  "tone": "red",
+                  "detail": "1 Satz zu Frachtraten, Energie und Versicherungskosten."
+                }
+              ]
+            }`);
 
-            // Neue behandelte Ticker & Firmen für das 14-Tage-Gedächtnis sammeln
+            // 14-Tage-Historie aktualisieren
             const newlyUsed = (cardsRes.cards || []).map(c => c.company || c.ticker);
             const updatedHistory = [...new Set([...recentHistory, ...newlyUsed])].slice(-25);
 
             const finalBriefing = {
               generatedAt: now.toISOString(),
               lastUpdated: `${todayStr}, ${timeStr} Uhr`,
+              isWeekendEdition: isWeekend,
               morningSynthesis: overviewRes.morningSynthesis || '',
               intermarket: overviewRes.intermarket || null,
               macroRegime: overviewRes.macroRegime || [],
@@ -246,7 +271,7 @@ jobs:
             };
 
             await fs.writeFile('briefing.json', JSON.stringify(finalBriefing, null, 2), 'utf-8');
-            console.log('briefing.json mit 14-Tage-Historie erfolgreich gespeichert!');
+            console.log('briefing.json erfolgreich aktualisiert!');
           }
 
           main().catch(err => {
@@ -262,5 +287,5 @@ jobs:
           git config user.name "Meridian Auto-Publisher"
           git config user.email "actions@github.com"
           git add briefing.json
-          git diff --staged --quiet || git commit -m "Auto-Update Meridian Briefing ($(date -u +'%d.%m.%Y %H:%M UTC'))"
+          git diff --staged --quiet || git commit -m "Auto-Update Meridian ($(date -u +'%d.%m.%Y %H:%M UTC'))"
           git push
