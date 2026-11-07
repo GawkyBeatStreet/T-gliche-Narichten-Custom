@@ -55,7 +55,7 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#0a84ff]/30 selection:text-white">
 
-  <!-- Minimalist Apple Top Bar -->
+  <!-- Apple Minimal Header -->
   <header class="sticky top-0 z-30 apple-glass border-b border-white/[0.07] px-5 lg:px-10 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
       
@@ -65,12 +65,15 @@
           <i data-lucide="compass" class="w-4 h-4"></i>
         </div>
         <div>
-          <h1 class="font-semibold text-[15px] tracking-tight text-white">Meridian</h1>
+          <div class="flex items-center gap-2">
+            <h1 class="font-semibold text-[15px] tracking-tight text-white">Meridian</h1>
+            <span id="editionBadge" class="hidden text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/[0.08] text-[#a1a1a6]">Wochenend-Ausgabe</span>
+          </div>
           <p id="dateDisplay" class="text-[11px] text-[#86868b]"></p>
         </div>
       </div>
 
-      <!-- Apple Segmented Control -->
+      <!-- Segmented Control -->
       <div class="flex items-center bg-[#1c1c1e] p-1 rounded-full border border-white/[0.06]">
         <button onclick="switchTab('world')" id="tab-world" class="px-4 py-1.5 rounded-full text-xs font-medium transition-all bg-white text-black shadow-sm">
           Briefing
@@ -96,33 +99,24 @@
   <!-- Main Content -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-5 lg:px-10 py-8 space-y-8">
 
-    <!-- Progress Banner -->
-    <div id="loadingBanner" class="hidden py-3 px-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.08] flex items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-3.5 h-3.5 border-2 border-[#0a84ff] border-t-transparent rounded-full animate-spin shrink-0"></div>
-        <span id="loadingStepTitle" class="text-xs text-[#f5f5f7]">Aktualisiere Dossiers...</span>
-      </div>
-      <span id="loadingStepBadge" class="text-[11px] text-[#86868b]"></span>
-    </div>
-
     <!-- Executive Summary Hero -->
     <div class="apple-card p-6 sm:p-7">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff]">Tages-Synthese</span>
+        <span id="synthesisLabel" class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff]">Tages-Synthese</span>
         <span id="lastScanTimeLabel" class="text-[11px] text-[#86868b]"></span>
       </div>
       <p id="morningSynthesis" class="text-base sm:text-lg font-medium text-[#f5f5f7] leading-snug"></p>
     </div>
 
-    <!-- VIEW 1: BRIEFING (WORLD & ECONOMY) -->
+    <!-- VIEW 1: BRIEFING -->
     <section id="view-world" class="space-y-6">
       <div id="worldGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
     </section>
 
-    <!-- VIEW 2: MARKETS & 5Y RADAR -->
+    <!-- VIEW 2: MARKETS -->
     <section id="view-market" class="hidden space-y-6">
 
-      <!-- Clean Apple Filter Pills -->
+      <!-- Sector Pills -->
       <div class="flex items-center justify-between gap-3 overflow-x-auto pb-1">
         <div class="flex items-center gap-2">
           <button onclick="filterCards('all')" class="sector-pill px-3.5 py-1.5 rounded-full bg-white text-black text-xs font-medium transition" data-filter="all">Alle</button>
@@ -132,10 +126,9 @@
         </div>
       </div>
 
-      <!-- Top Row: Intermarket & NEW Makro-Regime-Ampel -->
+      <!-- Top Row: Intermarket & Makro-Ampel -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
-        <!-- Left: Intermarket Card -->
         <div class="apple-card p-6 lg:col-span-7 flex flex-col justify-between cursor-pointer" onclick="openIntermarketDetail()">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -161,7 +154,6 @@
           </div>
         </div>
 
-        <!-- Right: NEW Makro-Regime & Liquiditäts-Ampel -->
         <div class="apple-card p-6 lg:col-span-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3.5">
@@ -173,7 +165,6 @@
         </div>
       </div>
 
-      <!-- Market Cards Grid -->
       <div id="bentoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
@@ -312,6 +303,7 @@
   <script>
     const defaultData = {
       lastUpdated: "Stand: Referenz-Dossiers",
+      isWeekendEdition: false,
       morningSynthesis: "Europäische Präzisions- und Netzausrüster melden volle Auftragsbücher trotz gedämpfter Binnenkonjunktur, während die US-Zinskurve strukturell steiler tendiert.",
       intermarket: {
         title: "US-Staatsanleihen (~4,0 % Rendite) vs. Sachwerte: Warum Bilanzqualität über allem steht",
@@ -589,20 +581,11 @@
     }
 
     function handleRefreshClick() {
-      const key = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
-      if (key) {
-        toast("Verwende für das tägliche Update die automatisierte GitHub-Action um 06:45 Uhr.");
-      } else {
-        const icon = document.getElementById('refreshIcon');
-        icon.classList.add('animate-spin');
-        loadSharedServerBriefing().finally(() => {
-          setTimeout(() => icon.classList.remove('animate-spin'), 500);
-        });
-      }
-    }
-
-    function toast(msg) {
-      alert(msg);
+      const icon = document.getElementById('refreshIcon');
+      icon.classList.add('animate-spin');
+      loadSharedServerBriefing().finally(() => {
+        setTimeout(() => icon.classList.remove('animate-spin'), 500);
+      });
     }
 
     function copyMobileSyncLink() {
@@ -645,6 +628,11 @@
       document.getElementById('lastScanTimeLabel').textContent = appState.lastUpdated || "";
       document.getElementById('morningSynthesis').textContent = appState.morningSynthesis || "";
 
+      // Titel dynamisch anpassen: Werktags vs. Wochenend-Ausgabe
+      const isWeekend = appState.isWeekendEdition || [0, 6].includes(new Date().getDay());
+      document.getElementById('synthesisLabel').textContent = isWeekend ? "Wochen-Synthese & Ausblick" : "Tages-Synthese";
+      document.getElementById('editionBadge').classList.toggle('hidden', !isWeekend);
+
       if (appState.intermarket) {
         document.getElementById('intermarketTitle').textContent = appState.intermarket.title;
         document.getElementById('intermarketContext').textContent = appState.intermarket.contextExplanation || appState.intermarket.summary;
@@ -653,12 +641,11 @@
         }
       }
 
-      // RENDER DIE NEUE MAKRO-REGIME & LIQUIDITÄTS-AMPEL
+      // RENDER MAKRO-REGIME & LIQUIDITÄTS-AMPEL
       const macroEl = document.getElementById('macroList');
       const macroItems = appState.macroRegime || appState.macroCalendar || [];
       
       macroEl.innerHTML = macroItems.map(item => {
-        // Erkennt automatisch, ob neues Regime-Format oder altes Format vorliegt
         const name = item.indicator || item.date || "Makro-Faktor";
         const phase = item.phase || item.impact || "Neutral";
         const detail = item.detail || item.event || "";
