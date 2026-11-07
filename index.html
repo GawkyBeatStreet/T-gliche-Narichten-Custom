@@ -18,6 +18,7 @@
       --apple-border-hover: rgba(255, 255, 255, 0.16);
       --apple-blue: #0a84ff;
       --apple-green: #30d158;
+      --apple-amber: #ffd60a;
       --apple-red: #ff453a;
     }
 
@@ -38,7 +39,7 @@
     .apple-card:hover {
       background-color: var(--apple-surface-hover);
       border-color: var(--apple-border-hover);
-      transform: scale(1.006);
+      transform: scale(1.004);
     }
 
     .apple-glass {
@@ -95,7 +96,7 @@
   <!-- Main Content -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-5 lg:px-10 py-8 space-y-8">
 
-    <!-- Multi-Step Progress Pill (Only visible during scan) -->
+    <!-- Progress Banner -->
     <div id="loadingBanner" class="hidden py-3 px-4 rounded-2xl bg-[#1c1c1e] border border-white/[0.08] flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <div class="w-3.5 h-3.5 border-2 border-[#0a84ff] border-t-transparent rounded-full animate-spin shrink-0"></div>
@@ -113,16 +114,12 @@
       <p id="morningSynthesis" class="text-base sm:text-lg font-medium text-[#f5f5f7] leading-snug"></p>
     </div>
 
-    <!-- ========================================== -->
-    <!-- VIEW 1: BRIEFING (WORLD & ECONOMY)         -->
-    <!-- ========================================== -->
+    <!-- VIEW 1: BRIEFING (WORLD & ECONOMY) -->
     <section id="view-world" class="space-y-6">
       <div id="worldGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 2: MARKETS & 5Y RADAR                 -->
-    <!-- ========================================== -->
+    <!-- VIEW 2: MARKETS & 5Y RADAR -->
     <section id="view-market" class="hidden space-y-6">
 
       <!-- Clean Apple Filter Pills -->
@@ -135,8 +132,10 @@
         </div>
       </div>
 
-      <!-- Top Row: Intermarket & Macro -->
+      <!-- Top Row: Intermarket & NEW Makro-Regime-Ampel -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Left: Intermarket Card -->
         <div class="apple-card p-6 lg:col-span-7 flex flex-col justify-between cursor-pointer" onclick="openIntermarketDetail()">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -162,10 +161,14 @@
           </div>
         </div>
 
+        <!-- Right: NEW Makro-Regime & Liquiditäts-Ampel -->
         <div class="apple-card p-6 lg:col-span-5 flex flex-col justify-between">
           <div>
-            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b] block mb-4">Makro-Zyklen</span>
-            <div id="macroList" class="space-y-3 text-xs"></div>
+            <div class="flex items-center justify-between mb-3.5">
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Makro-Regime & Liquidität</span>
+              <span class="text-[10px] text-[#0a84ff] font-medium bg-[#0a84ff]/10 px-2 py-0.5 rounded-full">Radar</span>
+            </div>
+            <div id="macroList" class="space-y-2.5"></div>
           </div>
         </div>
       </div>
@@ -176,14 +179,11 @@
 
   </main>
 
-  <!-- ===================================================== -->
-  <!-- APPLE-STYLE SLIDE-OVER DOSSIER + INTEGRATED AI CHAT   -->
-  <!-- ===================================================== -->
+  <!-- Dossier Modal & Chat -->
   <div id="detailModal" class="fixed inset-0 z-50 hidden">
     <div onclick="closeDetailModal()" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
     
     <div class="relative z-10 ml-auto h-full w-full max-w-2xl bg-[#121214] border-l border-white/[0.08] shadow-2xl flex flex-col overflow-hidden">
-      
       <div class="apple-glass border-b border-white/[0.07] px-6 py-4 flex items-start justify-between gap-4 shrink-0">
         <div>
           <div class="flex flex-wrap items-center gap-2 mb-1">
@@ -199,7 +199,6 @@
       </div>
 
       <div class="p-6 space-y-6 overflow-y-auto flex-1">
-
         <div class="space-y-2">
           <h4 class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Kontext & Einordnung</h4>
           <p id="modalContextExplanation" class="text-[15px] text-[#f5f5f7] leading-relaxed font-normal"></p>
@@ -262,14 +261,11 @@
             </button>
           </form>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- ===================================================== -->
-  <!-- CLEAN APPLE SETTINGS MODAL                            -->
-  <!-- ===================================================== -->
+  <!-- Settings Modal -->
   <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-[#121214] border border-white/[0.1] rounded-3xl max-w-lg w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto shadow-2xl">
       <div class="flex items-center justify-between pb-3 border-b border-white/[0.07]">
@@ -280,7 +276,7 @@
       <div class="space-y-4 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-[#86868b] font-medium mb-1.5">Gemini API-Key (für Chat & Sofort-Scan)</label>
+            <label class="block text-[#86868b] font-medium mb-1.5">Gemini API-Key</label>
             <input id="apiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-white focus:outline-none focus:border-[#0a84ff]">
           </div>
           <div>
@@ -304,11 +300,6 @@
           <input id="tier1MediaInput" type="text" value="Wall Street Journal (WSJ), Handelsblatt, Financial Times (FT), The Economist, Bloomberg, NZZ, Nikkei Asia" class="w-full px-3.5 py-2 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-[#d1d1d6] focus:outline-none focus:border-[#0a84ff] mb-2">
           <input id="verificationAgenciesInput" type="text" value="Reuters, Associated Press (AP), dpa, AFP, Bloomberg News, Primärquellen (SEC, EZB, Fed, IWF)" class="w-full px-3.5 py-2 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-[#d1d1d6] focus:outline-none focus:border-[#0a84ff]">
         </div>
-
-        <div>
-          <label class="block text-[#86868b] font-medium mb-1.5">Recherche-Fokus</label>
-          <textarea id="customPromptInput" rows="2" class="w-full p-3 rounded-xl bg-[#1c1c1e] border border-white/[0.08] text-[#d1d1d6] leading-relaxed focus:outline-none focus:border-[#0a84ff]">Erkläre bei jedem Artikel verständlich die Hintergründe ('Warum passiert das jetzt? Wie hängen die Faktoren zusammen?'). Zeige unterschiedliche Medien-Narrative nur dann an, wenn sich US-, EU- oder Asien-Quellen tatsächlich widersprechen.</textarea>
-        </div>
       </div>
 
       <div class="flex justify-between items-center pt-2">
@@ -321,269 +312,221 @@
   <script>
     const defaultData = {
       lastUpdated: "Stand: Referenz-Dossiers",
-      morningSynthesis: "Globale Industriekonzerne und Tech-Giganten sichern sich langfristige Energie- und Halbleiter-Kapazitäten, während westliche Zentralbanken angesichts hoher struktureller Staatsdefizite vor vorschnellen Zinssenkungen warnen.",
+      morningSynthesis: "Europäische Präzisions- und Netzausrüster melden volle Auftragsbücher trotz gedämpfter Binnenkonjunktur, während die US-Zinskurve strukturell steiler tendiert.",
       intermarket: {
-        title: "US-Staatsanleihen (~4,0 % Rendite) vs. Sachwerte: Warum Bilanzqualität wieder über allem steht",
-        summary: "Die Renditen 10-jähriger US-Staatsanleihen verharren nahe der 4-%-Marke, während physische Rohstoffe (Gold, Kupfer) und hochprofitable Qualitätsaktien parallel steigen.",
-        contextExplanation: "Normalerweise drücken hohe Anleihezinsen auf die Preise von Gold und Aktien, weil Zinspapiere wieder eine sichere Rendite abwerfen. Dass Gold und Qualitätsaktien trotzdem steigen, liegt an der hohen Staatsverschuldung in den USA und Europa: Großinvestoren verlangen für Staatsanleihen einen Risikoaufschlag und schützen ihr Kapital gleichzeitig durch knappe Sachwerte sowie Aktien von Unternehmen, die kaum Schulden haben und Preiserhöhungen mühelos weitergeben können.",
-        bearCase: "Sollte eine unerwartet scharfe globale Rezession eintreten, könnten Investoren kurzfristig wieder massiv in langlaufende Staatsanleihen flüchten und Zykliker verkaufen.",
+        title: "US-Staatsanleihen (~4,0 % Rendite) vs. Sachwerte: Warum Bilanzqualität über allem steht",
+        summary: "Die Renditen 10-jähriger US-Staatsanleihen verharren nahe der 4-%-Marke, während physische Rohstoffe und hochprofitable Qualitätsaktien parallel steigen.",
+        contextExplanation: "Normalerweise drücken hohe Anleihezinsen auf die Bewertung von Aktien. Dass Substanzwerte trotzdem steigen, liegt am hohen US-Haushaltsdefizit: Investoren verlangen für Staatsanleihen einen Risikoaufschlag und diversifizieren in Cashflow-starke Qualitätsmonopole.",
+        bearCase: "Ein plötzlicher Liquiditätsschock an den Kreditmärkten könnte Anleger vorübergehend in Cash flüchten lassen.",
         hasDivergingNarratives: false,
         narrativeComparison: "",
         bullets: [
-          "10-jährige US-Treasuries notieren um 4,0 %, deutsche Bundesanleihen bei rund 2,3 % – die Ära des kostenlosen Geldes ist strukturell vorbei.",
-          "Unternehmen mit hoher Verschuldung müssen auslaufende Kredite zu deutlich höheren Zinsen refinanzieren.",
-          "Marktführer mit hohen Cash-Reserven profitieren hingegen durch hohe Zinserträge auf ihre Liquidität."
+          "10-jährige US-Treasuries notieren um 4,0 % – die Ära des billigen Geldes ist vorbei.",
+          "Schuldenfreie Unternehmen erwirtschaften hohe Zinserträge auf ihre Liquidität.",
+          "Kapital fließt selektiv in Marktführer mit Preissetzungsmacht."
         ],
         symbol: "TVC:US10Y",
         sources: ["Wall Street Journal", "Financial Times", "Reuters"]
       },
-      macroCalendar: [
-        { date: "US-Haushalt & Fed", event: "Hohe US-Anleiheauktionen treffen auf selektive Käufer", impact: "Langfrist-Zinsen bleiben erhöht" },
-        { date: "EU-Industrie", event: "Energiekosten-Gefälle & lokale Wertschöpfungsquoten", impact: "Vorteil für globale Nischenführer" },
-        { date: "Energie & Netze", event: "Stromnetz-Engpässe durch KI-Rechenzentren & Elektrifizierung", impact: "Mehrjahres-Zyklus für Kupfer & Uran" },
-        { date: "Notenbanken", event: "Zentralbank-Goldkäufe der Schwellenländer (BRICS+)", impact: "Struktureller Boden für Edelmetalle" }
+      macroRegime: [
+        { indicator: "US-Dollar & Liquidität", phase: "Restriktiv", tone: "amber", detail: "Starker Dollar dämpft Schwellenländer und Rohstoffrallyes." },
+        { indicator: "Zinskurve (2Y vs 10Y)", phase: "Steiler werdend", tone: "green", detail: "Banken profitieren von Fristentransformation; Refinanzierungsdruck steigt." },
+        { indicator: "Kreditrisiko (Spreads)", phase: "Sorglos / Eng", tone: "green", detail: "Niedrige Risikoprämien; kaum Kreditausfälle eingepreist." },
+        { indicator: "Geopolitische Risikoprämie", phase: "Erhöht", tone: "red", detail: "Frachtraten und Energieversicherungen bleiben strukturell verteuert." }
       ],
       cards: [
         {
-          id: "eq-1",
+          id: "card-1",
           category: "equities",
-          sectorLabel: "Halbleiter-Monopol",
-          ticker: "NASDAQ:ASML",
-          company: "ASML & TSMC",
-          direction: "Burggraben wächst",
-          directionColor: "text-[#30d158]",
-          moatScore: 96,
-          headline: "High-NA-EUV: Chip-Hersteller buchen Produktionskapazitäten für die 2-Nanometer-Ära bis 2030.",
-          contextExplanation: "Um moderne KI-Rechenzentren, Smartphones und autonome Systeme zu betreiben, müssen Transistoren auf Mikrochips fast auf Atomgröße verkleinert werden. Weltweit gibt es nur ein einziges Unternehmen (ASML aus den Niederlanden), das die dafür nötigen Extrem-Ultraviolett-Belichtungsmaschinen (Stückpreis über 350 Mio. Euro) bauen kann, und mit TSMC einen dominanten Fertiger. Selbst wenn Konkurrenten Milliarden investieren, lässt sich dieses über 30 Jahre aufgebaute Lieferketten- und Physik-Know-how nicht kopieren.",
-          thesis: "Da die großen US-Technologiekonzerne im Wettlauf um künstliche Intelligenz nicht auf die nächste Chip-Generation verzichten können, besitzen ASML und TSMC extreme Preissetzungsmacht über das gesamte Jahrzehnt.",
-          bearCase: "Strengere US-Exportverbote für Wartungsdienstleistungen und ältere DUV-Maschinen nach China sowie geopolitische Spannungen rund um Taiwan bleiben das zentrale Bewertungsrisiko.",
-          hasDivergingNarratives: true,
-          narrativeComparison: "US-Medien (WSJ) betonen die nationale Sicherheitsnotwendigkeit schärferer Chip-Exportkontrollen gegen China, während europäische Berichte (Handelsblatt/FD) vor Umsatzeinbußen und dem Aufbau einer unabhängigen chinesischen Parallel-Lieferkette warnen.",
-          bullets: [
-            "Eine einzige High-NA-EUV-Maschine kostet rund 350 bis 380 Mio. Euro und besteht aus über 100.000 Spezialteilen.",
-            "TSMC plant den Serienstart der 2nm-Architektur mit voller Auslastung durch Apple, Nvidia und AMD.",
-            "Bruttomargen von über 50 % sichern die technologische Marktführerschaft langfristig ab."
-          ],
-          sources: ["Wall Street Journal", "Handelsblatt", "Reuters", "Nikkei Asia"],
-          verificationStatus: "Verifiziert · 4 Quellen",
-          sparkline: [42, 46, 44, 53, 60, 68, 76, 88]
-        },
-        {
-          id: "eq-2",
-          category: "equities",
-          sectorLabel: "Stromnetze & Infrastruktur",
+          sectorLabel: "Industrie & Netze",
           ticker: "NYSE:ETN",
-          company: "Eaton / Schneider Electric",
-          direction: "Struktureller Profiteur",
-          directionColor: "text-[#30d158]",
-          moatScore: 91,
-          headline: "Weltweiter Engpass bei Transformatoren und Schaltanlagen beschert Netztechnik-Konzernen Rekord-Auftragsbücher.",
-          contextExplanation: "Während alle Welt über KI-Software spricht, entsteht der wahre Flaschenhals in der physischen Stromversorgung: Ein KI-Rechenzentrum benötigt bis zu zehnmal so viel Strom wie ein klassisches Serverzentrum. Gleichzeitig sind die Stromnetze in den USA und Europa im Schnitt über 40 Jahre alt. Spezialisten für Hochspannungs-Schaltanlagen, Transformatoren und Lastmanagement erleben daher eine historisch einmalige Sonderkonjunktur.",
-          thesis: "Der Umbau der globalen Stromnetze ist ein 10- bis 15-jähriger Investitionszyklus. Lange Lieferzeiten von bis zu 3 Jahren für Großtransformatoren sichern hohe Margen und planbare Umsätze.",
-          bearCase: "Hohe Bewertungsmultiples an der Börse lassen wenig Raum für Projektverzögerungen bei staatlichen Genehmigungsverfahren oder Engpässe bei Facharbeitern.",
+          company: "Eaton Corporation",
+          direction: "Volle Auftragsbücher",
+          isPositive: true,
+          moatScore: 92,
+          headline: "Globaler Transformatoren-Engpass beschert Stromnetz-Ausrüstern mehrjährige Liefersicherheit.",
+          contextExplanation: "Der Ausbau von Rechenzentren und erneuerbaren Energien überlastet die bestehenden Stromnetze. Transformatoren und Schaltanlagen haben Lieferzeiten von bis zu 3 Jahren.",
+          thesis: "Die Elektrifizierung ist ein säkularer 10-Jahres-Zyklus mit enormer Preissetzungsmacht.",
+          bearCase: "Verzögerungen bei behördlichen Netzgenehmigungen dämpfen das Tempo.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Wartezeiten für Hochspannungstransformatoren in den USA und Europa sind auf bis zu 36–48 Monate gestiegen.",
-            "Der Auftragsbestand führender Elektrifizierungs-Konzerne deckt bereits mehrere Jahresumsätze ab.",
-            "Hohe Zulassungshürden schützen etablierte westliche Anbieter vor neuer Billigkonkurrenz."
-          ],
-          sources: ["Financial Times", "Handelsblatt", "Wall Street Journal"],
+          bullets: ["Lieferzeiten für Großtransformatoren liegen bei bis zu 36 Monaten.", "Auftragsbestand deckt mehrere Jahresumsätze ab.", "Zulassungshürden schützen vor Billigkonkurrenz."],
+          sources: ["Handelsblatt", "Financial Times", "Reuters"],
           verificationStatus: "Verifiziert · 3 Quellen",
-          sparkline: [38, 43, 49, 55, 62, 70, 78, 86]
+          sparkline: [45, 48, 52, 57, 63, 70, 78, 86]
         },
         {
-          id: "com-1",
-          category: "commodities",
-          sectorLabel: "Industriemetalle",
-          ticker: "COMEX:HG1!",
-          company: "Kupfer",
-          direction: "Angebotsdefizit (5Y+)",
-          directionColor: "text-[#30d158]",
-          moatScore: 90,
-          headline: "Sinkende Erzgrade in bestehenden Großminen treffen auf wachsenden Bedarf für Stromnetze und Elektrifizierung.",
-          contextExplanation: "Kupfer ist das unverzichtbare Leitmetall für jede Form von Elektrizität. In den größten Kupferminen der Welt (vor allem in Chile und Peru) sinkt jedoch der Kupfergehalt im Gestein seit Jahren – es muss immer mehr Gestein bewegt werden, um dieselbe Tonne Kupfer zu gewinnen. Gleichzeitig dauert es heute durchschnittlich 16 Jahre, bis eine neu entdeckte Kupfermine das erste Metall liefert.",
-          thesis: "Der Weltmarkt steuert bis 2030 auf ein strukturelles Defizit zu. Große Bergbaukonzerne kaufen lieber bestehende Konkurrenten auf, statt selbst neue Minen zu bauen – weil aktuelle Kupferpreise die hohen Baukosten neuer Minen noch kaum decken.",
-          bearCase: "Eine anhaltende Schwäche im chinesischen Bausektor (bisher der größte Einzelabnehmer von Kupfer) oder eine Substitution durch Aluminium in Hochspannungskabeln kann kurzfristig auf den Preis drücken.",
+          id: "card-2",
+          category: "equities",
+          sectorLabel: "Medtech & Robotik",
+          ticker: "NASDAQ:ISRG",
+          company: "Intuitive Surgical",
+          direction: "Struktureller Moat",
+          isPositive: true,
+          moatScore: 95,
+          headline: "Installierte Basis von Operationsrobotern generiert über 70 % wiederkehrende Verbrauchserlöse.",
+          contextExplanation: "Das da-Vinci-System ist an Kliniken weltweit etabliert. Ärzte werden jahrelang auf dieses System geschult, was einen Wechsel zu Konkurrenten fast unmöglich macht.",
+          thesis: "Demografischer Wandel und alternde Gesellschaften treiben die Zahl minimalinvasiver OPs strukturell.",
+          bearCase: "Klinikbudgets unter Druck könnten Neuinstallationen temporär verlangsamen.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Laut Internationaler Energieagentur (IEA) decken bestehende Minen bis 2030 nur rund 80 % des prognostizierten Bedarfs.",
-            "Netzausbau, Rechenzentren und E-Mobilität erhöhen die Kupferintensität pro Wirtschaftseinheit massiv.",
-            "Staatliche Umweltauflagen verzögern neue Minenprojekte in Nord- und Südamerika um Jahre."
-          ],
-          sources: ["Financial Times", "Reuters", "IEA", "Wall Street Journal"],
-          verificationStatus: "Verifiziert · IEA & Reuters",
-          sparkline: [45, 48, 52, 50, 59, 65, 71, 82]
+          bullets: ["Über 70 % der Umsätze stammen aus wiederkehrenden Instrumenten und Services.", "Chirurgen-Schulung schafft extreme Wechselbarrieren.", "Verfahrenszahlen wachsen zweistellig."],
+          sources: ["Wall Street Journal", "Reuters"],
+          verificationStatus: "Verifiziert · 2 Quellen",
+          sparkline: [42, 45, 50, 54, 60, 68, 74, 84]
         },
         {
-          id: "com-2",
+          id: "card-3",
           category: "commodities",
-          sectorLabel: "Monetäre Edelmetalle",
+          sectorLabel: "Edelmetalle & Währung",
           ticker: "TVC:GOLD",
-          company: "Gold & Silber",
-          direction: "Monetärer Anker",
-          directionColor: "text-[#30d158]",
-          moatScore: 93,
-          headline: "Rekordkäufe durch Notenbanken der Schwellenländer entkoppeln den Goldpreis von den US-Zinsen.",
-          contextExplanation: "Seit dem Einfrieren russischer Devisenreserven im Jahr 2022 hat sich das Verhalten vieler Notenbanken außerhalb der westlichen G7-Staaten grundlegend verändert: Statt ihre Handelsüberschüsse fast ausschließlich in US-Staatsanleihen zu parken, schichten Zentralbanken in Asien und dem Nahen Osten systematisch in physisches Gold um, das im eigenen Land gelagert wird und keinem Sanktionsrisiko unterliegt.",
-          thesis: "Gold wandelt sich zurück zur strategischen Welt-Währungsreserve. Da die globale Staatsverschuldung weiter schneller wächst als die Wirtschaftsleistung, bleibt der langfristige Aufwärtstrend fundamental untermauert.",
-          bearCase: "Sollten die Notenbanken der Schwellenländer ihre Käufe nach Erreichen ihrer Zielquoten pausieren, fehlt kurzfristig der wichtigste physische Preis-Treiber.",
+          company: "Gold (Physisch)",
+          direction: "Monetäre Reserve",
+          isPositive: true,
+          moatScore: 94,
+          headline: "Schwellenländer-Notenbanken setzen Umschichtung aus Dollar-Anleihen in Goldreserven fort.",
+          contextExplanation: "Nach den Sanktionserfahrungen diversifizieren Zentralbanken weltweit ihre Devisenreserven in sanktionssicheres, physisch im Inland lagerbares Gold.",
+          thesis: "Wachsende globale Staatsverschuldung stützt den Goldpreis als unentwertbaren monetären Anker.",
+          bearCase: "Eine Pause der Zentralbank-Käufe könnte zu einer kurzfristigen Konsolidierung führen.",
           hasDivergingNarratives: true,
-          narrativeComparison: "Westliche Finanzmedien betrachten Gold oft noch primär als kurzfristige Zins-Wette auf die US-Fed, während asiatische Quellen (Nikkei/SCMP) die langfristige Abkehr vom US-Dollar-Monopol als strukturellen Treiber hervorheben.",
-          bullets: [
-            "Zentralbanken kauften zuletzt über 1.000 Tonnen Gold pro Jahr – doppelt so viel wie im Durchschnitt des letzten Jahrzehnts.",
-            "Silber verzeichnet durch den Ausbau der Solarindustrie das vierte Jahr in Folge ein physisches Marktdefizit.",
-            "Der Preisanstieg wird von physischen Käufen aus Asien statt von westlichen Kredit-Spekulanten getragen."
-          ],
-          sources: ["Financial Times", "Handelsblatt", "World Gold Council", "Reuters"],
+          narrativeComparison: "Westliche Medien fokussieren auf US-Zinserwartungen, asiatische Quellen betonen die Abkehr von Devisenreserven.",
+          bullets: ["Zentralbanken kauften zuletzt über 1.000 Tonnen pro Jahr.", "Physische Nachfrage aus Asien stützt das Preisniveau.", "Geringe Korrelation zu traditionellen Anleihen."],
+          sources: ["Financial Times", "World Gold Council", "Reuters"],
           verificationStatus: "Verifiziert · WGC & FT",
-          sparkline: [50, 54, 58, 63, 69, 75, 83, 91]
+          sparkline: [50, 54, 58, 64, 70, 76, 82, 90]
         },
         {
-          id: "com-3",
+          id: "card-4",
           category: "commodities",
-          sectorLabel: "Grundlast-Energie",
-          ticker: "NYSE:CCJ",
-          company: "Uran & Kernkraft",
-          direction: "Strukturell Bullisch",
-          directionColor: "text-[#30d158]",
-          moatScore: 88,
-          headline: "US-Tech-Konzerne schließen direkte Stromlieferverträge mit Kernkraftwerken – Uranmarkt bleibt knapp.",
-          contextExplanation: "Sonnen- und Windenergie liefern keinen konstanten Strom rund um die Uhr (24/7-Grundlast), den KI-Rechenzentren und Schwerindustrie zwingend brauchen. Deshalb haben über 20 Staaten vereinbart, ihre Kernkraftkapazitäten bis 2050 zu verdreifachen. Da nach 2011 über ein Jahrzehnt lang kaum in neue Uranminen investiert wurde, trifft die neue Nachfrage auf ein sehr knappes Primärangebot.",
-          thesis: "Für den Betrieb eines Kernkraftwerks machen die Kosten für Roh-Uran weniger als 5 % der Gesamtkosten aus – ohne Uran steht das Kraftwerk jedoch still. Versorger sichern sich daher langfristige Verträge bei westlichen Produzenten wie Cameco.",
-          bearCase: "Ein sicherheitsrelevanter Störfall in einem Kernkraftwerk weltweit oder die Freigabe strategischer Regierungsbestände würde die Stimmung im Sektor schlagartig belasten.",
+          sectorLabel: "Agrar & Grundstoffe",
+          ticker: "TVC:USOIL",
+          company: "Rohöl (Brent)",
+          direction: "Puffer begrenzt",
+          isPositive: false,
+          moatScore: 85,
+          headline: "Freie Förderkapazitäten der OPEC+ dämpfen geopolitische Preisspitzen am Ölmarkt.",
+          contextExplanation: "Trotz Nahost-Spannungen reagiert der Rohölpreis gedämpft, weil die OPEC+ über erhebliche ungenutzte Förderkapazitäten verfügt und das US-Schieferölangebot stabil bleibt.",
+          thesis: "Investitionszurückhaltung bei Neuförderprojekten hält das langfristige Angebot knapp.",
+          bearCase: "Schwächere Industrienachfrage in Asien drückt auf den weltweiten Raffinerie-Durchsatz.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Cloud-Anbieter (Microsoft, Amazon, Google) schließen exklusive Mehrjahresverträge mit Kernkraftwerksbetreibern ab.",
-            "Über 60 neue Reaktoren befinden sich weltweit im Bau, während bestehende US-Reaktoren Laufzeitverlängerungen auf 80 Jahre erhalten.",
-            "Geopolitische Risiken in Kasachstan und Niger erhöhen den strategischen Wert kanadischer Minen."
-          ],
-          sources: ["Wall Street Journal", "Reuters", "Bloomberg"],
-          verificationStatus: "Verifiziert · 3 Quellen",
-          sparkline: [40, 44, 51, 56, 61, 68, 74, 84]
+          bullets: ["OPEC+ verfügt über freie Pufferkapazitäten von ca. 3–4 Mio. Barrel/Tag.", "Schifffahrtsumleitungen binden vorübergehend Tankervolumen.", "Effizienzgewinne senken Ölintensität pro BIP-Einheit."],
+          sources: ["Wall Street Journal", "IEA", "Reuters"],
+          verificationStatus: "Verifiziert · IEA & WSJ",
+          sparkline: [65, 62, 59, 61, 58, 55, 57, 54]
         },
         {
-          id: "cry-1",
+          id: "card-5",
+          category: "equities",
+          sectorLabel: "Finanzinfrastruktur",
+          ticker: "NYSE:V",
+          company: "Visa Inc.",
+          direction: "Monopol-Burggraben",
+          isPositive: true,
+          moatScore: 96,
+          headline: "Grenzüberschreitende Zahlungsvolumina und Reisetrends sichern operative Margen von über 65 %.",
+          contextExplanation: "Visa agiert als Mautstation des weltweiten Zahlungsverkehrs. Das Unternehmen leiht selbst kein Geld, trägt kein Kreditrisiko und verdient an jeder Kartentransaktion mit.",
+          thesis: "Bargeldloser Zahlungsverkehr wächst weltweit weiter; automatische Inflationsabsicherung durch volumenbasierte Gebühren.",
+          bearCase: "Regulatorische Eingriffe in Interbankengebühren in den USA oder der EU belasten die Gebührensätze.",
+          hasDivergingNarratives: false,
+          narrativeComparison: "",
+          bullets: ["Operative Marge übersteigt 65 %.", "Kein eigenes Kreditausfallrisiko.", "Zwei-Milliarden-Karten-Netzwerk schützt vor neuen Konkurrenten."],
+          sources: ["Financial Times", "SEC Filings", "Bloomberg"],
+          verificationStatus: "Verifiziert · SEC & FT",
+          sparkline: [48, 51, 55, 59, 64, 71, 77, 85]
+        },
+        {
+          id: "card-6",
           category: "crypto",
-          sectorLabel: "Monetäres Netzwerk",
+          sectorLabel: "Digitales Asset",
           ticker: "BITSTAMP:BTCUSD",
           company: "Bitcoin (BTC)",
-          direction: "Strukturell Intakt",
-          directionColor: "text-[#30d158]",
-          moatScore: 86,
-          headline: "Vom Spekulationsobjekt zur Anlageklasse: Vermögensverwalter und Pensionskassen nutzen regulierte Spot-ETFs.",
-          contextExplanation: "Lange Zeit war Bitcoin für große Institutionen aus regulatorischen Gründen tabu, weil sie keine eigenen Krypto-Wallets verwalten durften. Durch die Zulassung regulierter Börsenfonds (Spot-ETFs) durch die US-Börsenaufsicht SEC und Anbieter wie BlackRock und Fidelity kann Bitcoin nun wie ein normales Wertpapier ins institutionelle Depot aufgenommen werden.",
-          thesis: "Da die maximale Anzahl auf exakt 21 Millionen Stück begrenzt ist, führt schon eine kleine Portfolio-Beimischung von 1 % bis 2 % bei institutionellen Anlegern zu einer langfristigen Verknappung.",
-          bearCase: "Bei starken Liquiditätsengpässen an den globalen Aktienmärkten reagiert Bitcoin kurzfristig weiterhin wie ein hochvolatiles Risiko-Asset mit möglichen Korrekturen von 30 % bis 50 %.",
+          direction: "Institutionell",
+          isPositive: true,
+          moatScore: 87,
+          headline: "Regulierte Spot-ETFs etablieren Bitcoin als liquide Portfolio-Beimischung für US-Pensionskassen.",
+          contextExplanation: "Durch Spot-ETFs von BlackRock und Fidelity ist die Hürde für institutionelle Gelder gefallen. Bitcoin wird zunehmend als digitales, begrenztes Sachwert-Asset allokiert.",
+          thesis: "Auf 21 Millionen Einheiten limitierte Menge trifft auf wachsende institutionelle Allokation.",
+          bearCase: "Kurzfristig bleibt die Volatilität in Risk-off-Phasen der Aktienmärkte erhöht.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Die US-Spot-ETFs von BlackRock und Fidelity zählen zu den am schnellsten wachsenden ETF-Starts der Finanzgeschichte.",
-            "Rund 70 % aller existierenden Bitcoins wurden seit über 12 Monaten nicht bewegt.",
-            "Neue US-Bilanzierungsregeln erleichtern Unternehmen das Halten von Bitcoin als Bilanzreserve."
-          ],
-          sources: ["Wall Street Journal", "Bloomberg", "SEC Filings"],
-          verificationStatus: "Verifiziert · SEC & WSJ",
-          sparkline: [35, 42, 48, 46, 58, 66, 73, 85]
+          bullets: ["Spot-ETFs verwalten Rekord-Milliardenvolumina.", "Rund 70 % der Coins seit über einem Jahr unbewegt.", "Feste Obergrenze von 21 Mio. Einheiten."],
+          sources: ["Wall Street Journal", "Bloomberg"],
+          verificationStatus: "Verifiziert · WSJ & Bloomberg",
+          sparkline: [40, 46, 52, 49, 62, 70, 78, 88]
         }
       ],
       worldNews: [
         {
           region: "EU · Industriepolitik",
           title: "Europa verschärft den Schutz heimischer Schlüsselindustrien mit lokalen Wertschöpfungsquoten",
-          summary: "Als Reaktion auf Subventionen in den USA und China plant die EU verbindliche 'Made in Europe'-Quoten bei öffentlichen Aufträgen und Förderprogrammen.",
-          contextExplanation: "Europäische Hersteller – vom Maschinenbau über die Chemie bis zur Batteriebranche – geraten von zwei Seiten unter Druck: China exportiert hochsubventionierte Überkapazitäten zu Niedrigpreisen nach Europa, während die USA mit Steuergutschriften und niedrigen Energiepreisen Fabriken abwerben. Um eine Deindustrialisierung zu verhindern, knüpft die EU staatliche Gelder künftig daran, dass ein Großteil der Bauteile tatsächlich in Europa gefertigt wird.",
-          longTermImpact: "Europäische Konzerne mit starker lokaler Fertigung in der EU (Rüstung, Stromnetze, Medizintechnik) profitieren, während exportabhängige Branchen wie die Autoindustrie Gegenmaßnahmen Chinas fürchten.",
+          summary: "Als Reaktion auf staatliche Subventionen in den USA und China plant die EU verbindliche Quoten bei öffentlichen Ausschreibungen.",
+          contextExplanation: "Europäische Hersteller geraten unter Druck: China exportiert subventionierte Überkapazitäten zu Niedrigpreisen, während die USA mit günstiger Energie Fabriken anlocken. Die EU knüpft Fördergelder künftig daran, dass wesentliche Teile in Europa gefertigt werden.",
+          longTermImpact: "Europäische Spezialisten mit lokaler Produktion profitieren, während exportabhängige Massenhersteller chinesische Gegenmaßnahmen fürchten.",
           hasDivergingNarratives: true,
-          narrativeComparison: "Französische und Brüsseler Quellen befürworten strikte europäische Schutzzölle ('Buy European'), während deutsche Wirtschaftsmedien (Handelsblatt) intensiv vor einem Handelskrieg mit China warnen, der deutsche Exporteure treffen würde.",
-          bullets: [
-            "Geplantes 'Made in Europe'-Kriterium sieht mindestens 60–70 % europäische Wertschöpfung bei öffentlichen Ausschreibungen vor.",
-            "Schutzinstrumente sollen auf Maschinenbau, Windkraft und Grundstoffchemie ausgeweitet werden.",
-            "Ziel ist eine verbindliche Einigung innerhalb des neuen mehrjährigen EU-Finanzrahmens."
-          ],
-          sources: ["Handelsblatt", "Financial Times", "Reuters", "dpa"],
-          verificationStatus: "Verifiziert · 4 Quellen"
+          narrativeComparison: "Französische Quellen fordern strikte 'Buy European'-Regeln, während deutsche Wirtschaftsmedien vor Handelskriegen warnen.",
+          bullets: ["Mindestens 60–70 % europäische Wertschöpfung bei Ausschreibungen geplant.", "Schutz für Maschinenbau, Windkraft und Grundstoffchemie.", "Einigung im EU-Finanzrahmen angestrebt."],
+          sources: ["Handelsblatt", "Financial Times", "Reuters"],
+          verificationStatus: "Verifiziert · 3 Quellen"
         },
         {
-          region: "USA · Geldpolitik & Staatsschulden",
+          region: "USA · Geldpolitik & Schulden",
           title: "US-Notenbank Fed und Anleihemärkte stellen sich auf dauerhaft höhere Realzinsen ein",
-          summary: "Robuste US-Konsumdaten und ein staatliches Haushaltsdefizit von über 6 % des BIP verhindern eine Rückkehr zu den Nullzinsen der 2010er-Jahre.",
-          contextExplanation: "Viele Marktteilnehmer hatten gehofft, dass die Zinsen schnell wieder auf 1 % bis 2 % sinken würden. Das Wall Street Journal und Daten des Congressional Budget Office (CBO) zeigen jedoch den strukturellen Grund, warum die Zinsen oben bleiben: Die US-Regierung gibt jedes Jahr fast 2 Billionen Dollar mehr aus, als sie einnimmt. Um diese Schulden zu finanzieren, muss das Finanzministerium ständig neue Staatsanleihen auf den Markt bringen – und dafür höhere Zinsen bieten.",
-          longTermImpact: "Der 'neutrale Zins' liegt strukturell höher als im letzten Jahrzehnt. Das begünstigt schuldenfreie Unternehmen und belastet hochverschuldete Immobilien- und Staatssektoren.",
+          summary: "Robuste US-Konsumdaten und ein Staatsdefizit von über 6 % des BIP verhindern eine rasche Rückkehr zu den Nullzinsen der Vergangenheit.",
+          contextExplanation: "Das US-Finanzministerium muss jedes Jahr Billionen neuer Staatsanleihen emittieren, um das Defizit zu finanzieren. Großanleger verlangen dafür einen Risikoaufschlag, weshalb die langfristigen Zinsen oben bleiben.",
+          longTermImpact: "Schuldenfreie Unternehmen mit hohem Cashbestand profitieren, hochverschuldete Immobilienkonzerne leiden.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Die jährlichen Zinszahlungen der USA haben erstmals die Marke von 1 Billion US-Dollar überschritten.",
-            "Die US-Wirtschaft wächst dank hoher Technologie- und Infrastrukturinvestitionen dennoch schneller als die Eurozone.",
-            "Die Fed betont, dass vorschnelle Zinssenkungen die Dienstleistungsinflation wieder anheizen würden."
-          ],
-          sources: ["Wall Street Journal", "Bloomberg", "AP", "Reuters"],
-          verificationStatus: "Verifiziert · CBO & WSJ"
+          bullets: ["Jährliche Zinszahlungen der USA überschreiten 1 Billion Dollar.", "US-Wirtschaft wächst schneller als der Euroraum.", "Fed warnt vor vorschneller Zinslockerung."],
+          sources: ["Wall Street Journal", "Bloomberg", "Reuters"],
+          verificationStatus: "Verifiziert · WSJ & CBO"
         },
         {
           region: "Asien · Globale Lieferketten",
           title: "Die 'China+1'-Strategie verlagert neue Industriekapazitäten dauerhaft nach Indien, Vietnam und Mexiko",
-          summary: "Weltkonzerne lösen sich nicht komplett von China, bauen aber systematisch parallele Produktionszentren im globalen Süden auf.",
-          contextExplanation: "Nach den Lieferketten-Schocks und angesichts drohender Handelszölle ist das Risiko, zu 100 % von Fabriken in China abzuhängen, für westliche Vorstände zu groß geworden. Statt China komplett zu verlassen, fahren Konzerne wie Apple, Samsung oder Siemens die 'China+1'-Strategie: Jede neue Erweiterungsfabrik wird außerhalb Chinas – vor allem in Indien, Vietnam oder Mexiko – errichtet.",
-          longTermImpact: "Mexiko ist bereits vor China zum größten Handelspartner der USA aufgestiegen; Indien und Südostasien erleben einen mehrjährigen Industrialisierungs- und Infrastruktur-Boom.",
+          summary: "Weltkonzerne bauen systematisch parallele Produktionsnetzwerke außerhalb Chinas auf.",
+          contextExplanation: "Nach den Lieferengpässen und angesichts drohender Zölle diversifizieren Großkonzerne ihre Standorte. Jede neue Erweiterungsfabrik entsteht vermehrt in Südostasien oder Nordamerika.",
+          longTermImpact: "Mexiko und Indien erleben einen mehrjährigen Industrialisierungs- und Infrastrukturboom.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Apple produziert inzwischen rund 14 % seiner iPhones in Indien und baut die Kapazitäten weiter aus.",
-            "Mexiko verzeichnet Rekord-Direktinvestitionen, da Güter über das USMCA-Abkommen zollfrei in die USA gelangen.",
-            "Selbst chinesische Hersteller errichten eigene Werke in Mexiko, Vietnam und Ungarn, um Zölle zu umgehen."
-          ],
-          sources: ["Nikkei Asia", "The Economist", "Wall Street Journal", "Reuters"],
-          verificationStatus: "Verifiziert · 4 Quellen"
+          bullets: ["Apple produziert rund 14 % der iPhones in Indien.", "Mexiko ist zum wichtigsten US-Handelspartner aufgestiegen.", "Chinesische Konzerne bauen eigene Werke im Ausland."],
+          sources: ["Nikkei Asia", "The Economist", "Reuters"],
+          verificationStatus: "Verifiziert · 3 Quellen"
         },
         {
           region: "Deutschland & Schweiz · Industrie",
           title: "Zweigeteilte Industrie: Stille Rekorde bei Technologie-Nischenführern trotz schwacher Binnenkonjunktur",
-          summary: "Während energieintensive Grundstoffbranchen in Deutschland schrumpfen, wachsen spezialisierte Anbieter in Automatisierung, Medizintechnik und Netzinfrastruktur weltweit.",
-          contextExplanation: "Ein genauer Blick in die Unternehmensdaten von Handelsblatt und NZZ zeigt eine scharfe Zweiteilung: Firmen, deren Geschäftsmodell auf billigem Pipeline-Gas und einfachen Massenprodukten basierte, verlieren Marktanteile. Gleichzeitig erzielen deutsche und Schweizer Hochtechnologie-Konzerne – die in Nordamerika und Asien direkt vor Ort produzieren – Rekordgewinne, weil ihre Spezialmaschinen und Software weltweit unverzichtbar sind.",
-          longTermImpact: "Börsenindizes wie DAX und SMI entkoppeln sich zunehmend von der heimischen Konjunktur, da über 80 % der Umsätze im wachsenden Ausland erzielt werden.",
+          summary: "Während Grundstoffbranchen schrumpfen, wachsen spezialisierte Anbieter in Automatisierung und Medizintechnik weltweit.",
+          contextExplanation: "Deutsche und Schweizer Spezialisten für Präzisionstechnik und Software erzielen Rekordergebnisse, weil ihre Produkte im Ausland unverzichtbar sind. Über 80 % der Erlöse fließen aus wachsenden Überseemärkten.",
+          longTermImpact: "Leitindizes wie DAX und SMI entkoppeln sich von der heimischen Binnenstimmung.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "DAX-Konzerne erwirtschaften weniger als 20 % ihrer Umsätze innerhalb Deutschlands.",
-            "Erweiterungsinvestitionen fließen wegen niedrigerer Energiekosten und schnellerer Genehmigungen verstärkt in die USA.",
-            "Hohes strukturelles Wachstum zeigen Netztechnik, Verteidigung, Industrie-Software und Medizintechnik."
-          ],
-          sources: ["Handelsblatt", "NZZ", "dpa", "Reuters"],
+          bullets: ["DAX-Konzerne erwirtschaften unter 20 % ihres Umsatzes im Inland.", "Investitionen fließen verstärkt nach Nordamerika.", "Wachstum bei Netztechnik, Medtech und Industrie-Software."],
+          sources: ["Handelsblatt", "NZZ", "Reuters"],
           verificationStatus: "Verifiziert · HB & NZZ"
         },
         {
           region: "Geopolitik · Welthandel & Logistik",
           title: "Sicherheit von Seewegen und Unterseekabeln rückt ins Zentrum westlicher Wirtschaftsstrategie",
-          summary: "Störungen an maritimen Nadelöhren zwingen Reedereien und Industriekonzerne zu längeren Transportrouten und höherer Lagerhaltung.",
-          contextExplanation: "Über 90 % des weltweiten Warenhandels laufen über Containerschiffe, und über 95 % des interkontinentalen Datenverkehrs fließen durch Glasfaser-Unterseekabel. Die Krise im Roten Meer hat gezeigt, wie verwundbar globale Nadelöhre sind: Schiffe müssen um ganz Afrika herumfahren, was die Reisezeit zwischen Asien und Europa um 10 bis 14 Tage verlängert und Schiffskapazitäten bindet.",
-          longTermImpact: "Die Ära der extrem knappen 'Just-in-Time'-Lieferketten weicht einer sicherheitsorientierten 'Just-in-Case'-Lagerhaltung in der Nähe der Absatzmärkte.",
+          summary: "Störungen maritimer Engpässe zwingen Reedereien zu längeren Transportrouten und höherer Lagerhaltung.",
+          contextExplanation: "Über 90 % des Welthandels laufen über Containerschiffe und 95 % des Datenverkehrs durch Unterseekabel. Anfällige Seerouten führen dazu, dass Unternehmen Pufferlager aufbauen, statt 'just-in-time' zu wirtschaften.",
+          longTermImpact: "Transportkosten und Lagerhaltungskosten verharren auf einem strukturell höheren Sockel.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Das Frachtvolumen durch den Suezkanal liegt über 60 % unter dem Vorkrisenniveau.",
-            "NATO und EU bauen gemeinsame Überwachungsstrukturen für Pipelines und Daten-Unterseekabel aus.",
-            "Längere Laufzeiten und Versicherungsprämien halten die globalen Frachtkosten strukturell höher."
-          ],
-          sources: ["Reuters", "Associated Press (AP)", "Financial Times", "AFP"],
-          verificationStatus: "Verifiziert · 4 Agenturen"
+          bullets: ["Frachtverkehr im Suezkanal liegt 60 % unter Vorkrisenniveau.", "NATO verstärkt Schutz kritischer Meeresinfrastruktur.", "Längere Fahrtzeiten binden weltweite Flottenkapazitäten."],
+          sources: ["Reuters", "Associated Press", "Financial Times"],
+          verificationStatus: "Verifiziert · 3 Agenturen"
         },
         {
           region: "Demografie · Produktivität & KI",
-          title: "Schrumpfende Erwerbsbevölkerung macht Automatisierung und KI in den Industrienationen zur Pflicht",
-          summary: "In Europa, Japan, Südkorea und China sinkt die Zahl der Menschen im erwerbsfähigen Alter – Technologie wird zum einzigen Weg, das Wohlstandsniveau zu halten.",
-          contextExplanation: "Oft wird über Künstliche Intelligenz und Robotik so diskutiert, als würden sie Arbeitsplätze vernichten. Daten von IWF und OECD zeigen jedoch die gegenteilige Realität: In den nächsten 10 Jahren gehen in Europa und Ostasien Millionen 'Babyboomer' in Rente. Es fehlen schlicht Arbeitskräfte in Industrie, Handwerk, Logistik und Verwaltung. Ohne Produktivitätssteigerung durch Software und Roboter würde die Wirtschaftsleistung allein demografisch bedingt schrumpfen.",
-          longTermImpact: "Hersteller von Industrie-Robotik und produktivitätssteigernder Unternehmenssoftware profitieren von einem jahrzehntelangen strukturellen Nachfragetrend.",
+          title: "Schrumpfende Erwerbsbevölkerung macht Automatisierung in den Industrienationen zur Pflicht",
+          summary: "In Europa, Japan und Ostasien sinkt die Zahl der Erwerbstätigen – Technologie sichert das Wohlstandsniveau.",
+          contextExplanation: "In den nächsten 10 Jahren scheiden Millionen Fachkräfte altersbedingt aus dem Arbeitsmarkt aus. Um die Wirtschaftsleistung zu halten, investieren Firmen massiv in Roboter und administrative KI-Systeme.",
+          longTermImpact: "Anbieter von Robotik und Produktivitäts-Software profitieren von jahrzehntelangem Rückenwind.",
           hasDivergingNarratives: false,
           narrativeComparison: "",
-          bullets: [
-            "Allein in Deutschland scheiden bis 2035 netto rund 5 bis 7 Millionen mehr Menschen altersbedingt aus dem Arbeitsmarkt aus, als nachrücken.",
-            "Asiatische und europäische Industrieunternehmen verzeichnen Rekordbestellungen bei kollaborativen Robotern.",
-            "KI-Systeme werden vor allem zur Entlastung bei administrativen Standardprozessen und in der Softwareentwicklung eingesetzt."
-          ],
-          sources: ["The Economist", "IWF", "Handelsblatt", "Reuters"],
+          bullets: ["In Deutschland scheiden bis 2035 netto Millionen Erwerbstätige aus.", "Rekordaufträge für kollaborative Industrieroboter.", "Automatisierung dämpft den Fachkräftemangel."],
+          sources: ["The Economist", "Handelsblatt", "IWF"],
           verificationStatus: "Verifiziert · IWF & OECD"
         }
       ]
@@ -615,17 +558,6 @@
       document.getElementById('apiKeyInput').value = localStorage.getItem('gemini_api_key') || '';
       document.getElementById('modelNameInput').value = localStorage.getItem('gemini_model_name') || 'gemini-3.5-flash-lite';
 
-      if (localStorage.getItem('tier1_media')) {
-        document.getElementById('tier1MediaInput').value = localStorage.getItem('tier1_media');
-      }
-      if (localStorage.getItem('verification_agencies')) {
-        document.getElementById('verificationAgenciesInput').value = localStorage.getItem('verification_agencies');
-      }
-      if (localStorage.getItem('custom_directive')) {
-        document.getElementById('customPromptInput').value = localStorage.getItem('custom_directive');
-      }
-
-      // 1. Load local cache immediately
       try {
         const saved = JSON.parse(localStorage.getItem('meridian_v1_state'));
         if (saved && Array.isArray(saved.worldNews) && saved.worldNews.length > 0) {
@@ -634,8 +566,6 @@
       } catch (e) {}
 
       renderAll();
-
-      // 2. Automatically load shared ./briefing.json from GitHub server (so all visitors see the daily 06:45 update!)
       await loadSharedServerBriefing();
     }
 
@@ -661,15 +591,18 @@
     function handleRefreshClick() {
       const key = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
       if (key) {
-        fetchLiveBriefingMultiStep();
+        toast("Verwende für das tägliche Update die automatisierte GitHub-Action um 06:45 Uhr.");
       } else {
-        // Visitors without API key simply reload the latest shared briefing.json from the server
         const icon = document.getElementById('refreshIcon');
         icon.classList.add('animate-spin');
         loadSharedServerBriefing().finally(() => {
           setTimeout(() => icon.classList.remove('animate-spin'), 500);
         });
       }
+    }
+
+    function toast(msg) {
+      alert(msg);
     }
 
     function copyMobileSyncLink() {
@@ -687,66 +620,6 @@
           if (window.lucide) lucide.createIcons();
         }, 3000);
       });
-    }
-
-    function safeParseGeminiJSON(rawText) {
-      if (!rawText) return null;
-      let cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-      const firstBrace = cleaned.indexOf('{');
-      const lastBrace = cleaned.lastIndexOf('}');
-      if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) return null;
-      let jsonCandidate = cleaned.substring(firstBrace, lastBrace + 1);
-
-      try {
-        return JSON.parse(jsonCandidate);
-      } catch (err1) {
-        let repaired = jsonCandidate
-          .replace(/,\s*([\]}])/g, '$1')
-          .replace(/[\u0000-\u0019]+/g, ' ');
-        try {
-          return JSON.parse(repaired);
-        } catch (err2) {
-          return null;
-        }
-      }
-    }
-
-    async function fetchLiveRSSContext() {
-      const feeds = [
-        { name: "Wall Street Journal", url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml" },
-        { name: "WSJ World", url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml" },
-        { name: "Handelsblatt", url: "https://www.handelsblatt.com/contentexport/feed/schlagzeilen" },
-        { name: "Tagesschau Wirtschaft", url: "https://www.tagesschau.de/wirtschaft/index~rss2.xml" },
-        { name: "CNBC Global", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114" }
-      ];
-
-      let collectedHeadlines = [];
-      await Promise.allSettled(feeds.map(async (f) => {
-        try {
-          const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(f.url);
-          const r = await fetch(apiUrl);
-          if (!r.ok) return;
-          const j = await r.json();
-          if (j && Array.isArray(j.items)) {
-            j.items.slice(0, 6).forEach(item => {
-              const cleanDesc = (item.description || '').replace(/<[^>]*>/g, '').slice(0, 220);
-              collectedHeadlines.push("[" + f.name + "] " + item.title + " — " + cleanDesc);
-            });
-          }
-        } catch (err) {}
-      }));
-
-      return {
-        headlinesText: collectedHeadlines.join("\n"),
-        count: collectedHeadlines.length
-      };
-    }
-
-    function resetToDefaultData() {
-      localStorage.removeItem('meridian_v1_state');
-      appState = JSON.parse(JSON.stringify(defaultData));
-      renderAll();
-      toggleModal('settingsModal');
     }
 
     function createSparklineSVG(points, isPositive) {
@@ -780,17 +653,35 @@
         }
       }
 
+      // RENDER DIE NEUE MAKRO-REGIME & LIQUIDITÄTS-AMPEL
       const macroEl = document.getElementById('macroList');
-      macroEl.innerHTML = (appState.macroCalendar || []).map(item => `
-        <div class="p-3.5 rounded-2xl bg-[#1c1c1e] flex items-center justify-between gap-3">
-          <div>
-            <span class="text-[10px] font-medium text-[#0a84ff] block mb-0.5">${item.date}</span>
-            <p class="text-[#f5f5f7] font-medium leading-snug">${item.event}</p>
-          </div>
-          <span class="text-[11px] text-[#86868b] shrink-0">${item.impact}</span>
-        </div>
-      `).join('');
+      const macroItems = appState.macroRegime || appState.macroCalendar || [];
+      
+      macroEl.innerHTML = macroItems.map(item => {
+        // Erkennt automatisch, ob neues Regime-Format oder altes Format vorliegt
+        const name = item.indicator || item.date || "Makro-Faktor";
+        const phase = item.phase || item.impact || "Neutral";
+        const detail = item.detail || item.event || "";
+        
+        let badgeColor = "bg-[#30d158]/15 text-[#30d158] border-[#30d158]/20";
+        if (item.tone === "red" || phase.toLowerCase().includes("erhöht") || phase.toLowerCase().includes("vorsicht")) {
+          badgeColor = "bg-[#ff453a]/15 text-[#ff453a] border-[#ff453a]/20";
+        } else if (item.tone === "amber" || phase.toLowerCase().includes("restriktiv") || phase.toLowerCase().includes("neutral")) {
+          badgeColor = "bg-[#ffd60a]/15 text-[#ffd60a] border-[#ffd60a]/20";
+        }
 
+        return `
+          <div class="p-3 rounded-2xl bg-[#1c1c1e] border border-white/[0.04] space-y-1">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs font-semibold text-[#f5f5f7] truncate">${name}</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border ${badgeColor} shrink-0">${phase}</span>
+            </div>
+            <p class="text-[11px] text-[#86868b] leading-snug">${detail}</p>
+          </div>
+        `;
+      }).join('');
+
+      // Weltnachrichten Grid
       const worldGrid = document.getElementById('worldGrid');
       worldGrid.innerHTML = (appState.worldNews || []).map((n, i) => {
         const sourcesText = (n.sources && n.sources.length) ? n.sources.slice(0, 3).join(' · ') : 'WSJ · Handelsblatt · Reuters';
@@ -805,11 +696,9 @@
                 <span class="text-[11px] font-semibold uppercase tracking-wider text-[#0a84ff]">${n.region}</span>
                 ${narrativeBadge}
               </div>
-
               <h3 class="text-[17px] font-semibold text-white leading-snug mb-2.5">${n.title}</h3>
               <p class="text-[13px] text-[#a1a1a6] leading-relaxed line-clamp-4 mb-4">${contextPreview}</p>
             </div>
-
             <div class="pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-[#86868b]">
               <span class="truncate">${sourcesText}</span>
               <i data-lucide="chevron-right" class="w-4 h-4 text-[#86868b] shrink-0"></i>
@@ -818,6 +707,7 @@
         `;
       }).join('');
 
+      // Markt Kacheln Grid
       const grid = document.getElementById('bentoGrid');
       const filtered = currentFilter === 'all'
         ? (appState.cards || [])
@@ -841,11 +731,10 @@
               <p class="text-[13px] text-[#f5f5f7] font-medium leading-snug mb-2.5">${card.headline}</p>
               <p class="text-xs text-[#a1a1a6] leading-relaxed line-clamp-3 mb-4">${contextPreview}</p>
             </div>
-
             <div class="pt-3.5 border-t border-white/[0.06] flex items-center justify-between">
               <div>
                 <span class="text-[10px] text-[#86868b] block">${sourcesText}</span>
-                <span class="text-xs font-semibold text-white mt-0.5 block">Moat ${card.moatScore || 85}/100</span>
+                <span class="text-xs font-semibold text-white mt-0.5 block">Moat ${card.moatScore || 88}/100</span>
               </div>
               <div>${createSparklineSVG(card.sparkline, isPos)}</div>
             </div>
@@ -968,7 +857,6 @@
       document.getElementById('modalSectorBadge').textContent = card.sectorLabel;
       document.getElementById('modalTickerBadge').textContent = card.ticker;
       document.getElementById('modalTitle').textContent = card.company + " – " + card.headline;
-      
       document.getElementById('modalContextExplanation').textContent = card.contextExplanation || card.thesis;
       document.getElementById('modalLongTermThesis').textContent = card.thesis;
       
@@ -981,10 +869,10 @@
 
     function openIntermarketDetail() {
       const im = appState.intermarket;
+      if (!im) return;
       document.getElementById('modalSectorBadge').textContent = "Intermarket & Staatsanleihen";
       document.getElementById('modalTickerBadge').textContent = im.symbol || "TVC:US10Y";
       document.getElementById('modalTitle').textContent = im.title;
-      
       document.getElementById('modalContextExplanation').textContent = im.contextExplanation || im.summary;
       document.getElementById('modalLongTermThesis').textContent = im.summary;
       
@@ -997,10 +885,10 @@
 
     function openWorldModal(idx) {
       const n = appState.worldNews[idx];
+      if (!n) return;
       document.getElementById('modalSectorBadge').textContent = n.region;
       document.getElementById('modalTickerBadge').textContent = "Briefing";
       document.getElementById('modalTitle').textContent = n.title;
-      
       document.getElementById('modalContextExplanation').textContent = n.contextExplanation || n.summary;
       document.getElementById('modalLongTermThesis').textContent = n.longTermImpact || n.summary;
       
@@ -1022,9 +910,6 @@
     function saveSettings() {
       localStorage.setItem('gemini_api_key', document.getElementById('apiKeyInput').value.trim());
       localStorage.setItem('gemini_model_name', document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite');
-      localStorage.setItem('tier1_media', document.getElementById('tier1MediaInput').value.trim());
-      localStorage.setItem('verification_agencies', document.getElementById('verificationAgenciesInput').value.trim());
-      localStorage.setItem('custom_directive', document.getElementById('customPromptInput').value.trim());
       toggleModal('settingsModal');
     }
 
@@ -1074,10 +959,17 @@
       ].join("\n");
 
       try {
-        const result = await callGeminiJSONOrText(key, preferredModel, chatPrompt, false);
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(preferredModel)}:generateContent?key=${key}`;
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: chatPrompt }] }] })
+        });
+        const data = await res.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort erhalten.";
         const loadEl = document.getElementById(loadingId);
         if (loadEl) {
-          loadEl.innerHTML = `<div class="px-4 py-2.5 rounded-2xl bg-[#1c1c1e] border border-white/[0.06] text-[#f5f5f7] text-xs max-w-[92%] leading-relaxed">${result.text.replace(/\*\*/g, '')}</div>`;
+          loadEl.innerHTML = `<div class="px-4 py-2.5 rounded-2xl bg-[#1c1c1e] border border-white/[0.06] text-[#f5f5f7] text-xs max-w-[92%] leading-relaxed">${text.replace(/\\*\\*/g, '')}</div>`;
         }
       } catch (err) {
         const loadEl = document.getElementById(loadingId);
@@ -1088,143 +980,11 @@
       chatLog.scrollTop = chatLog.scrollHeight;
     }
 
-    // Reliable API Caller with automatic model fallback and native JSON mode support
-    async function callGeminiJSONOrText(apiKey, preferredModel, prompt, forceJsonMode) {
-      const allModels = [
-        preferredModel,
-        "gemini-3.5-flash-lite",
-        "gemini-3.1-flash-lite",
-        "gemini-3.8-flash",
-        "gemini-3.6-flash"
-      ];
-      const modelQueue = [...new Set(allModels)];
-      let lastError = "";
-
-      for (let i = 0; i < modelQueue.length; i++) {
-        const currentModel = modelQueue[i];
-        try {
-          const genConfig = {
-            temperature: 0.25,
-            maxOutputTokens: forceJsonMode ? 6000 : 1024
-          };
-          if (forceJsonMode) {
-            genConfig.responseMimeType = "application/json";
-          }
-
-          const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(currentModel) + ":generateContent?key=" + apiKey, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: genConfig
-            })
-          });
-
-          if (res.ok) {
-            const data = await res.json();
-            const text = (data?.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || '').join('\n');
-            if (forceJsonMode) {
-              const parsed = safeParseGeminiJSON(text);
-              if (parsed) return { json: parsed, usedModel: currentModel };
-              lastError = "Ungültiges JSON von " + currentModel;
-            } else {
-              return { text: text, usedModel: currentModel };
-            }
-          } else {
-            const errJson = await res.json().catch(() => ({}));
-            lastError = currentModel + " (" + res.status + "): " + (errJson.error?.message || res.statusText);
-          }
-        } catch (netErr) {
-          lastError = netErr.message;
-        }
-      }
-
-      throw new Error(lastError || "Alle Modelle ausgelastet.");
-    }
-
-    // =========================================================================
-    // 3-STEP SPLIT FETCH: Solves the "1 out of 4" truncation problem completely
-    // =========================================================================
-    async function fetchLiveBriefingMultiStep() {
-      const key = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
-      if (!key) {
-        toggleModal('settingsModal');
-        return;
-      }
-
-      const todayStr = new Date().toLocaleDateString('de-DE');
-      const preferredModel = localStorage.getItem('gemini_model_name') || document.getElementById('modelNameInput').value.trim() || 'gemini-3.5-flash-lite';
-      const banner = document.getElementById('loadingBanner');
-      const stepTitle = document.getElementById('loadingStepTitle');
-      const stepBadge = document.getElementById('loadingStepBadge');
-      const refreshIcon = document.getElementById('refreshIcon');
-
-      banner.classList.remove('hidden');
-      refreshIcon.classList.add('animate-spin');
-
-      try {
-        stepTitle.textContent = "Lade Live-Schlagzeilen (WSJ, Handelsblatt, FT, Tagesschau)...";
-        stepBadge.textContent = "Schritt 1 / 4";
-        const rssData = await fetchLiveRSSContext();
-
-        const tier1Media = document.getElementById('tier1MediaInput').value;
-        const verificationAgencies = document.getElementById('verificationAgenciesInput').value;
-        const userDirective = document.getElementById('customPromptInput').value;
-
-        const baseHeader = [
-          "Du bist Meridian, ein präzises Global Intelligence Terminal (Stil: The Economist, Wall Street Journal, Handelsblatt). Heutiges Datum: " + todayStr + ".",
-          "WICHTIG: Verwende innerhalb von JSON-Strings niemals doppelte Anführungszeichen, sondern einfache ('...').",
-          "Leitmedien-Fokus: " + tier1Media,
-          "Verifikations-Institute: " + verificationAgencies,
-          "Zusatz-Direktive: " + userDirective,
-          rssData.count > 0 ? ("AKTUELLE LIVE-HEADLINES:\n" + rssData.headlinesText) : ""
-        ].join("\n");
-
-        // --- CALL 1: 6 World News Dossiers ---
-        stepTitle.textContent = "Erstelle 6 Hintergrund-Dossiers (Welt & Wirtschaft)...";
-        stepBadge.textContent = "Schritt 2 / 4";
-        const worldPrompt = baseHeader + "\n\nAUFGABE: Erstelle EXAKT 6 ausführliche Welt- & Wirtschafts-Dossiers als JSON: {\"worldNews\": [ { \"region\": \"...\", \"title\": \"...\", \"summary\": \"...\", \"contextExplanation\": \"4-5 ausführliche Sätze Hintergrund-Erklärung (warum passiert das jetzt, wie hängen die Faktoren zusammen)\", \"longTermImpact\": \"...\", \"hasDivergingNarratives\": false, \"narrativeComparison\": \"Nur ausfüllen wenn US/EU/Asien-Medien sich widersprechen, sonst leer\", \"bullets\": [\"...\", \"...\", \"...\"], \"sources\": [\"WSJ\", \"Handelsblatt\", \"Reuters\"], \"verificationStatus\": \"Verifiziert · 3 Quellen\" } ]}";
-        const worldRes = await callGeminiJSONOrText(key, preferredModel, worldPrompt, true);
-        if (Array.isArray(worldRes.json?.worldNews) && worldRes.json.worldNews.length > 0) {
-          appState.worldNews = worldRes.json.worldNews;
-          renderAll();
-        }
-
-        // --- CALL 2: 6 Market Cards ---
-        stepTitle.textContent = "Analysiere globale Aktien, Rohstoffe & Krypto (5Y-Horizont)...";
-        stepBadge.textContent = "Schritt 3 / 4";
-        const cardsPrompt = baseHeader + "\n\nAUFGABE: Erstelle EXAKT 6 detaillierte Markt-Kacheln (2x category 'equities' mit TradingView-Ticker wie NASDAQ:NVDA, NASDAQ:ASML oder XETR:SAP; 3x category 'commodities' zu Gold TVC:GOLD, Kupfer COMEX:HG1!, Uran NYSE:CCJ; 1x category 'crypto' zu Bitcoin BITSTAMP:BTCUSD) als JSON: {\"cards\": [ { \"id\": \"eq-1\", \"category\": \"equities\", \"sectorLabel\": \"...\", \"ticker\": \"NASDAQ:ASML\", \"company\": \"...\", \"direction\": \"Burggraben wächst\", \"moatScore\": 92, \"headline\": \"...\", \"contextExplanation\": \"4-5 ausführliche Sätze Erklärung\", \"thesis\": \"5-Jahres Bull-Case\", \"bearCase\": \"Wichtigstes Gegenrisiko\", \"hasDivergingNarratives\": false, \"narrativeComparison\": \"\", \"bullets\": [\"...\", \"...\", \"...\"], \"sources\": [\"WSJ\", \"Reuters\"], \"verificationStatus\": \"Verifiziert\", \"sparkline\": [45, 50, 55, 60, 65, 70, 75, 85] } ]}";
-        const cardsRes = await callGeminiJSONOrText(key, preferredModel, cardsPrompt, true);
-        if (Array.isArray(cardsRes.json?.cards) && cardsRes.json.cards.length > 0) {
-          appState.cards = cardsRes.json.cards.map((c, idx) => ({ ...c, id: c.id || ("card-" + idx) }));
-          renderAll();
-        }
-
-        // --- CALL 3: Morning Synthesis, Intermarket & Macro Calendar ---
-        stepTitle.textContent = "Finalisiere Tages-Synthese & Anleihen-Radar...";
-        stepBadge.textContent = "Schritt 4 / 4";
-        const overviewPrompt = baseHeader + "\n\nAUFGABE: Erstelle die Tages-Synthese, das Anleihen/Intermarket-Dossier und 4 Makro-Zyklen als JSON: {\"morningSynthesis\": \"1-2 prägnante Sätze zum Hauptthema des Tages\", \"intermarket\": { \"title\": \"...\", \"summary\": \"...\", \"contextExplanation\": \"4-5 Sätze Hintergrund\", \"bearCase\": \"...\", \"hasDivergingNarratives\": false, \"narrativeComparison\": \"\", \"bullets\": [\"...\", \"...\", \"...\"], \"symbol\": \"TVC:US10Y\", \"sources\": [\"WSJ\", \"FT\", \"Reuters\"] }, \"macroCalendar\": [ { \"date\": \"...\", \"event\": \"...\", \"impact\": \"...\" } ]}";
-        const overviewRes = await callGeminiJSONOrText(key, preferredModel, overviewPrompt, true);
-        if (overviewRes.json?.morningSynthesis) {
-          appState.morningSynthesis = overviewRes.json.morningSynthesis;
-        }
-        if (overviewRes.json?.intermarket) {
-          appState.intermarket = overviewRes.json.intermarket;
-        }
-        if (Array.isArray(overviewRes.json?.macroCalendar)) {
-          appState.macroCalendar = overviewRes.json.macroCalendar;
-        }
-
-        const timeStr = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-        appState.lastUpdated = todayStr + ", " + timeStr + " Uhr";
-        localStorage.setItem('meridian_v1_state', JSON.stringify(appState));
-        renderAll();
-      } catch (e) {
-        alert("Hinweis beim Update: " + e.message);
-      } finally {
-        banner.classList.add('hidden');
-        refreshIcon.classList.remove('animate-spin');
-      }
+    function resetToDefaultData() {
+      localStorage.removeItem('meridian_v1_state');
+      appState = JSON.parse(JSON.stringify(defaultData));
+      renderAll();
+      toggleModal('settingsModal');
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
