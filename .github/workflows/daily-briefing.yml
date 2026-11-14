@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Briefing (Werktags vs. Wochenend-Edition) generieren
+      - name: Briefing mit doppeltem Cooldown & Second-Order-Filter generieren
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -33,8 +33,9 @@ jobs:
             process.exit(1);
           }
 
-          // 1. Frühere Ticker der letzten 14 Tage aus briefing.json laden (14-Tage-Cooldown)
+          // 1. Gedächtnis laden: Sowohl frühere Aktien/Ticker ALS AUCH frühere Welt-Themen!
           let recentHistory = [];
+          let recentWorldTopics = [];
           try {
             const oldBriefing = JSON.parse(await fs.readFile('briefing.json', 'utf-8'));
             if (Array.isArray(oldBriefing.recentHistory)) {
@@ -42,15 +43,26 @@ jobs:
             } else if (Array.isArray(oldBriefing.cards)) {
               recentHistory = oldBriefing.cards.map(c => c.company || c.ticker);
             }
+
+            if (Array.isArray(oldBriefing.recentWorldTopics)) {
+              recentWorldTopics = oldBriefing.recentWorldTopics.slice(-24);
+            } else if (Array.isArray(oldBriefing.worldNews)) {
+              recentWorldTopics = oldBriefing.worldNews.map(w => w.title);
+            }
           } catch (e) {
             recentHistory = [];
+            recentWorldTopics = [];
           }
 
-          const blacklistPrompt = recentHistory.length > 0 
-            ? `\nBEREITS BEHANDELTE THEMEN/UNTERNEHMEN DER LETZTEN TAGE (STRIKT GESPERRT! WÄHLE ZWINGEND ANDERE!): ${recentHistory.join(', ')}\n`
+          const assetBlacklistPrompt = recentHistory.length > 0
+            ? `\nGESPERRTE UNTERNEHMEN/ROHSTOFFE DER LETZTEN TAGE (WÄHLE ZWINGEND ANDERE!): ${recentHistory.join(', ')}\n`
             : '';
 
-          // 2. Wochentag prüfen: Ist heute Wochenende (Samstag=6 oder Sonntag=0)?
+          const worldBlacklistPrompt = recentWorldTopics.length > 0
+            ? `\nBEREITS BEHANDELTE WELT-THEMEN DER LETZTEN TAGE (STRIKT GESPERRT – KEINE SCHLEICHENDEN FORTSETZUNGEN ODER TÄGLICHEN ANLEIHE-UPDATES WIE VANKE WIEDERHOLEN, AUSSER BEI EINEM HISTORISCHEN BRUCH!): \n- ${recentWorldTopics.join('\n- ')}\n`
+            : '';
+
+          // 2. Wochentag prüfen
           const now = new Date();
           const dayOfWeek = now.getDay();
           const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
@@ -134,23 +146,22 @@ jobs:
               : `Du bist Chefredakteur von 'Meridian' und erstellst das tagesaktuelle BRIEFING (Stil: The Economist, WSJ).`;
 
             const editorialTask = isWeekend
-              ? `FOKUS WOCHENENDE: Da die Börsen geschlossen sind, erstelle KEINE kurzlebigen Kursmeldungen, sondern eine tiefgehende STRATEGISCHE WOCHEN-SYNTHESE:
-                 1. Was waren die tektonischen Plattenverschiebungen dieser Woche?
-                 2. Worauf blicken globale Investoren in der kommenden Woche (Zinsentscheide, Wahlen, Konjunkturdaten)?`
-              : `FOKUS TAGESBRIEFING: Analysiere die tagesaktuellen wirtschaftlichen und geopolitischen Haupthemen mit 5-Jahres-Relevanz.`;
+              ? `FOKUS WOCHENENDE: Erstelle eine tiefgehende STRATEGISCHE WOCHEN-SYNTHESE (keine kurzlebigen Kursmeldungen): Was waren die echten strukturellen Verschiebungen der Woche, und worauf blickt der Markt in der kommenden Woche?`
+              : `FOKUS TAGESBRIEFING: Analysiere tagesaktuelle wirtschaftliche und geopolitische Haupthemen mit langfristiger Relevanz. Ignoriere schleichende Endlos-Krisen ohne neuen Durchbruch.`;
 
             const baseHeader = `${editorialRole} Heute ist ${todayStr}.
             ${editorialTask}
             Verwende in JSON-Strings einfache Anführungszeichen ('...').
             ANTI-NOISE: Keine Gerüchte, kein Daytrading-Rauschen. Nur fundierte Bilanzen, Gesetze und verifizierte Daten.
-            ${blacklistPrompt}
+            ${assetBlacklistPrompt}
+            ${worldBlacklistPrompt}
             AKTUELLE LEITMEDIEN-MELDUNGEN:
             ${rssContext}\n\n`;
 
-            console.log(isWeekend ? '1/3 Wochenend-Dossiers (Megatrends) generieren...' : '1/3 Welt-Dossiers generieren...');
+            console.log(isWeekend ? '1/3 Wochenend-Dossiers generieren...' : '1/3 Welt-Dossiers generieren...');
             const worldPrompt = isWeekend
-              ? `Erstelle EXAKT 6 strategische Wochenend-Dossiers (Megatrends: Deglobalisierung, Demografie, Energie-Infrastruktur, geopolitische Blöcke).`
-              : `Erstelle EXAKT 6 Welt- & Makro-Dossiers mit verschiedenen Weltregionen (max 1 pro Region).`;
+              ? `Erstelle EXAKT 6 strategische Wochenend-Dossiers (Megatrends: Deglobalisierung, Demografie, Energie-Infrastruktur, geopolitische Blöcke). Vermeide strikt Themen aus der Sperrliste oben!`
+              : `Erstelle EXAKT 6 Welt- & Makro-Dossiers mit verschiedenen Weltregionen (max 1 pro Region). Wähle zwingend FRISCHE Themen, die NICHT auf der Sperrliste oben stehen (z.B. keine Wiederholung von Vanke-Schuldenupdates!).`;
 
             const worldRes = await callGeminiJSON(baseHeader + `AUFGABE: ${worldPrompt}
             JSON: {
@@ -170,21 +181,21 @@ jobs:
               ]
             }`);
 
-            console.log('2/3 Markt-Kacheln mit rotierender Slot-Architektur generieren...');
-            const marketPrompt = isWeekend
-              ? `Erstelle EXAKT 6 Markt-Kacheln für das Wochenende:
-                 Fokus auf Geschäftsmodelle mit extremem Burggraben (Moat) und die entscheidenden Katalysatoren der kommenden Woche.`
-              : `Erstelle EXAKT 6 Markt-Kacheln (Horizont 5+ Jahre) nach dieser FESTEN SLOT-ARCHITEKTUR:`;
+            console.log('2/3 Markt-Kacheln (Second-Order & Bewertungs-Check) generieren...');
+            const cardsRes = await callGeminiJSON(baseHeader + `AUFGABE: Erstelle EXAKT 6 Kapitalmarkt-Kacheln (Horizont 5+ Jahre).
+            WICHTIGE INVESTOREN-REGEL GEGEN 'ZU SPÄT KOMMEN':
+            - Wähle KEINE Aktie nur deshalb, weil sie gestern nach Quartalszahlen schon stark gestiegen ist!
+            - Suche stattdessen nach unaufgeregten ZWEITRUNDEN-PROFITEUREN (Zulieferer, Infrastruktur-Flaschenhälse, B2B-Monopole) oder strukturell wichtigen Werten für eine langfristige Watchlist.
+            - Prüfe im 'bearCase' immer ehrlich, ob der gute Trend aktuell schon teuer im Kurs eingepreist ist!
 
-            const cardsRes = await callGeminiJSON(baseHeader + `AUFGABE: ${marketPrompt}
-            - Slot 1 (equities): Industrie, Automatisierung & Infrastruktur (z.B. Schneider Electric, Siemens, ABB, Deere, Caterpillar, Linde)
-            - Slot 2 (equities): Pharma, Medtech oder Konsumgüter mit Preissetzungsmacht (z.B. Novo Nordisk, Intuitive Surgical, LVMH, Nestlé, Stryker)
-            - Slot 3 (commodities): Rotierender strategischer Rohstoff (z.B. Silber, Erdgas/TTF, Öl/Brent, Lithium, Seltene Erden, Kakao, Weizen)
+            FESTE SLOT-ARCHITEKTUR (beachte die Unternehmens-Sperrliste!):
+            - Slot 1 (equities): Industrie, Automatisierung & Infrastruktur
+            - Slot 2 (equities): Pharma, Medtech oder Konsumgüter mit Preissetzungsmacht
+            - Slot 3 (commodities): Rotierender strategischer Rohstoff
             - Slot 4 (commodities): Zweiter Rohstoff, Energie oder Frachtraten
-            - Slot 5 (equities): Finanzen, Zinsen & Kapitalmonopole (z.B. Visa, Berkshire Hathaway, BlackRock, Münchner Rück)
-            - Slot 6 (crypto): Digitales Netzwerk / Asset (Bitcoin, Ethereum L2, Tokenisierte Real-World-Assets)
+            - Slot 5 (equities): Finanzen, Zinsen & Kapitalmonopole
+            - Slot 6 (crypto): Digitales Netzwerk / Asset
 
-            Beachte strikt die Blacklist! Wähle neue, substanzielle Werte.
             JSON: {
               "cards": [
                 {
@@ -193,13 +204,13 @@ jobs:
                   "sectorLabel": "Branche",
                   "ticker": "BÖRSE:SYMBOL (z.B. NYSE:ETN, NASDAQ:ISRG, TVC:GOLD)",
                   "company": "Name",
-                  "direction": "Burggraben wächst / Säkularer Trend",
+                  "direction": "Watchlist-Kandidat / Burggraben wächst / Struktureller Trend",
                   "isPositive": true,
                   "moatScore": 92,
                   "headline": "Prägnante Überschrift",
-                  "contextExplanation": "4-5 Sätze Erklärung der Marktmechanik & des Burggrabens.",
+                  "contextExplanation": "4-5 Sätze Erklärung der Marktmechanik, des Zweitrunden-Effekts & des Burggrabens.",
                   "thesis": "5-Jahres Bull-Case (2 Sätze).",
-                  "bearCase": "Wichtigstes Gegenrisiko (2 Sätze).",
+                  "bearCase": "Gegenrisiko & ehrlicher Bewertungs-Check: Was ist schon eingepreist? (2 Sätze).",
                   "hasDivergingNarratives": false,
                   "narrativeComparison": "",
                   "bullets": ["Marktfakt 1", "Marktfakt 2", "Marktfakt 3"],
@@ -254,9 +265,12 @@ jobs:
               ]
             }`);
 
-            // 14-Tage-Historie aktualisieren
-            const newlyUsed = (cardsRes.cards || []).map(c => c.company || c.ticker);
-            const updatedHistory = [...new Set([...recentHistory, ...newlyUsed])].slice(-25);
+            // Sowohl Aktien-Historie als auch Welt-Themen-Historie fortschreiben
+            const newlyUsedAssets = (cardsRes.cards || []).map(c => c.company || c.ticker);
+            const updatedHistory = [...new Set([...recentHistory, ...newlyUsedAssets])].slice(-25);
+
+            const newlyUsedWorld = (worldRes.worldNews || []).map(w => w.title).filter(Boolean);
+            const updatedWorldTopics = [...new Set([...recentWorldTopics, ...newlyUsedWorld])].slice(-24);
 
             const finalBriefing = {
               generatedAt: now.toISOString(),
@@ -267,11 +281,12 @@ jobs:
               macroRegime: overviewRes.macroRegime || [],
               worldNews: worldRes.worldNews || [],
               cards: (cardsRes.cards || []).map((c, idx) => ({ ...c, id: c.id || `card-${idx + 1}` })),
-              recentHistory: updatedHistory
+              recentHistory: updatedHistory,
+              recentWorldTopics: updatedWorldTopics
             };
 
             await fs.writeFile('briefing.json', JSON.stringify(finalBriefing, null, 2), 'utf-8');
-            console.log('briefing.json erfolgreich aktualisiert!');
+            console.log('briefing.json mit doppeltem Cooldown erfolgreich gespeichert!');
           }
 
           main().catch(err => {
