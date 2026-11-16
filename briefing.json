@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-15T06:37:40.119Z",
-  "lastUpdated": "15.11.2026, 07:37 Uhr",
-  "isWeekendEdition": true,
-  "morningSynthesis": "Die abgelaufene Börsenwoche stand im Zeichen einer fundamentalen Neubewertung von Technologie- und Infrastrukturwerten, ausgelöst durch disruptive KI-Modelle aus Asien und geopolitische Spannungen im Nahen Osten. Während die Aktienmärkte eine scharfe Korrektur verarbeiteten, blicken Investoren nun gebannt auf die anstehenden geldpolitischen Weichenstellungen und die Resilienz der globalen Lieferketten.",
+  "generatedAt": "2026-11-16T07:21:17.623Z",
+  "lastUpdated": "16.11.2026, 08:21 Uhr",
+  "isWeekendEdition": false,
+  "morningSynthesis": "Die globalen Kapitalmärkte erleben durch den Technologieschock aus China eine fundamentale Neubewertung, während gleichzeitig geopolitische Risse in Osteuropa und dem Nahen Osten die Risikoprämien treiben. Die Dynamik verschiebt sich spürbar von spekulativen KI-Wetten hin zu harten Fiskal- und Infrastrukturdaten.",
   "intermarket": {
-    "title": "Kapitalflüsse in sichere Häfen: Anleihemärkte unter dem Eindruck geopolitischer Eskalation",
-    "summary": "Staatsanleihen verzeichneten im Wochenverlauf moderate Kursgewinne, da Investoren angesichts wachsender geopolitischer Risiken und Korrekturen am Aktienmarkt in sichere Häfen umschichteten.",
-    "contextExplanation": "Die Renditen zehnjähriger US-Staatsanleihen gaben leicht nach, da die Marktteilnehmer nach den heftigen Verwerfungen im Technologiesektor eine defensive Haltung einnahmen. Zugleich drückten neue Konfliktherde im Nahen Osten und die Sorge um unterbrochene Handelswege in der Straße von Hormus auf die Risikobereitschaft. Analysten werten diese Bewegung als klassische Umschichtung, bei der institutionelles Kapital temporär aus riskanten Wachstumssegmenten in festverzinsliche, liquide Instrumente gelenkt wird.",
-    "bearCase": "Sollten hartnäckige Inflationsdaten oder überraschend robuste Konjunkturindikatoren die Zinssenkungserwartungen der Zentralbanken dämpfen, droht ein abneigungsbedingter Ausverkauf am Anleihemarkt mit entsprechend steigenden Renditen.",
+    "title": "Kapitalflüsse im Schatten des Tech-Abverkaufs und fiskalischer Realitäten",
+    "summary": "Die Flucht aus hochbewerteten US-Technologiewerten treibt Anleger in sichere Häfen wie den Schweizer Franken und den japanischen Yen. Gleichzeitig belasten historische Haushaltswarnungen in Europa die Renditen.",
+    "contextExplanation": "Der abrupte Einbruch bei KI-Infrastrukturwerten nach dem Erscheinen neuer asiatischer Modelle hat eine klassische Risk-Off-Bewegung ausgelöst. Investoren schichten massiv von Aktien in Staatsanleihen um, was die Renditen drückt. Parallel dazu verdeutlichen Berichte über ausufernde Staatsdefizite, wie im Fall Deutschlands, dass der Refinanzierungsbedarf der öffentlichen Hand hoch bleibt. Die Bondmärkte müssen somit gleichzeitig die Unsicherheit des Technologiesektors und steigende fiskalische Risiken einpreisen.",
+    "bearCase": "Sollte die Inflation durch unerwartete Rohstoffpreissprünge oder Handelskriege persistenter bleiben als angenommen, droht ein Szenario, in dem sowohl Aktien als auch Anleihen gleichzeitig Verluste verzeichnen.",
     "hasDivergingNarratives": true,
-    "narrativeComparison": "Während einige Marktbeobachter in der aktuellen Nachfrage nach Staatsanleihen ein klares Signal für eine bevorstehende Konjunkturabkühlung sehen, interpretieren andere den Renditerückgang lediglich als kurzfristige technische Gegenbewegung nach den massiven Aktienkorrekturen.",
+    "narrativeComparison": "Während Aktieninvestors den Einbruch bei KI-Titanen als temporäre Panik und Kaufgelegenheit werten, sehen Rentenmärkte die systemischen Risiken einer überhitzten und zu stark konzentrierten Kreditvergabe im Technologiesektor.",
     "bullets": [
-      "Renditen zehnjähriger US-Treasuries gaben im Wochenverlauf um einige Basispunkte nach.",
-      "Flucht in sichere Häfen stärkte neben US-Anleihen auch den Schweizer Franken und den Japanischen Yen.",
-      "Institutionelle Investoren schichten aktiv von hoch bewerteten Technologie-Aktien in liquide Fixed-Income-Produkte um."
+      "Sicherer Hafen gesucht: Schweizer Franken und Yen verzeichnen deutliche Zuflüsse.",
+      "Renditedruck an den Anleihemärkten durch Umschichtungen aus dem US-Tech-Sektor.",
+      "Fiskalische Bedenken in Europa belasten die langfristigen Refinanzierungsbedingungen."
     ],
     "symbol": "TVC:US10Y",
     "sources": [
-      "WSJ Markets",
-      "Financial Times",
-      "Bloomberg"
+      "WSJ",
+      "FT",
+      "Handelsblatt"
     ],
     "verificationStatus": "Verifiziert"
   },
@@ -28,169 +28,165 @@
       "indicator": "US-Dollar & Liquidität (DXY)",
       "phase": "Neutral",
       "tone": "amber",
-      "detail": "Der US-Dollar profitierte zeitweise von seiner Funktion als sicherer Hafen, hält sich jedoch angesichts uneinheitlicher Konjunkturdaten in einer engen Handelsspanne."
+      "detail": "Der US-Dollar zeigt sich robust durch kurzfristige Zuflüsse, lässt aber wegen globaler Wachstumsbedenken eine klare Richtung vermissen."
     },
     {
       "indicator": "Zinskurve (2Y/10Y Spread)",
       "phase": "Normalisierend",
       "tone": "green",
-      "detail": "Die sukzessive Steilstellung der Zinskurve entlastet klassische Geschäftsbanken und verringert den Refinanzierungsdruck im kurzfristigen Segment."
+      "detail": "Die Entspannung am langen Ende der Zinskurve entlastet Geschäftsbanken und reduziert den akuten Refinanzierungsdruck für bonitätsstarke Unternehmen."
     },
     {
       "indicator": "Kreditrisiko (High-Yield-Spreads)",
       "phase": "Eng",
       "tone": "green",
-      "detail": "Unternehmensanleihen zeigen sich trotz der jüngsten Aktienmarktturbulenzen robust, und die Risikoaufschläge verharren auf historisch unauffälligem Niveau."
+      "detail": "Unternehmensanleihen spüren den Tech-Abverkauf bisher kaum; die Spreads verbleiben auf einem historisch engen Niveau."
     },
     {
       "indicator": "Geopolitische Risikoprämie",
       "phase": "Erhöht",
       "tone": "red",
-      "detail": "Neue Konflikte im Nahen Osten und anhaltende Seeverkehrsrisiken belasten die Frachtraten und treiben die Versicherungsprämien für maritime Logistik."
+      "detail": "Sabotageakte an kritischer Infrastruktur in der Ostsee und anhaltende Seewege-Risiken treiben die Versicherungs- und Frachtkosten."
     }
   ],
   "worldNews": [
     {
       "region": "ASIEN · TECHNOLOGIE & KI-INFRASTRUKTUR",
-      "title": "Der Schock aus Hangzhou: Wie DeepSeek die fundamentale Neubewertung von Rechenzentren erzwingt",
-      "summary": "Das Aufkommen des chinesischen KI-Modells DeepSeek löste eine historische Marktkorrektur bei Infrastrukturwerten aus und vernichtete Billionen an Börsenwert.",
-      "contextExplanation": "Die Marktreaktion der Woche war kein kurzfristiges Rauschen, sondern das Ende der unkritischen 'Picks and Shovels'-Hypothese im Halbleitersektor. Jahrelang ging die Wall Street davon aus, dass exponentiell steigende KI-Leistung immer massivere physische und finanzielle Investitionen in Hardware erfordert. Das chinesische Startup DeepSeek bewies jedoch, dass hocheffiziente Trainingsmethoden und optimierte Algorithmen den Rechen- und Energiebedarf drastisch senken können. Dieser Effizienzdurchbruch entzieht den teuren Expansionsplänen der großen Technologiekonzerne vorübergehend die preistreibende Basis. Die gigantischen Bewertungen von Hardware-Zulieferern prallten hart auf die Realität wirtschaftlicher Margen und sinkender Kapitaleffizienz.",
-      "longTermImpact": "Langfristig führt dies zu einer gesünderen Konsolidierung des Technologiesektors, bei der Software-Effizienz über rohe Hardware-Gewalt triumphiert. Kapitalströme verlagern sich von reinen Halbleiter-Monopolen hin zu applikationsnahen Industrieanwendungen und optimierten Cloud-Dienstleistern.",
+      "title": "Der Marktwert-Sturz der Chipgiganten: Wie DeepSeek die fundamentale Neubewertung auslöst",
+      "summary": "Asiatische Hardware- und globale Halbleiterwerte geraten nach Effizienzdurchbrüchen chinesischer KI-Modelle massiv unter Druck.",
+      "contextExplanation": "Die Veröffentlichung neuer, extrem ressourcenschonender Architekturen durch das Start-up DeepSeek hat die Märkte kalt erwischt. Jahrelang basierten die Bewertungen von Halbleiterkonzernen wie SK Hynix oder westlichen Ausrüstern auf der Prämisse, dass exponentielles Wachstum bei Rechenzentren und unersättlicher Energiebedarf unumstößlich sind. Nun zeigt sich, dass algorithmische Effizienz den physischen Hardware-Bedarf drastisch senken kann. Dies führt zu einer abrupten Neubewertung von Investitionszyklen in der gesamten Tech-Lieferkette.",
+      "longTermImpact": "Kapitalflüsse verlagern sich von reiner Hardware-Expansion hin zu Software-Optimierung und spezialisierten Anwendungen. Unternehmen müssen ihre Capex-Budgets für Rechenzentren fundamental überprüfen.",
       "hasDivergingNarratives": true,
-      "narrativeComparison": "Während Panikverkäufer an der Wall Street das Ende des KI-Booms ausrufen, argumentieren strategische Analysten, dass günstigere Modelle die Adaptionsrate in der globalen Wirtschaft massiv beschleunigen werden.",
+      "narrativeComparison": "Während Panikverkäufe an den Börsen einen Sättigungspunkt der KI-Revolution heraufbeschwören, argumentieren Technologie-Analysten, dass günstigere Modelle die Adaptionsrate branchenweit drastisch beschleunigen und langfristig neue Märkte öffnen.",
       "bullets": [
-        "Historischer Kurseinbruch bei Hardware-Zulieferern und Rechenzentrums-Ausrüstern",
-        "DeepSeek beweist, dass algorithmische Effizienz den physischen Kapazitätsbedarf radikal senken kann",
-        "Investoren fordern von Tech-Giganten strengere KPIs bezüglich des Return on Investment (ROI) von KI-Ausgaben"
+        "Massive Kursverluste bei führenden Halbleiterproduzenten und KI-Infrastrukturanbietern",
+        "SK Hynix treibt den Ausbau von Produktionsstätten in einem veränderten Marktumfeld voran",
+        "Fokus verschiebt sich von reiner Rechenleistung zu algorithmischer Effizienz"
       ],
       "sources": [
+        "Nikkei Asia",
         "Financial Times",
-        "WSJ Markets",
-        "Nikkei Asia"
+        "WSJ Markets"
       ],
       "verificationStatus": "Verifiziert · 3 Quellen"
     },
     {
-      "region": "NAHER OSTEN · ENERGIE-INFRASTRUKTUR & GEOPOLITIK",
-      "title": "Die offene Flanke am Persischen Golf: Eskalation in der Straße von Hormus",
-      "summary": "Gezielte Angriffe auf Tanker und US-Stützpunkte in Bahrain markieren eine neue Dimension der Bedrohung für globale Handels- und Energierouten.",
-      "contextExplanation": "Die sicherheitspolitische Lage im Nahen Osten hat sich von regionalen Scharmützeln zu einer akuten Bedrohung für globale Lieferketten ausgeweitet. Der Minenkontakt von Öltankern in der Straße von Hormus und Angriffe auf strategische Infrastruktur treffen die weltweite Energieversorgung an ihrer verletzlichsten Stelle. Trotz diplomatischer Bemühungen wächst das Misstrauen der Reeder, die traditionelle Handelswege zunehmend meiden oder mit massiven Risikoprämien versehen. Die Verflechtung von geopolitischer Destabilisierung und marokkanischer beziehungsweise nahöstlicher Logistik erzwingt eine Neubewertung von maritimen Sicherheitsrisiken.",
-      "longTermImpact": "Energieintensive Volkswirtschaften müssen dauerhaft mit höheren Risikoprämien und volatileren Rohstoffpreisen rechnen. Die Diversifizierung von Transportwegen und der Ausbau heimischer Resilienz erhalten höchste politische Priorität.",
+      "region": "EUROPA · FISKALPOLITIK & STAATSFINANZEN",
+      "title": "Deutschlands historische Haushaltskrise: Zwischen Schuldenbremse und Investitionsstau",
+      "summary": "Der Sachverständigenrat warnt vor einer historischen Zuspitzung der öffentlichen Finanzen in der Bundesrepublik.",
+      "contextExplanation": "Die deutsche Wirtschaft steht vor einer strukturellen Belastungsprobe, da die Staatsfinanzen zunehmend aus dem Ruder laufen. Der Sachverständigenrat zur Begutachtung der gesamtwirtschaftlichen Entwicklung fordert drastische Schritte, darunter harte Einsparungen sowie strukturelle Reformen. Die Einhaltung der verfassungsmäßigen Schuldenbremse kollidiert dabei mit dem massiven Bedarf an Investitionen in Infrastruktur, Energiewende und Verteidigung. Ohne konsensfähige Korrekturen droht ein dauerhafter Verlust der fiskalischen Handlungsfähigkeit.",
+      "longTermImpact": "Die Diskussion um die Reform der Schuldenbremse wird die politische Agenda der kommenden Jahre dominieren und direkte Auswirkungen auf deutsche Staatsanleihen sowie das Wachstumspotenzial haben.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Mehrere Öltanker nach Minenkontakten in der Straße von Hormus beschädigt",
-        "Revolutionsgarden attackieren US-Stützpunkt in Bahrain",
-        "Reedereien halten an extrem vorsichtigen Routenplanungen fest"
+        "Sachverständigenrat warnt vor historischen Ausmaßen der Finanzierungslücke",
+        "Dringender Reformbedarf bei Sozialausgaben und öffentlichen Investitionen",
+        "Wachsende Spannungen zwischen fiskalischer Disziplin und Modernisierungsdruck"
       ],
       "sources": [
         "Handelsblatt",
-        "WSJ World",
         "Financial Times"
       ],
-      "verificationStatus": "Verifiziert · 3 Quellen"
+      "verificationStatus": "Verifiziert · 2 Quellen"
     },
     {
-      "region": "EUROPA · KRITISCHE INFRASTRUKTUR",
-      "title": "Unterseeische Verwundbarkeit: Die NATO reagiert auf Sabotage im Ostseeraum",
-      "summary": "Erneut gekappte Tiefseekabel zwingen das Bündnis zu einer historischen, koordinierten Schutzmission für digitale Lebensadern.",
-      "contextExplanation": "Die physische Integrität des europäischen Internets und der Finanzkommunikation steht unter permanenter Bedrohung. Die mutmaßliche Sabotage an Unterseekabeln in der Ostsee hat die NATO veranlasst, erstmals eine institutionalisierte Schutzreaktion einzuleiten. Jahrelang galt die Tiefseeschifffahrt und die dort verlegte Infrastruktur als graue Zone der hybriden Kriegführung. Nun zeigt sich, dass die dezentrale Natur des globalen Datenverkehrs ein leicht angreifbares Nadelöhr für feindliche Akteure darstellt, deren Schutz enorme militärische und finanzielle Ressourcen bindet.",
-      "longTermImpact": "Telekommunikationskonzerne und Staaten werden gezwungen sein, Milliarden in redundante, satellitengestützte und schwerer zugängliche Übertragungswege zu investieren, was die Betriebskosten der digitalen Wirtschaft nachhaltig erhöht.",
+      "region": "AFRIKA · GEOPOLITIK & SICHERHEIT",
+      "title": "Eskalation im Kongo: Rebellenangriffe gefährden humanitäre Schutzzonen",
+      "summary": "Bewaffnete Milizen dringen in strategisch wichtige urbane Zentren vor und verschärfen die humanitäre Krise.",
+      "contextExplanation": "Die Sicherheitslage in der Demokratischen Republik Kongo hat sich drastisch verschlechtert, nachdem von Ruanda unterstützte Rebellen in die als Zufluchtsort geltende Stadt Goma vorgerückt sind. Hunderttausende Binnenflüchtlinge, die dort Schutz gesucht hatten, geraten ins direkte Kreuzfeuer von Artillerieangriffen. Die staatlichen Sicherheitskräfte sind den Verbänden organisierter Milizen strukturell unterlegen, was die Schwäche der zentralen Regierungsstrukturen in Kinshasa offenbart und internationale Friedensbemühungen akut gefährdet.",
+      "longTermImpact": "Die Instabilität droht die gesamte Region der Großen Seen zu destabilisieren und den Zugang zu kritischen Rohstoffen für globale Lieferketten nachhaltig zu beeinträchtigen.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Erste koordinierte NATO-Operation zum Schutz kritischer Tiefseekabel",
-        "Zunehmende Häufung hybrider Angriffe auf europäische Netzinfrastruktur",
-        "Wirtschaft fordert beschleunigte Redundanzen im digitalen Backbone"
+        "Rebellenverbände überrennen kongolesische Regierungstruppen in Goma",
+        "Über eine Million Binnenflüchtlinge in der Stadt von Kampfhandlungen bedroht",
+        "Internationale Diplomatie fordert sofortige Deeskalation und humanitäre Korridore"
       ],
       "sources": [
         "WSJ World",
-        "Tagesschau Wirtschaft",
-        "Financial Times"
+        "NZZ International"
       ],
-      "verificationStatus": "Verifiziert · 3 Quellen"
+      "verificationStatus": "Verifiziert · 2 Quellen"
     },
     {
-      "region": "NORDAMERIKA · LUFTFAHRT & SYSTEMISCHE VERLETZLICHKEIT",
-      "title": "Das Kartenhaus der Mobilität: Wie veraltete US-Netzwerke den Luftverkehr lahmlegen",
-      "summary": "Ein landesweiter Ground Stop verdeutlicht die dramatischen Folgen jahrzehntelanger Unterinvestitionen in US-Telekommunikationssysteme.",
-      "contextExplanation": "Der erneute, massive Kollaps im US-Flugverkehr durch Software- und Router-Probleme bei älteren Subunternehmern wie L3Harris ist kein technischer Betriebsunfall, sondern das Symptom eines tiefen systemischen Versagens. Experten sprechen von einer Infrastruktur, die seit Jahrzehnten nur noch mit 'Draht und Klebeband' zusammengehalten wird. Das Ausbleiben überparteilicher Investitionen in kritische Überwachungssysteme führt zu regelmäßigen Produktivitätsverlusten, die die gesamte nordamerikanische Wirtschaft belasten. Der Vorfall unterstreicht, dass hochmoderne Endprodukte in der Luftfahrt auf fragile, veraltete analoge und digitale Relaisstationen angewiesen sind.",
-      "longTermImpact": "Die US-Regierung steht unter Zugzwang, milliardenschwere Modernisierungsprogramme für die Flugsicherung und Telekommunikations-Backbones aufzulegen, was regulierte Dienstleister und Systemintegratoren begünstigt.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
+      "region": "NORDAMERIKA · KAPITALMÄRKTE & TECH-IPOS",
+      "title": "Der Lackmustest der KI-Monetarisierung: Anthropic wagt den Gang an die Börse",
+      "summary": "Der bevorstehende Börsengang von Anthropic soll dem angeschlagenen IPO-Markt für Technologieunternehmen neuen Impuls geben.",
+      "contextExplanation": "Nach jahrelanger Zurückhaltung bei Neuemissionen und Enttäuschungen bei früheren Tech-Flotations im Jahr 2026 richtet sich die Aufmerksamkeit der Wall Street auf den Börsengang von Anthropic. Das Unternehmen, das neben seiner Rolle als KI-Modellentwickler zunehmend in direkte Konkurrenz zu etablierten Bürosoftware-Anbietern wie Microsoft tritt, fungiert als Barometer für die Rentabilität des gesamten Sektors. Investoren fordern zunehmend harte Beweise dafür, dass generative KI signifikante und nachhaltige Cashflows generieren kann.",
+      "longTermImpact": "Der Erfolg oder Misserfolg dieser Emission wird das Bewertungsniveau privater KI-Labore weltweit prägen und den Zugang zu Wagniskapital für die nächste Innovationswelle steuern.",
+      "hasDivergingNarratives": true,
+      "narrativeComparison": "Optimisten sehen im IPO den Befreiungsschlag für einen überverkauften Technologiemarkt, während Skeptiker vor überzogenen Erwartungen und anhaltend hohen Verbrennungsraten von Kapital warnen.",
       "bullets": [
-        "Landesweiter Flugstopp offenbart fragile Abhängigkeit von Altsystemen",
-        "Verkehrsministerium sieht Ursachen bei veralteten Kommunikations-Routern",
-        "Wirtschaftsforschung warnt vor dauerhaften Produktivitätsschäden durch Infrastrukturmängel"
+        "Anthropic kündigt umfassende Bürosoftware- und Kollokationsprodukte an",
+        "Der IPO gilt als wichtigster Lackmustest für das Vertrauen institutioneller Anleger in KI",
+        "Vergangene Tech-IPOs des Jahres notieren im Durchschnitt deutlich unter den Emissionskursen"
       ],
       "sources": [
         "CNBC World",
         "Financial Times",
-        "WSJ World"
+        "Handelsblatt"
       ],
       "verificationStatus": "Verifiziert · 3 Quellen"
     },
     {
-      "region": "ASIEN · GLOBALE HANDELSORDNUNG & APEC",
-      "title": "Das Gegenmodell aus Shenzhen: Chinas Versuch einer neuen Weltordnung",
-      "summary": "Der bevorstehende APEC-Gipfel in Shenzhen dient Peking als Bühne, um multilaterale Standards fernab westlicher Institutionen zu definieren.",
-      "contextExplanation": "Während der Westen mit internen Krisen, Technologieschocks und protektionistischen Grabenkämpfen beschäftigt ist, nutzt China den Gipfel in Shenzhen, um gezielt Schwellenländer an sich zu binden. Die Strategie zielt darauf ab, alternative Handelsregeln, Technologiestandards und Zahlungssysteme zu etablieren, die weniger anfällig für US-Sanktionen sind. Dies markiert eine strukturelle Vertiefung der Deglobalisierung: Statt eines globalen Marktes entstehen zwei voneinander unabhängige, technologisch und finanziell entkoppelte Blöcke, die von Unternehmen komplexe, redundante Lieferketten erfordern.",
-      "longTermImpact": "Multinationale Konzerne müssen ihre Produktions- und Vertriebsstrukturen dauerhaft bifurkieren ('China for China', 'West for West'), was die Skaleneffekte der Globalisierung permanent verringert.",
-      "hasDivergingNarratives": true,
+      "region": "NAHER OSTEN · MARITIME SICHERHEIT",
+      "title": "Anhaltende Skepsis in der Schifffahrt: Rotes Sea Routing bleibt gemieden",
+      "summary": "Trotz formaler Erklärungen meiden führende Containerreedereien weiterhin die Routen durch das Rote Meer.",
+      "contextExplanation": "Die großen globalen Container-Logistiker zeigen sich trotz angeblicher Zusicherungen bezüglich sinkender Angriffsrisiken äußerst zögerlich, den Schiffsverkehr durch den Suezkanal und das Rote Meer zu normalisieren. Die anhaltende Instabilität in der Region und ungelöste Konflikte im Nahen Osten zwingen Reedereien dazu, die kostspielige und zeitraubende Umrundung des Kaps der Guten Hoffnung beizubehalten. Dies zementiert höhere Frachtkosten und verlängerte Transportzeiten als neue Normalität im Welthandel.",
+      "longTermImpact": "Strukturell höhere Transportkosten belasten dauerhaft die Margen exportorientierter Industrien und treiben inflationäre Tendenzen in den Importmärkten an.",
+      "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "APEC-Gipfel in Shenzhen als Demonstration technologischer und diplomatischer Stärke",
-        "Fortschreitende Etablierung alternativer, westunabhängiger Handelsstrukturen",
-        "Zunehmweiser Druck auf internationale Konzerne zur regionalen Entflechtung"
+        "Führende Reedereien halten an Umroutungen um das Kap der Guten Hoffnung fest",
+        "Geopolitische Unsicherheiten überwiegen formale Waffenstillstandsversprechen",
+        "Lieferketten bleiben anfällig für unerwartete regionale Eskalationen"
       ],
       "sources": [
-        "Financial Times",
-        "Nikkei Asia",
+        "WSJ World",
         "NZZ International"
       ],
-      "verificationStatus": "Verifiziert · 3 Quellen"
+      "verificationStatus": "Verifiziert · 2 Quellen"
     },
     {
-      "region": "EUROPA · INDUSTRIELLE WETTBEWERBSFÄHIGKEIT",
-      "title": "Bürokratischer Atemschutz: EU modifiziert den Emissionshandel für die Industrie",
-      "summary": "Um Abwanderung zu verhindern, weitet die EU die Vergabe kostenloser Zertifikate aus – ein Eingeständnis industriepolitischer Überlastung.",
-      "contextExplanation": "Der europäische Emissionshandel gerät in einen Zielkonflikt zwischen radikalem Klimaschutz und dem Erhalt der industriellen Basis. Die vereinbarte Aufstockung kostenloser Verschmutzungsrechte für energieintensive Branchen ist das direkte Resultat massiven Drucks aus der deutschen und europäischen Realwirtschaft. Steigende Energiekosten und strenge regulatorische Vorgaben hatten Investitionen in Europa zunehmend unattraktiv gemacht. Mit diesem Schritt versucht die EU, den schleichenden Deindustrialisierungsprozess zu bremsen, torpediert damit jedoch gleichzeitig die kurzfristigen Reduktionsziele des Green Deal.",
-      "longTermImpact": "Investoren in energieintensive Sektoren erhalten Planungssicherheit für die kommenden Jahre, während die strukturelle Transformation hin zu klimaneutralen Produktionsprozessen zeitlich gestreckt wird.",
-      "hasDivergingNarratives": true,
+      "region": "SÜDOSTASIEN · REGIONALES WACHSTUM",
+      "title": "Thailands Exportstärke federt Binnendynamik ab: BIP-Wachstum bei 2.9 Prozent",
+      "summary": "Robuste Exporte stützen das thailändische Wirtschaftswachstum im dritten Quartal gegen globale Gegenwinde.",
+      "contextExplanation": "Thailand verzeichnet im dritten Quartal eine Beschleunigung des Bruttoinlandsprodukts auf 2.9 Prozent, angetrieben vor allem durch eine überraschend starke Exportperformance. Während die Binnennachfrage und die industrielle Produktion in einigen Nachbarländern Anzeichen einer Verlangsamung zeigen, profitiert die thailändische Wirtschaft von globalen Nachfragetrends in bestimmten Technologiesegmenten und der Automobilzulieferindustrie. Dennoch bleibt die Region anfällig für geldpolitische Schwankungen der großen Notenbanken.",
+      "longTermImpact": "Die Exportresilienz stärkt die thailändische Währung, erfordert jedoch gleichzeitig gezielte Strukturreformen zur Stärkung des Binkonsums, um langfristige Stabilität zu gewährleisten.",
+      "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "EU-Parlament und Mitgliedstaaten einigen sich auf mehr kostenlose Zertifikate",
-        "Schutz vor internationaler Abwanderung steht vor temporären Klimazielen",
-        "Kritik von Umweltverbänden an aufgeweichten Auflagen für die Großindustrie"
+        "BIP-Wachstum im Q3 steigt auf 2.9 Prozent dank robuster Ausfuhren",
+        "Kontrast zu schwächelnden Konjunkturdaten in anderen Teilen der ASEAN-Region",
+        "Fokus richtet sich auf Diversifizierung der Handelspartner angesichts globaler Risiken"
       ],
       "sources": [
-        "Tagesschau Wirtschaft",
-        "Handelsblatt",
-        "Financial Times"
+        "Nikkei Asia",
+        "CNBC World"
       ],
-      "verificationStatus": "Verifiziert · 3 Quellen"
+      "verificationStatus": "Verifiziert · 2 Quellen"
     }
   ],
   "cards": [
     {
       "id": "card-1",
       "category": "equities",
-      "sectorLabel": "Industrie, Automatisierung & Infrastruktur",
-      "ticker": "EPA:SU",
-      "company": "Schneider Electric SE",
+      "sectorLabel": "Industrielle Automatisierung",
+      "ticker": "NYSE:ROK",
+      "company": "Rockwell Automation Inc.",
       "direction": "Struktureller Trend",
       "isPositive": true,
-      "moatScore": 89,
-      "headline": "Elektrifizierung und Rechenzentrumsinfrastruktur als unersetzliches Fundament",
-      "contextExplanation": "Während der breite Technologiesektor unter Korrekturen bei KI-Anwendungen leidet, profitiert die physische Infrastruktur überproportional vom anhaltenden Bedarf an hocheffizienten Stromnetzen und Kühlsystemen für Rechenzentren. Schneider Electric agiert hier als unverzichtbarer Ausrüster für Mittel- und Niederspannungstechnik. Der anhaltende globale Investitionsstau in veraltete Netze zwingt Versorger und Industrieunternehmen zu langfristigen Modernisierungsprogrammen. Dies sichert dem Konzern aus Rueil-Malmaison eine hohe Visibilität der Auftragsbücher weit über den Konjunkturzyklus hinaus.",
-      "thesis": "Bis 2031 treiben der globale Netzausbau und die Dekarbonisierung den Bedarf an intelligenter Energieverteilung voran. Das Unternehmen wächst strukturell stärker als der breite Industriemarkt und hält eine starke Preissetzungsmacht.",
-      "bearCase": "Das Bewertungsniveau ist nach den starken Vorjahren ambitioniert und preist ein anhaltend hohes zweistelliges Gewinnwachstum ein. Zunehmende Engpässe bei elektronischen Bauteilen und steigende Lohnkosten könnten zudem temporär auf die operativen Margen drücken.",
+      "moatScore": 88,
+      "headline": "Die Architektur der Fabrik-Resilienz",
+      "contextExplanation": "Während der KI-Hype die Rechenzentren flutet, bleibt die physische Automatisierung der industrielle Flaschenhals. Rockwell profitiert als Zweitrunden-Profiteur von der notwendigen Re-Industrialisierung in Nordamerika und Europa. Die Integration von Software-gesteuerter Fertigung macht sie zum unverzichtbaren Partner für Unternehmen, die ihre Lieferketten gegen geopolitische Schocks absichern müssen. Der Burggraben besteht in der tiefen Integration in bestehende Produktionslinien, die einen Wechsel zu Wettbewerbern prohibitiv teuer macht.",
+      "thesis": "Die zunehmende Komplexität globaler Lieferketten erzwingt massive Investitionen in lokale, hochautomatisierte Produktionskapazitäten. Rockwell wird als Standard-Infrastrukturanbieter überproportional von diesem CAPEX-Zyklus profitieren.",
+      "bearCase": "Die Bewertung reflektiert bereits hohe Erwartungen an die Margenexpansion durch Software-Services. Eine konjunkturelle Abkühlung in den USA könnte die Investitionsbereitschaft der Kunden kurzfristig bremsen.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Robuste Nachfrage durch globale Rechenzentrums-Investitionen",
-        "Hoher Anteil wiederkehrender Umsätze im Bereich Software und Services",
-        "Starke Marktposition bei industrieller Energieeffizienz"
+        "Dominante Marktstellung bei speicherprogrammierbaren Steuerungen",
+        "Wachsende Abhängigkeit der Industrie von 'Smart Factory' Lösungen",
+        "Starke Bilanz ermöglicht Akquisitionen in Nischen-Software"
       ],
       "sources": [
         "Financial Times",
@@ -200,69 +196,177 @@
       "sparkline": [
         120,
         125,
-        128,
-        134,
-        140,
+        122,
+        130,
+        138,
         145,
-        150,
-        156
+        152,
+        160
       ]
     },
     {
       "id": "card-2",
       "category": "equities",
-      "sectorLabel": "Pharma & Medtech mit Preissetzungsmacht",
-      "ticker": "SWX:ROG",
-      "company": "Roche Holding AG",
+      "sectorLabel": "Medizintechnik",
+      "ticker": "NYSE:BSX",
+      "company": "Boston Scientific Corporation",
       "direction": "Burggraben wächst",
       "isPositive": true,
-      "moatScore": 91,
-      "headline": "Innovationszyklen in der Diagnostik und Onkologie sichern stabile Cashflows",
-      "contextExplanation": "Roche demonstriert einmal mehr die defensive Stärke eines integrierten Pharmakonzerns mit starker Basis im Diagnostiksegment. In Zeiten geopolitischer und marktinterner Unsicherheiten schätzen institutionelle Investoren die verlässliche Dividendenhistorie und die Unabhängigkeit des Geschäftsmodells von zyklischen Konsumtrends. Die Pipeline im Bereich schwerer neurologischer und immunologischer Erkrankungen verspricht zudem absehbar neue Umsatztreiber. Regulatorische Hürden und langwierige Zulassungsverfahren bilden gleichzeitig einen hohen Schutzwall gegen neue Marktteilnehmer.",
-      "thesis": "Die Kombination aus stabiler Diagnostik-Sparte und zielgerichteter Onkologie-Forschung garantiert auch in einem schwierigen makroökonomischen Umfeld solide Margen und stetigen Cashflow. Langfristig profitiert Roche von der global alternden Bevölkerung.",
-      "bearCase": "Währungseffekte, insbesondere ein starker Schweizer Franken, belasten regelmäßig die ausgewiesenen Ergebnisse in Fremdwährungen. Zudem drohen im Zuge globaler Gesundheitsreformen zunehmender Preisdruck und strengere Erstattungskriterien für innovative Medikamente.",
+      "moatScore": 90,
+      "headline": "Demografische Konstante trifft Innovationskraft",
+      "contextExplanation": "Boston Scientific hat sich durch gezielte Akquisitionen in den Bereichen Kardiologie und Neuromodulation eine fast unangreifbare Marktposition erarbeitet. Im Gegensatz zu volatilen Tech-Werten bietet das Unternehmen eine defensive Preissetzungsmacht, da ihre Produkte bei lebensnotwendigen Eingriffen eingesetzt werden. Die Alterung der Gesellschaft in den Industrienationen sorgt für eine stetig wachsende Nachfrage, die unabhängig von kurzfristigen makroökonomischen Zyklen ist.",
+      "thesis": "Die Kombination aus hoher F&E-Effizienz und einer alternden globalen Bevölkerung sichert ein zweistelliges organisches Wachstum über das nächste Jahrzehnt. Die Marktführerschaft bei minimalinvasiven Eingriffen ist ein massiver Wettbewerbsvorteil.",
+      "bearCase": "Regulatorische Eingriffe in die Preisgestaltung von Medizintechnik in den USA könnten die Margen unter Druck setzen. Der aktuelle Kurs preist bereits eine hohe Erfolgsrate bei der Pipeline-Entwicklung ein.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Führende globale Position in der In-Vitro-Diagnostik",
-        "Starkes Portfolio in der personalisierten Medizin",
-        "Verlässliche Aktionärspolitik und hohe Bilanzgüte"
+        "Führend bei minimalinvasiven kardiologischen Verfahren",
+        "Hohe Eintrittsbarrieren durch Patente und klinische Evidenz",
+        "Stabile Cashflow-Generierung durch wiederkehrende Prozeduren"
       ],
       "sources": [
         "Wall Street Journal",
-        "NZZ International"
+        "Financial Times"
       ],
       "verificationStatus": "Verifiziert",
       "sparkline": [
-        230,
-        235,
-        232,
-        240,
-        245,
-        242,
-        248,
-        252
+        70,
+        72,
+        75,
+        78,
+        82,
+        85,
+        89,
+        94
       ]
     },
     {
       "id": "card-3",
       "category": "commodities",
-      "sectorLabel": "Rotierender strategischer Rohstoff",
-      "ticker": "TVC:PLATINUM",
-      "company": "Platin Spot",
+      "sectorLabel": "Strategische Metalle",
+      "ticker": "TVC:LITHIUM",
+      "company": "Lithium Carbonate Spot",
       "direction": "Struktureller Trend",
       "isPositive": true,
-      "moatScore": 84,
-      "headline": "Angebotsdefizite und industrielle Nachfrage stützen den Edelmetallmarkt",
-      "contextExplanation": "Platin rückt als strategischer Rohstoff für die Wasserstoffwirtschaft und emissionsmindernde Industrieanwendungen verstärkt in den Fokus langfristig orientierter Anleger. Während klassische Edelmetalle wie Gold und Silber stark von kurzfristigen Zinsspekulationen getrieben werden, leidet der Platinmarkt seit Jahren unter strukturellen Angebotsdefiziten in den Hauptförderländern Südafrika und Russland. Die Substitution von Palladium in Verbrennungsmotoren sowie der wachsende Bedarf in der grünen Chemie stabilisieren den industriellen Verbrauch nachhaltig.",
-      "thesis": "Die Kombination aus sinkendem Minenangebot und neuen technologischen Anwendungen im Bereich der sauberen Energie führt in den kommenden fünf Jahren zu einer spürbaren Verknappung des physischen Angebots.",
-      "bearCase": "Eine globale Rezession könnte die industrielle Kernnachfrage spürbar dämpfen und kurzfristig zu starken Preisschwankungen führen. Zudem bleibt der Markt anfällig für spekulative Kapitalabflüsse.",
+      "moatScore": 75,
+      "headline": "Der unterschätzte Rohstoff-Zyklus",
+      "contextExplanation": "Nach dem massiven Preisverfall der letzten Jahre hat sich der Markt für Lithium bereinigt. Die langfristige Nachfrage durch die Elektrifizierung der Mobilität und stationäre Speicherlösungen bleibt intakt, während das Angebot durch die Schließung unrentabler Minen verknappt wurde. Wir sehen hier eine Bodenbildung, die für langfristige Investoren attraktiv ist, da die Investitionszyklen in neue Minen 5-7 Jahre betragen.",
+      "thesis": "Die Angebotslücke wird sich ab 2027 signifikant öffnen, da neue Kapazitäten aufgrund der niedrigen Preise der letzten Jahre nicht rechtzeitig finanziert wurden. Dies wird zu einem strukturellen Preisanstieg führen.",
+      "bearCase": "Technologische Durchbrüche bei Feststoffbatterien oder Natrium-Ionen-Akkus könnten die spezifische Nachfrage nach Lithium langfristig dämpfen. Der Markt ist zudem anfällig für staatliche Eingriffe in Förderländern.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Anhaltende Förderdefizite in südafrikanischen Minen",
-        "Steigende Relevanz in Elektrolyseuren und Brennstoffzellen",
-        "Attraktives Bewertungsverhältnis im historischen Vergleich zu Gold"
+        "Langsame Wiederaufnahme von Minenprojekten",
+        "Stetig steigende Nachfrage aus dem Energiesektor",
+        "Geopolitische Diversifizierung der Lieferketten"
+      ],
+      "sources": [
+        "Nikkei Asia",
+        "Financial Times"
+      ],
+      "verificationStatus": "Verifiziert",
+      "sparkline": [
+        100,
+        80,
+        60,
+        40,
+        35,
+        38,
+        42,
+        45
+      ]
+    },
+    {
+      "id": "card-4",
+      "category": "commodities",
+      "sectorLabel": "Agrarrohstoffe",
+      "ticker": "ICE:KC",
+      "company": "Coffee C Futures",
+      "direction": "Watchlist-Kandidat",
+      "isPositive": true,
+      "moatScore": 65,
+      "headline": "Klimawandel als Preistreiber",
+      "contextExplanation": "Kaffee ist zunehmend anfällig für extreme Wetterereignisse in den Hauptanbaugebieten Brasiliens und Vietnams. Die Kombination aus steigender globaler Nachfrage und sinkenden Erträgen durch klimatische Instabilität schafft ein strukturelles Defizit. Handelskonflikte und Zölle, wie aktuell im US-Kolumbien-Spat, wirken als zusätzliche Volatilitätsverstärker auf einem bereits angespannten Markt.",
+      "thesis": "Die strukturelle Verknappung von Arabica-Bohnen durch klimatische Veränderungen wird das Preisniveau dauerhaft auf einem höheren Plateau stabilisieren. Dies ist ein klassischer 'Hard Asset' Hedge gegen Inflation.",
+      "bearCase": "Eine unerwartete Erholung der Ernteerträge oder eine globale Rezession, die den Konsum von Premium-Kaffee reduziert, könnte die Preise schnell korrigieren lassen. Die Volatilität bleibt extrem hoch.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Anbaugebiete leiden unter unvorhersehbarem Wetter",
+        "Wachsende Mittelschicht in Asien erhöht Konsum",
+        "Begrenzte Anbauflächen für hochwertige Sorten"
+      ],
+      "sources": [
+        "Wall Street Journal",
+        "Financial Times"
+      ],
+      "verificationStatus": "Verifiziert",
+      "sparkline": [
+        180,
+        190,
+        210,
+        205,
+        220,
+        235,
+        250,
+        265
+      ]
+    },
+    {
+      "id": "card-5",
+      "category": "equities",
+      "sectorLabel": "Finanzinfrastruktur",
+      "ticker": "NYSE:ICE",
+      "company": "Intercontinental Exchange Inc.",
+      "direction": "Burggraben wächst",
+      "isPositive": true,
+      "moatScore": 95,
+      "headline": "Der neutrale Schiedsrichter der Märkte",
+      "contextExplanation": "ICE betreibt nicht nur die New York Stock Exchange, sondern ist ein Gigant im Bereich Clearing und Daten-Services. In einer Welt zunehmender geopolitischer Unsicherheit und volatiler Märkte steigen die Handelsvolumina und der Bedarf an Absicherungsinstrumenten. ICE profitiert als 'Mautstellenbetreiber' des globalen Finanzsystems, unabhängig davon, welche Anlageklasse gerade gewinnt oder verliert.",
+      "thesis": "Die zunehmende Komplexität der Finanzmärkte und der regulatorische Druck erfordern eine robuste, zentralisierte Infrastruktur. ICE ist als Monopolist bei Börsendaten und Clearing unverzichtbar.",
+      "bearCase": "Eine Konsolidierung der globalen Börsenlandschaft könnte zu regulatorischem Druck führen. Zudem könnten dezentrale Handelsplattformen langfristig Marktanteile im Bereich der kleineren Assets abknabbern.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Hohe Margen durch Daten- und Analysedienste",
+        "Starke Position im Bereich Hypotheken-Technologie",
+        "Widerstandsfähigkeit gegenüber Marktvolatilität"
+      ],
+      "sources": [
+        "Wall Street Journal",
+        "Financial Times"
+      ],
+      "verificationStatus": "Verifiziert",
+      "sparkline": [
+        130,
+        135,
+        140,
+        148,
+        155,
+        162,
+        170,
+        178
+      ]
+    },
+    {
+      "id": "card-6",
+      "category": "crypto",
+      "sectorLabel": "Digitales Netzwerk",
+      "ticker": "COIN:DOT",
+      "company": "Polkadot Network",
+      "direction": "Struktureller Trend",
+      "isPositive": true,
+      "moatScore": 70,
+      "headline": "Interoperabilität als Rückgrat der Web3-Infrastruktur",
+      "contextExplanation": "Während viele Krypto-Projekte an mangelnder Nutzung scheitern, fokussiert sich Polkadot auf die technische Interoperabilität zwischen verschiedenen Blockchains. Dies ist die notwendige Infrastruktur für institutionelle Anwendungen, die eine Kommunikation zwischen privaten und öffentlichen Netzwerken erfordern. Das Modell der 'Parachains' bietet eine skalierbare Lösung für komplexe B2B-Anwendungen, die über einfache Transaktionen hinausgehen.",
+      "thesis": "Die Zukunft der Blockchain-Technologie liegt in der Vernetzung spezialisierter Ketten. Polkadot ist als 'Layer-0' Protokoll die fundamentale Infrastruktur für diese vernetzte digitale Wirtschaft.",
+      "bearCase": "Die Komplexität des Netzwerks schreckt Entwickler ab und die Konkurrenz durch andere Interoperabilitäts-Protokolle (wie Cosmos) ist groß. Die Akzeptanz im institutionellen Bereich ist noch nicht vollständig verifiziert.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Fokus auf Interoperabilität statt reiner Spekulation",
+        "Starke Entwickler-Community im Hintergrund",
+        "Skalierbare Architektur für Unternehmensanwendungen"
       ],
       "sources": [
         "Financial Times",
@@ -270,132 +374,18 @@
       ],
       "verificationStatus": "Verifiziert",
       "sparkline": [
-        900,
-        920,
-        910,
-        940,
-        960,
-        950,
-        980,
-        1005
-      ]
-    },
-    {
-      "id": "card-4",
-      "category": "commodities",
-      "sectorLabel": "Energie & Maritime Fracht",
-      "ticker": "NYMEX:NG1!",
-      "company": "US Henry Hub Natural Gas",
-      "direction": "Watchlist-Kandidat",
-      "isPositive": false,
-      "moatScore": 76,
-      "headline": "Wetteranomalien und Exportkapazitäten prägen die Volatilität am Gasmarkt",
-      "contextExplanation": "Der US-amerikanische Erdgasmarkt bleibt ein Paradebeispiel für extreme Preisschwankungen, die primär durch meteorologische Prognosen und den Ausbau von LNG-Export-Terminals gesteuert werden. Nach milderen Winterprognosen gerieten die Futures zuletzt unter Druck. Langfristig bleibt der Sektor jedoch strategisch bedeutsam, da die USA als verlässlicher Exporteur für energiearme Regionen in Europa und Asien agieren. Die Effizienzsteigerungen bei der Schiefergasförderung halten die Grenzkosten der Produktion strukturell niedrig.",
-      "thesis": "Die langfristigen Exportverträge für Flüssiggas sichern dem US-Inlandsmarkt eine dauerhafte Nachfragebasis, selbst wenn saisonale Preisschwankungen anhalten.",
-      "bearCase": "Überkapazitäten bei der Förderung und unerwartet milde Winterperioden können die Preise rasch unter die Rentabilitätsschwelle einzelner Produzenten drücken. Regulatorische Eingriffe in den Export stellen ein permanentes politisches Risiko dar.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
-      "bullets": [
-        "Stark wachsende LNG-Exportkapazitäten an der US-Küste",
-        "Hohe Sensitivität gegenüber kurzfristigen Wetterdaten",
-        "Technologische Effizienzgewinne bei der Erschließung"
-      ],
-      "sources": [
-        "Wall Street Journal",
-        "CNBC World"
-      ],
-      "verificationStatus": "Verifiziert",
-      "sparkline": [
-        3.2,
-        3,
-        2.8,
-        3.1,
-        2.9,
-        2.6,
-        2.7,
-        2.5
-      ]
-    },
-    {
-      "id": "card-5",
-      "category": "equities",
-      "sectorLabel": "Finanzen, Zinsen & Kapitalmonopole",
-      "ticker": "ETR:ALV",
-      "company": "Allianz SE",
-      "direction": "Burggraben wächst",
-      "isPositive": true,
-      "moatScore": 94,
-      "headline": "Kapitalstärke und Asset Management als Fels in der Brandung",
-      "contextExplanation": "Die Allianz SE profitiert als globaler Versicherungs- und Finanzkonzern von der neuen Zinsrealität an den Kapitalmärkten. Höhere Renditen im festverzinslichen Anlageportfolio stärken die Ertragskraft der Schaden- und Unfallversicherung nachhaltig. Gleichzeitig stabilisieren die verwalteten Vermögen der Fondstöchter Pimco und Allianz Global Investors die Provisionserlöse in Phasen schwankender Aktienmärkte. Die exzellente Solvabilitätsquote bietet dem Management Spielraum für kontinuierliche Dividendenerhöhungen und gezielte Aktienrückkäufe.",
-      "thesis": "Das diversifizierte Geschäftsmodell und die disziplinierte Zeichnungspolitik im Versicherungsgeschäft garantieren über Konjunkturzyklen hinweg eine überdurchschnittliche Eigenkapitalrendite und verlässliche Ausschüttungen.",
-      "bearCase": "Steigende Schadenaufwendungen durch Naturkatastrophen infolge des Klimawandels erhöhen das Risiko unvorhersehbarer Belastungen. Zudem könnte ein rapider Rückgang der Zinsniveaus die Neuanlagerenditen dämpfen.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
-      "bullets": [
-        "Führende Solvabilitätsquote im europäischen Versicherungssektor",
-        "Starke Ertragsbasis im globalen Asset Management",
-        "Langfristig bewährtes Risikomanagement"
-      ],
-      "sources": [
-        "Handelsblatt",
-        "Financial Times"
-      ],
-      "verificationStatus": "Verifiziert",
-      "sparkline": [
-        250,
-        255,
-        260,
-        268,
-        275,
-        280,
-        288,
-        295
-      ]
-    },
-    {
-      "id": "card-6",
-      "category": "crypto",
-      "sectorLabel": "Digitales Netzwerk & Asset",
-      "ticker": "SOLUSD",
-      "company": "Solana Network",
-      "direction": "Struktureller Trend",
-      "isPositive": true,
-      "moatScore": 81,
-      "headline": "Skalierbarkeit und hohe Transaktionsgeschwindigkeit als treibende Ökosystem-Faktoren",
-      "contextExplanation": "Das Solana-Netzwerk hat sich als ernstzunehmende High-Performance-Blockchain etabliert, die insbesondere im Bereich dezentraler Finanzanwendungen und tokenisierter Vermögenswerte signifikante Marktanteile gewinnt. Die Architektur ist konsequent auf niedrige Transaktionskosten und hohe Durchsatzraten ausgelegt, was Entwickler und institutionelle Partner gleichermaßen anzieht. Trotz früherer technischer Instabilitäten zeigt die Netzwerkinfrastruktur eine zunehmende Reife und Stabilität im Live-Betrieb.",
-      "thesis": "Die kontinuierliche Skalierbarkeit und die wachsende Entwickler-Community positionieren das Netzwerk als führende Plattform für tokenisierte Real-World-Assets (RWAs) im institutionellen Bereich.",
-      "bearCase": "Das regulatorische Umfeld für Kryptowährungen bleibt unsicher und birgt das Risiko restriktiver Eingriffe durch globale Aufsichtsbehörden. Zudem besteht weiterhin technologische Konkurrenz durch Layer-2-Lösungen etablierter Netzwerke.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
-      "bullets": [
-        "Wachsende Adaption im Bereich tokenisierter Finanzprodukte",
-        "Hohe Transaktionsgeschwindigkeit bei minimalen Gebühren",
-        "Kontinuierlicher Ausbau der Validator-Dezentralität"
-      ],
-      "sources": [
-        "Wall Street Journal",
-        "Financial Times"
-      ],
-      "verificationStatus": "Verifiziert",
-      "sparkline": [
-        110,
-        125,
-        118,
-        135,
-        142,
-        138,
-        155,
-        168
+        5,
+        6,
+        4,
+        7,
+        6,
+        8,
+        9,
+        10
       ]
     }
   ],
   "recentHistory": [
-    "Mastercard Inc.",
-    "Ethereum Network",
-    "Johnson & Johnson",
-    "Global Container Freight Index",
-    "American Express Company",
-    "Solana Network",
     "Siemens Energy AG",
     "Infineon Technologies AG",
     "Rohöl (Brent Crude)",
@@ -414,7 +404,13 @@
     "Schneider Electric SE",
     "Platin Spot",
     "Dutch TTF Natural Gas Futures",
-    "Münchener Rückversicherungs-Gesellschaft AG"
+    "Münchener Rückversicherungs-Gesellschaft AG",
+    "Rockwell Automation Inc.",
+    "Boston Scientific Corporation",
+    "Lithium Carbonate Spot",
+    "Coffee C Futures",
+    "Intercontinental Exchange Inc.",
+    "Polkadot Network"
   ],
   "recentWorldTopics": [
     "Das Ende des Personenkults: Nvidia nach dem Rücktritt von Jensen Huang",
@@ -428,6 +424,12 @@
     "Unterseeische Verwundbarkeit: Die NATO reagiert auf Sabotage im Ostseeraum",
     "Das Kartenhaus der Mobilität: Wie veraltete US-Netzwerke den Luftverkehr lahmlegen",
     "Das Gegenmodell aus Shenzhen: Chinas Versuch einer neuen Weltordnung",
-    "Bürokratischer Atemschutz: EU modifiziert den Emissionshandel für die Industrie"
+    "Bürokratischer Atemschutz: EU modifiziert den Emissionshandel für die Industrie",
+    "Der Marktwert-Sturz der Chipgiganten: Wie DeepSeek die fundamentale Neubewertung auslöst",
+    "Deutschlands historische Haushaltskrise: Zwischen Schuldenbremse und Investitionsstau",
+    "Eskalation im Kongo: Rebellenangriffe gefährden humanitäre Schutzzonen",
+    "Der Lackmustest der KI-Monetarisierung: Anthropic wagt den Gang an die Börse",
+    "Anhaltende Skepsis in der Schifffahrt: Rotes Sea Routing bleibt gemieden",
+    "Thailands Exportstärke federt Binnendynamik ab: BIP-Wachstum bei 2.9 Prozent"
   ]
 }
