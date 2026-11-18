@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-17T06:46:34.668Z",
-  "lastUpdated": "17.11.2026, 07:46 Uhr",
+  "generatedAt": "2026-11-18T06:43:29.730Z",
+  "lastUpdated": "18.11.2026, 07:43 Uhr",
   "isWeekendEdition": false,
-  "morningSynthesis": "Der globale Aktienmarkt steht im Zeichen einer harten Neubewertung der Künstlichen Intelligenz, ausgelöst durch disruptive Modelle und verschärfte US-Exportkontrollen. Parallel dazu erzwingen geopolitische Krisenherde an der Schwarzmeerküste und im Nahen Osten eine Neubewertung der Risikoprämien.",
+  "morningSynthesis": "Die geopolitischen Fronten verdichten sich im Vorfeld des richtungsweisenden Treffens der Großmächte in Shenzhen, während die globale Finanzarchitektur mit den spürbaren Nachbeben des US-Technologiemarktes und anhaltenden Engpässen in kritischen Infrastrukturen ringt. An den Kapitalmärkten dominieren selektive Umschichtungen in sichere Häfen, während die EU strategisch auf eine massive Beschleunigung ihres Netzausbaus drängt.",
   "intermarket": {
-    "title": "Kapitalflucht in sichere Häfen drückt Renditen",
-    "summary": "Die Verunsicherung an den Aktienmärkten treibt Investoren massiv in Staatsanleihen, während der Schweizer Franken und der japanische Yen als sichere Häfen gefragt sind.",
-    "contextExplanation": "Die plötzliche Neubewertung des Technologiesektors hat zu einer spürbaren Risikoaversion geführt. Anleger schichten Kapital aus risikoreichen Aktien in festverzinsliche Staatspapiere um. Dies drückt die Renditen, während die Nachfrage nach traditionellen Währungszuflüssen steigt. Gleichzeitig bleiben die Inflationserwartungen an den Terminmärkten im historischen Vergleich moderat.",
-    "bearCase": "Sollten unerwartete Inflationsdaten oder eine hartnäckige Lohn-Preis-Spirale die Notenbanken zu einer aggressiveren Haltung zwingen, droht trotz der jüngchten Aktienkorrektur ein abrupter Renditeanstieg.",
-    "hasDivergingNarratives": false,
-    "narrativeComparison": "",
+    "title": "Kapitalflüsse im Schatten geopolitischer Neuausrichtung und Zinsdynamik",
+    "summary": "Staatsanleihen verzeichnen moderate Zuflüsse, da Investoren angesichts regionaler Konflikte und geopolitischer Gipfeltreffen defensive Positionen einnehmen. Die Renditen bewegen sich in einer engen Spanne, gestützt durch anhaltende Inflationssorgen und geldpolitische Signale der Zentralbanken.",
+    "contextExplanation": "Der Anleihemarkt reflektiert derzeit einen anhaltenden Tauchgang zwischen der Furcht vor hartnäckigen Preissteigerungen und dem Bedürfnis nach Absicherung gegen geopolitische Eskalationen wie im Nahen Osten. Während die Notenbanken signalisieren, an der Zinsschraube zu drehen, um verbleibende Inflationsrisiken zu neutralisieren, reagieren die Renditen sensibel auf jede neue Konjunkturprognose. Insbesondere die von der EU und nationalen Institutionen nach oben korrigierten Wachstumsaussichten für die Industrie stützen das kurze Ende der Zinskurve. Gleichzeitig suchen institutionelle Investoren in sicheren Staatsanleihen Schutz vor den Verwerfungen, die von den aktuellen Kurskorrekturen im Technologiesektor und den anhaltenden Lieferkettenrisiken ausgehen.",
+    "bearCase": "Sollten unerwartete Inflationsdaten oder eine Eskalation der Konflikte am Persischen Golf zu einem abrupten Sprung der Energie- und Frachtkosten führen, droht ein massiver Ausverkauf am Anleihemarkt mit drastisch steigenden Renditen.",
+    "hasDivergingNarratives": true,
+    "narrativeComparison": "Während einige Marktteilnehmer in den aktuellen Renditeniveaus eine attraktive Einstiegschance zur langfristigen Kuponsicherung sehen, warnen skeptischere Stimmen vor einer unterschätzten, strukturell höheren Inflationsprämie durch dauerhafte geopolitische Fragmentierung.",
     "bullets": [
-      "Kapitalumschichtung begünstigt sichere Staatsanleihen.",
-      "Schweizer Franken und Yen legen gegenüber dem US-Dollar zu.",
-      "Anleihemärkte preisen kurzfristig erhöhte Volatilität ein."
+      "Moderate Umschichtungen in sichere Staatsanleihen als Puffer gegen geopolitische Unwägbarkeiten.",
+      "Anhaltende Diskussionen über den Zeitpunkt weiterer Zinsanpassungen zur Bekämpfung hartnäckiger Inflation.",
+      "Starke Korrelation zwischen den Schwankungen an den Aktienmärkten und kurzfristigen Nachfragespitzen im Anleihesegment."
     ],
     "symbol": "TVC:US10Y",
     "sources": [
       "WSJ Markets",
       "Financial Times",
-      "Bloomberg"
+      "Tagesschau Wirtschaft"
     ],
     "verificationStatus": "Verifiziert"
   },
@@ -28,139 +28,137 @@
       "indicator": "US-Dollar & Liquidität (DXY)",
       "phase": "Neutral",
       "tone": "amber",
-      "detail": "Die Nachfrage nach dem US-Dollar bleibt durch globale Krisen gestützt, während divergierende Notenbankerwartungen für Schwankungen in Schwellenländern sorgen."
+      "detail": "Der US-Dollar zeigt sich robust, während Schweizer Franken und japanischer Yen als sichere Häfen Kapital binden und Schwellenländer unter Druck setzen."
     },
     {
       "indicator": "Zinskurve (2Y/10Y Spread)",
       "phase": "Normalisierend",
       "tone": "green",
-      "detail": "Die Versteilerung der Zinskurve entlastet die Fristentransformation der Geschäftsbanken, hält jedoch den Refinanzierungsdruck für hoch verschuldete Unternehmen aufrecht."
+      "detail": "Die steiler werdende Zinskurve entlastet die Refinanzierungsstrukturen der Geschäftsbanken, erfordert jedoch eine präzise Steuerung der Fristenkongruenz."
     },
     {
       "indicator": "Kreditrisiko (High-Yield-Spreads)",
       "phase": "Eng",
       "tone": "green",
-      "detail": "Unternehmensanleihen zeigen sich bislang widerstandsfähig, wobei solide Bilanzen im Non-Tech-Bereich die Liquiditätsrisiken abfedern."
+      "detail": "Unternehmensanleihen bleiben gut unterstützt, da solide Bilanzen der Industrie trotz konjunktureller Bremsklötze Kreditausfälle auf breiter Front verhindern."
     },
     {
       "indicator": "Geopolitische Risikoprämie",
       "phase": "Erhöht",
       "tone": "red",
-      "detail": "Anhaltende Spannungen im Schwarzmeerraum und im Nahen Osten treiben die Versicherungs- und Frachtkosten für den globalen Handel nach oben."
+      "detail": "Anhaltende Sabotageakte an Unterseekabeln, Konflikte im Nahen Osten und gemiedene Routen im Roten Meer treiben dauerhaft die Fracht- und Versicherungskosten."
     }
   ],
   "worldNews": [
     {
-      "region": "EUROPA · INDUSTRIEPOLITIK",
-      "title": "Stahlgipfel in Salzgitter: Der harte Preis der Dekarbonisierung",
-      "summary": "Deutsche Stahlkonzerne fordern auf dem Gipfel in Salzgitter massive staatliche Strompreis-Entlastungen, um die teure Transformation zu 'grünem Stahl' überhaupt stemmen zu können.",
-      "contextExplanation": "Die heimische Stahlindustrie steckt in einem strukturellen Dilemma aus drastisch gestiegenen Energiekosten und dem internationalen Verdrängungswettbewerb, insbesondere durch subventionierte Überkapazitäten aus Asien. Während die EU versucht, mit handelspolitischen Schutzmaßnahmen gegenzusteuern, hinken die tatsächlichen Produktionsbedingungen hinter den politischen Zielvorgaben her. Der Energieverbrauch der deutschen Industrie ist im Zuge der hohen Preise und sinkender Margen im Jahr 2025 spürbar zurückgegangen. Gleichzeitig verliert konventionelle Kohlenutzung an Bedeutung, ohne dass erneuerbare Energien die energieintensive Grundlast verlässlich und zu wettbewerbsfähigen Tarifen kompensieren könnten. Ohne dauerhafte staatliche Subventionen oder einen verlässlichen Industriestrompreis droht der schleichende Verlust der gesamten industriellen Wertschöpfungskette in Deutschland.",
-      "longTermImpact": "Langfristig entscheidet diese Krise über die Deindustrialisierung Europas Kernregionen. Gelingt der Übergang zur CO2-freien Produktion nicht wirtschaftlich, droht eine vollständige Importabhängigkeit von ausländischem Stahl mit direkten Folgen für den Automobil- und Maschinenbau.",
-      "hasDivergingNarratives": true,
-      "narrativeComparison": "Industrievertreter warnen vor dem Verlust der industriellen Basis und fordern staatliche Garantien, während Kritiker argumentieren, dass künstlich subventionierte Strompreise ineffiziente Strukturen zementieren statt echter Innovation Vorschub zu leisten.",
+      "region": "USA · POLITIK & GEOPOLITIK",
+      "title": "Die demokratische Konsolidierung: Alaska als Wendepunkt",
+      "summary": "Mit dem Sieg im konservativen Alaska sichern sich die Demokraten eine komfortable Mehrheit von 56 Sitzen im US-Senat.",
+      "contextExplanation": "Der unerwartete Erfolg in einem traditionell republikanisch geprägten Bundesstaat markiert den Abschluss einer Midterm-Welle, die das Machtgefüge in Washington fundamental verschiebt. Diese neue parlamentarische Stärke ermöglicht es der Administration, Blockaden bei der Besetzung von Bundesrichtern und Schlüsselpositionen in der Exekutive zu umgehen. Gleichzeitig zwingt das Ergebnis die Republikaner zu einer internen Neuausrichtung, da die bisherige populistische Strategie in den Vororten an Zugkraft verloren hat. Die legislative Agenda für die kommenden zwei Jahre ist nun deutlich weniger von Kompromissen mit der Opposition abhängig.",
+      "longTermImpact": "Die gefestigte Mehrheit dürfte zu einer beschleunigten Umsetzung der industriepolitischen Agenda führen, was die regulatorische Unsicherheit für Unternehmen kurzfristig senkt. Langfristig könnte dies jedoch die politische Polarisierung verschärfen, da die Opposition den parlamentarischen Prozess zunehmend durch Klagen und Blockaden auf Ebene der Bundesstaaten zu untergraben versucht.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
       "bullets": [
-        "Forderung nach verlässlichem Industriestrompreis beim Gipfel in Salzgitter",
-        "Deutlicher Rückgang des industriellen Energieverbrauchs im Jahr 2025",
-        "EU-Kommission prüft schärfere Schutzmechanismen gegen globale Billigimporte"
+        "Demokraten erreichen 56 Sitze im Senat",
+        "Erosion der republikanischen Basis in konservativen Hochburgen",
+        "Beschleunigte Bestätigung von Regierungs- und Justizpersonal"
       ],
       "sources": [
-        "Tagesschau Wirtschaft",
-        "Handelsblatt"
+        "NZZ International",
+        "Financial Times"
       ],
       "verificationStatus": "Verifiziert · 2 Quellen"
     },
     {
-      "region": "ASIEN · TECHNOLOGIE & GEOPOLITIK",
-      "title": "Neue Exportbeschränkungen: Washington verschärft den KI-Chip-Krieg",
-      "summary": "Die US-Regierung zieht die Zügel bei der Exportkontrolle von Hochleistungs-Halbleitern an, um Chinas fernmündlichen und direkten Zugriff auf modernste Recheninfrastruktur weiter zu kappen.",
-      "contextExplanation": "Nach anhaltenden Enthüllungen über Umgehungsstrategien und Verflechtungen rund um wichtige Hardware-Partner hat Washington die Kontrollmechanismen für den Export von KI-Chips massiv verschärft. Im Zentrum stehen dabei komplexe Netzwerke, über die chinesische Stellen trotz bestehender Embargos weiterhin an fortschrittliche Rechenkapazitäten gelangten. Diese regulatorische Kehrtwende zwingt globale Halbleiterkonzerne zu einer fundamentalen Überprüfung ihrer Vertriebswege und Compliance-Strukturen in Asien. Da der asiatische Markt für Rechenzentren eng mit der US-Technologieversorgung verzahnt ist, erzeugt die Verschärfung eine spürbare Destabilisierung bei Zulieferern und verstärkt den Trend zu regionaler technologischer Autarkie in China.",
-      "longTermImpact": "Der Technologiemarkt fragmentiert sich zunehmend in zwei geschlossene Sphären. Für globale Halbleiterkonzerne sinken die Margen durch aufwendigere Compliance-Prüfungen, während chinesische Alternativen durch den staatlichen Druck massiv gefördert werden.",
+      "region": "EUROPA · ENERGIEINFRASTRUKTUR",
+      "title": "Die Billionen-Wette: EU forciert Stromnetz-Integration",
+      "summary": "Die EU-Kommission verabschiedet ein Investitionsprogramm von über einer Billion Euro bis 2040, um die Fragmentierung der europäischen Stromnetze zu beenden.",
+      "contextExplanation": "Das bisherige System der nationalen Stromnetze ist für die Anforderungen einer dezentralen, erneuerbaren Energieversorgung unzureichend. Die strukturelle Ineffizienz führt zu massiven Preisunterschieden zwischen den Mitgliedsstaaten und gefährdet die industrielle Wettbewerbsfähigkeit. Durch die Harmonisierung der Netzausbau-Standards und die Vereinfachung grenzüberschreitender Genehmigungsverfahren soll ein echter europäischer Strommarkt entstehen. Dies ist eine direkte Reaktion auf die Volatilität der Energiepreise und die Notwendigkeit, die Abhängigkeit von externen fossilen Importen durch eine stärkere interne Vernetzung zu kompensieren.",
+      "longTermImpact": "Die massiven Investitionen werden die Kapitalintensität im Versorgungssektor erhöhen, bieten jedoch langfristig eine stabilere Basis für die europäische Industrie. Investoren sollten mit einer Konsolidierung bei Netzbetreibern und spezialisierten Infrastruktur-Dienstleistern rechnen.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Ausweitung der US-Exportverbote für fortschrittliche KI-Prozessoren",
-        "Fokus der Justiz auf langwierige Untersuchungen gegen etablierte Hardware-Partner",
-        "Beschleunigte Bemühungen Chinas zum Aufbau unabhängiger Recheninfrastrukturen"
+        "Investitionsvolumen von 1 Billion Euro bis 2040",
+        "Harmonisierung der nationalen Netzausbau-Standards",
+        "Reduktion der Preisvolatilität durch Marktintegration"
       ],
       "sources": [
-        "Handelsblatt",
-        "Nikkei Asia",
-        "CNBC World"
-      ],
-      "verificationStatus": "Verifiziert · 3 Quellen"
-    },
-    {
-      "region": "NAHER OSTEN · SICHERHEIT & ENERGIE",
-      "title": "Eskalation am Golf: Iran droht nach US-Flottverstärkung",
-      "summary": "Die Verlegung eines dritten US-Flugzeugträgers in den Nahen Osten und Angriffe auf Frachtschiffe in der Straße von Hormus lassen die Spannungen zwischen Washington und Teheran drastisch eskalieren.",
-      "contextExplanation": "Nach dem faktischen Scheitern früherer Deeskalationsversuche und dem Wiederaufflammen konfrontativer Maßnahmen im Zuge des anhaltenden US-Iran-Konflikts befindet sich die Region erneut in einer sicherheitspolitischen Ausnahmesituation. Die Stationierung zusätzlicher US-Seestreitkräfte soll strategische Handelswege sichern, provoziert jedoch gleichzeitig aggressive Reaktionen Teherans und Drohungen gegen alliierte Einheiten. Jüngste Angriffe auf Handelsschiffe in der Straße von Hormus unterstreichen die enorme Verwundbarkeit der globalen maritimen Logistik an diesem maritimen Nadelöhr. Reedereien und Rohstoffmärkte reagieren hochsensibel auf das erhöhte Risiko von Blockaden und Sabotageakten.",
-      "longTermImpact": "Anhaltende Seeraumkonflikte im Persischen Golf erhöhen dauerhaft die Versicherungsprämien für den Welthandel und bergen das Risiko plötzlicher Angebotsschocks auf den globalen Energiemärkten.",
-      "hasDivergingNarratives": true,
-      "narrativeComparison": "Während das Pentagon die Truppenverstärkung als reine Abschreckungsmaßnahme zur Sicherung internationaler Gewässer wertet, sieht Teheran darin eine direkte militärische Bedrohung und rechtfertigt Gegenmaßnahmen an den Seeschifffahrtsstraßen.",
-      "bullets": [
-        "Eintreffen des dritten US-Flugzeugträgers im Nahen Osten",
-        "Erneute Angriffe auf Tanker und Handelsschiffe in der Straße von Hormus",
-        "Hohe Nervosität an den internationalen Logistik- und Energiemärkten"
-      ],
-      "sources": [
-        "NZZ International",
-        "CNBC World",
-        "WSJ World"
-      ],
-      "verificationStatus": "Verifiziert · 3 Quellen"
-    },
-    {
-      "region": "EUROPÄISCHE UNION · MIGRATION & AUSSENPOLITIK",
-      "title": "Neuer Kurs in der Asylpolitik: Fünf EU-Staaten planen Externalisierung",
-      "summary": "Eine Allianz aus fünf europäischen Ländern treibt Pläne voran, ab dem kommenden Jahr abgewiesene Migranten direkt in sichere Drittstaaten in Afrika abzuschieben.",
-      "contextExplanation": "Angesichts anhaltend hoher Migrationsströme über die zentralmediterrane und afrikanische Route suchen europäische Hauptstädte nach radikalen Alternativen zum gegenwärtigen System. Das Vorhaben sieht vor, asylrechtliche Verfahren oder zumindest die Rückführung in afrikanische Kooperationsstaaten auszulagern, falls die Herkunftsländer eine Rücknahme verweigern. Dieses Modell soll den Migrationsdruck auf die EU-Außengrenzen lindern, stößt jedoch international auf massive Bedenken bezüglich der dortigen Einhaltung von Menschenrechtsstandards und der völkerrechtlichen Umsetzung. Kritiker bezweifeln zudem die praktische und finanzielle Machbarkeit solcher bilateraler Abkommen.",
-      "longTermImpact": "Die Externalisierung von Asylverfahren markiert einen tiefgehenden Paradigmenwechsel in der europäischen Migrationsarchitektur mit langfristigen Auswirkungen auf die diplomatischen Beziehungen zu nord- und westafrikanischen Staaten.",
-      "hasDivergingNarratives": true,
-      "narrativeComparison": "Befürworter argumentieren, dass nur harte Abschreckung und Auslagerung irreguläre Migration stoppen können, während Menschenrechtsorganisationen vor schwerwiegenden Verstößen gegen das Non-Refoulement-Gebot warnen.",
-      "bullets": [
-        "Geplante Umsetzung erster Abschiebungen in Drittstaaten bereits für das kommende Jahr",
-        "Initiative wird von einer Koalition aus fünf EU-Mitgliedstaaten vorangetrieben",
-        "Scharfe Kritik von Nichtregierungsorganisationen wegen prekärem Menschenrechtsstatus"
-      ],
-      "sources": [
-        "NZZ International"
+        "Handelsblatt"
       ],
       "verificationStatus": "Verifiziert · 1 Quelle"
     },
     {
-      "region": "ASIEN-PAZIFIK · HANDELSIPLOMATIE",
-      "title": "Kanada und China: Strategische Annäherung trotz US-Drucks",
-      "summary": "Angesichts protektionistischer Handelsspannungen mit den USA sucht Kanada die wirtschaftliche Nähe zu Peking und senkt demonstrativ Zölle auf chinesische Elektrofahrzeuge.",
-      "contextExplanation": "Kanadas Premierminister treibt im Rahmen internationaler Foren eine bemerkenswerte Neuausrichtung der Außenhandelsbeziehungen voran. Durch die teilweise Rücknahme von Strafzöllen auf E-Autos aus chinesischer Produktion signalisiert Ottawa Verhandlungsbereitschaft und öffnet den heimischen Markt für asiatische Technologiekonzerne, um die einseitige wirtschaftliche Abhängigkeit vom südlichen Nachbarn zu verringern. Dieser Schritt erfolgt vor dem Hintergrund globaler Handelskonflikte und der Suche kanadischer Unternehmen nach verlässlichen Absatzmärkten außerhalb des US-Einflusssphäre. Für Peking bietet sich damit ein diplomatisches Tor zur Vertiefung des wirtschaftlichen Einflusses in Nordamerika.",
-      "longTermImpact": "Dieser bilaterale Kurswechsel schwächt die geschlossene westliche Handelsfront gegenüber China und könnte zu neuen handelsrechtlichen Reibungspunkten zwischen Ottawa und Washington führen.",
+      "region": "ASIEN · GEOPOLITISCHE ALLIANZEN",
+      "title": "Das Quad-Manöver: Asiens Sicherheitsarchitektur unter Druck",
+      "summary": "Vor dem Dreiergipfel mit Russland und China signalisiert Trump in Manila eine engere militärische und nukleare Kooperation mit den Quad-Partnern.",
+      "contextExplanation": "Die Treffen in Manila dienen als strategisches Gegengewicht zu den Bemühungen Pekings und Moskaus, eine alternative Weltordnung zu etablieren. Durch die explizite Erwähnung nuklearer Kooperation und militärischer Unterstützung für Partner wie die Philippinen verlässt Washington die bisherige Politik der strategischen Ambiguität. Dies zwingt die regionalen Akteure dazu, sich klarer zwischen den Blöcken zu positionieren. Die Dynamik wird durch die Sorge vor einer technologischen und militärischen Dominanz Chinas in der Region getrieben, die durch die jüngsten Exportbeschränkungen weiter befeuert wurde.",
+      "longTermImpact": "Die Region steuert auf eine verstärkte Blockbildung zu, was die Lieferketten für Halbleiter und kritische Komponenten dauerhaft verteuern wird. Unternehmen müssen ihre Asien-Strategien auf eine 'China-plus-eins'-Logik umstellen, die nun auch sicherheitspolitische Risikoprämien beinhaltet.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Kanadische Senkung von Importzöllen auf chinesische Elektrofahrzeuge",
-        "Intensive Gespräche zwischen kanadischen und chinesischen Regierungsvertretern",
-        "Strategisches Ziel der Diversifikation zur Verringerung der US-Marktabhängigkeit"
+        "Vertiefung der Quad-Sicherheitskooperation",
+        "Nukleare Abschreckung als zentrales Verhandlungsthema",
+        "Erhöhte Spannungen im Südchinesischen Meer"
       ],
       "sources": [
         "Handelsblatt",
+        "NZZ International",
         "Nikkei Asia"
+      ],
+      "verificationStatus": "Verifiziert · 3 Quellen"
+    },
+    {
+      "region": "NAHOST · KONFLIKTDYNAMIK",
+      "title": "Eskalation am Golf: Iran weitet Angriffe auf Kuwait aus",
+      "summary": "Die iranische Armee hat gezielt US-Drohnen- und Raketenstellungen in Kuwait angegriffen, was den seit Februar 2026 schwelenden Konflikt weiter destabilisiert.",
+      "contextExplanation": "Der Angriff auf die Ali Al Salem Air Base markiert eine neue Eskalationsstufe, da der Konflikt nun direkt auf Drittstaaten übergreift, die bisher als logistische Knotenpunkte für US-Operationen dienten. Die iranische Strategie zielt darauf ab, die Kosten für die US-Präsenz am Golf durch asymmetrische Schläge in die Höhe zu treiben. Da die Waffenruhe vom Juli offiziell für beendet erklärt wurde, gibt es derzeit keine diplomatischen Kanäle, die eine weitere Ausweitung verhindern könnten. Die regionale Sicherheit ist damit für Öl- und Handelsrouten in ein Stadium extremer Unvorhersehbarkeit eingetreten.",
+      "longTermImpact": "Die geopolitische Risikoprämie für die Region wird dauerhaft steigen, was die Versicherungskosten für den maritimen Handel in der Straße von Hormus weiter in die Höhe treibt. Eine dauerhafte Störung der regionalen Logistikketten ist wahrscheinlich.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Direkter Angriff auf US-Infrastruktur in Kuwait",
+        "Offizielles Ende der Waffenruhe vom Juli",
+        "Ausweitung des Konflikts auf neutrale Drittstaaten"
+      ],
+      "sources": [
+        "NZZ International",
+        "CNBC World"
       ],
       "verificationStatus": "Verifiziert · 2 Quellen"
     },
     {
-      "region": "ZENTRALASIEN · KORRUPTION & STAATSREFORM",
-      "title": "Kasachstan: Verhaftungen von Top-Managern offenbaren elitäre Machtkämpfe",
-      "summary": "Die Festnahme zweier einflussreicher Wirtschaftsmanager in Kasachstan wirft ein grelles Licht auf die internen Machtkämpfe und intransparenten Finanzströme der zentralasiatischen Elite.",
-      "contextExplanation": "Die von den Behörden in Astana vollzogenen Verhaftungen hochrangiger Wirtschaftslenker markieren einen neuen Höhepunkt im Ringen um die Kontrolle über Kasachstans lukrative Rohstoff- und Infrastruktursektoren. Der Fall verdeutlicht, wie stark die wirtschaftlichen Schlüsselpositionen des Landes nach wie vor mit politischen Seilschaften verwoben sind. Beobachter werten das Vorgehen als Versuch der Staatsführung, unter dem Deckmantel von Antikorruptionskampagnen verbliebene Machtzentren der alten politischen Garde zu zerschlagen und die staatliche Kontrolle über strategische Assets zu festigen. Dies verunsichert jedoch internationale Investoren, die auf rechtssichere Rahmenbedingungen angewiesen sind.",
-      "longTermImpact": "Politische Instabilität und willkürlich wirkende Eingriffe in Spitzenpositionen der Wirtschaft erhöhen das Risikoprofil für ausländische Direktinvestitionen in Zentralasiens größter Volkswirtschaft nachhaltig.",
-      "hasDivergingNarratives": true,
-      "narrativeComparison": "Offizielle Stellen präsentieren die Festnahmen als konsequenten Schritt im Rahmen von Anti-Korruptionsreformen, während Kritiker von einer machtpolitischen Bereinigung und der Neuausrichtung von Vermögenswerten innerhalb der Elite sprechen.",
+      "region": "AFRIKA · HUMANITÄRE KRISE",
+      "title": "Goma unter Beschuss: Die Destabilisierung des Ost-Kongo",
+      "summary": "Rebellenmilizen haben die Schutzzone in Goma überrannt, was über eine Million Binnenvertriebene in eine akute existenzielle Notlage bringt.",
+      "contextExplanation": "Die Sicherheitslage im Osten der Demokratischen Republik Kongo hat sich durch die Offensive der von Ruanda unterstützten Rebellen dramatisch verschlechtert. Das Versagen der staatlichen Truppen und die Überforderung der UN-Missionen zeigen die strukturelle Schwäche der regionalen Sicherheitsarchitektur. Die Kontrolle über Goma ist nicht nur ein humanitäres Desaster, sondern auch ein Kampf um den Zugang zu den dortigen Rohstoffvorkommen, die für die globale Elektronikindustrie essenziell sind. Die internationale Gemeinschaft steht vor dem Problem, dass diplomatische Appelle ohne militärische Durchsetzungskraft wirkungslos bleiben.",
+      "longTermImpact": "Die Instabilität wird die Lieferketten für kritische Mineralien aus der Region weiter verknappen und die ESG-Compliance-Kosten für globale Tech-Unternehmen massiv erhöhen. Eine dauerhafte Befriedung ist ohne eine grundlegende Neuordnung der ruandisch-kongolesischen Beziehungen unwahrscheinlich.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
       "bullets": [
-        "Verhaftung von zwei der mächtigsten Wirtschaftsmanager Kasachstans",
-        "Fokus der Ermittlungen auf intransparente Finanzströme und Vermögenswerte",
-        "Zunehmende Verunsicherung unter ausländischen Investoren bezüglich der Rechtssicherheit"
+        "Über eine Million Binnenvertriebene in Goma gefährdet",
+        "Zusammenbruch der staatlichen Verteidigungslinien",
+        "Risiko für globale Lieferketten kritischer Mineralien"
       ],
       "sources": [
-        "NZZ International"
+        "WSJ World"
+      ],
+      "verificationStatus": "Verifiziert · 1 Quelle"
+    },
+    {
+      "region": "SÜDAMERIKA · WIRTSCHAFTSPOLITIK",
+      "title": "Kaffee-Rekordpreise: Die Folgen des Handelsstreits",
+      "summary": "Arabica-Kaffeepreise erreichen historische Höchststände, getrieben durch die Unsicherheit über US-Zölle gegen Kolumbien.",
+      "contextExplanation": "Obwohl die unmittelbaren Drohungen von Präsident Trump bezüglich Zöllen und Sanktionen gegen Kolumbien vorerst zurückgenommen wurden, bleibt die Marktpsychologie extrem volatil. Die Kaffeepreise reagieren hochsensibel auf politische Instabilität in den Hauptexportländern, da die Lagerbestände weltweit auf einem niedrigen Niveau verharren. Der Handelsstreit hat die strukturelle Abhängigkeit der kolumbianischen Wirtschaft von den US-Märkten offengelegt und führt zu einer massiven Risikoaufschläge bei den Terminkontrakten. Die Kombination aus politischem Druck und klimatischer Unsicherheit schafft ein Umfeld, in dem Preisspitzen zur neuen Normalität werden.",
+      "longTermImpact": "Die Volatilität bei Agrarrohstoffen wird die Margen der globalen Lebensmittelkonzerne unter Druck setzen. Langfristig ist mit einer Diversifizierung der Anbaugebiete zu rechnen, um politische Klumpenrisiken zu minimieren.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Arabica-Preise auf Allzeithoch",
+        "Politische Unsicherheit als Preistreiber",
+        "Geringe globale Lagerbestände verschärfen Volatilität"
+      ],
+      "sources": [
+        "WSJ Markets"
       ],
       "verificationStatus": "Verifiziert · 1 Quelle"
     }
@@ -169,22 +167,166 @@
     {
       "id": "card-1",
       "category": "equities",
-      "sectorLabel": "Industrie & Elektrifizierung",
-      "ticker": "NYSE:ETN",
-      "company": "Eaton Corporation plc",
+      "sectorLabel": "Elektrische Infrastruktur",
+      "ticker": "NYSE:ABB",
+      "company": "ABB Ltd",
       "direction": "Struktureller Trend",
       "isPositive": true,
-      "moatScore": 89,
-      "headline": "Das fundamentale Nadelöhr der globalen Energiewende und Rechenzentren",
-      "contextExplanation": "Während der breite Markt auf volatile Chip- und KI-Titel blickt, wächst der eigentliche strukturelle Flaschenhals im Bereich der physischen Netzinfrastruktur und Transformatorentechnik. Eaton profitiert als etablierter B2B-Anbieter massiv von der Modernisierung veralteter Stromnetze und dem unstillbaren Energiebedarf neuer Rechenzentren. Der Burggraben basiert auf extrem hohen regulatorischen Hürden, langjährigen Zertifizierungen und einer tiefen Integration in industrielle Energieverteilungssysteme. Das Unternehmen fungiert als klassischer Zweitrunden-Profiteur, der unabhängig von den Margenschwankungen einzelner Chiphersteller agiert.",
-      "thesis": "Bis 2031 treiben Elektrifizierung, E-Mobilität und die globale Rechenzentrumsexpansion den Bedarf an intelligenter Leistungselektronik strukturell an. Eaton sichert sich durch hohe Preissetzungsmacht langfristig stabile Margen und ein zweistelliges Gewinnwachstum.",
-      "bearCase": "Globale Lieferkettenengpässe bei Spezialmaterialien wie Elektrostahl sowie mögliche Verzögerungen bei großen Infrastrukturinvestitionen könnten das Wachstum dämpfen. Zudem ist ein beträchtlicher Teil der stabilen Nachfrage bereits in der aktuellen Bewertung eingepreist.",
+      "moatScore": 88,
+      "headline": "Das Rückgrat der europäischen Energiewende",
+      "contextExplanation": "Während die EU-Kommission eine Billion Euro für den Ausbau der Stromnetze bis 2040 fordert, positioniert sich ABB als unverzichtbarer Zulieferer für Hochspannungstechnik und Automatisierung. Das Unternehmen profitiert nicht von kurzfristigen KI-Hypes, sondern von der langfristigen Notwendigkeit, instabile erneuerbare Energien in das Netz zu integrieren. Als Zweitrunden-Profiteur der industriellen Dekarbonisierung liefert ABB die Hardware, die für die Elektrifizierung der Industrie zwingend erforderlich ist. Die hohe Auftragsdichte im Bereich der Netzstabilität schafft einen tiefen Burggraben gegenüber günstigeren, aber technologisch weniger integrierten Wettbewerbern.",
+      "thesis": "Die regulatorische Notwendigkeit zum Netzausbau in Europa und den USA garantiert über Jahre hinweg volle Auftragsbücher. ABB transformiert sich erfolgreich vom Mischkonzern zum reinen Infrastruktur-Enabler.",
+      "bearCase": "Die hohen Investitionskosten könnten bei einer konjunkturellen Abkühlung in Europa zu Projektverzögerungen führen. Die aktuelle Bewertung spiegelt bereits einen Großteil des erwarteten Wachstums wider.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Enormer Auftragsbestand im Bereich elektrischer Komponenten",
-        "Kritischer Systemanbieter für ausfallsichere Stromversorgung",
-        "Hohe Eintrittsbarrieren durch zertifizierte Sicherheitsstandards"
+        "EU-Investitionsbedarf von 1 Billion Euro bis 2040",
+        "Fokus auf Netzstabilität und industrielle Automatisierung",
+        "Starke Marktstellung in der Elektrifizierung"
+      ],
+      "sources": [
+        "Handelsblatt",
+        "Financial Times"
+      ],
+      "verificationStatus": "Verifiziert",
+      "sparkline": [
+        38,
+        40,
+        42,
+        45,
+        48,
+        52,
+        55,
+        58
+      ]
+    },
+    {
+      "id": "card-2",
+      "category": "equities",
+      "sectorLabel": "Pharma & Diagnostik",
+      "ticker": "NYSE:ZBH",
+      "company": "Zimmer Biomet Holdings",
+      "direction": "Burggraben wächst",
+      "isPositive": true,
+      "moatScore": 85,
+      "headline": "Demografischer Rückenwind trifft auf Robotik-Integration",
+      "contextExplanation": "In einer alternden Gesellschaft bleibt die Nachfrage nach orthopädischen Implantaten und robotergestützten chirurgischen Systemen ein stabiler Anker. Zimmer Biomet hat sich durch die Integration von KI-gestützten Planungstools in ihre OP-Roboter einen technologischen Vorsprung erarbeitet, der über den reinen Verkauf von Prothesen hinausgeht. Das Unternehmen fungiert als unverzichtbarer Partner für Krankenhäuser, die Effizienzsteigerungen durch präzisere Eingriffe anstreben. Die hohen Wechselkosten für Chirurgen, die auf spezifische Robotik-Plattformen geschult sind, bilden einen natürlichen Schutzwall gegen neue Marktteilnehmer.",
+      "thesis": "Die alternde Weltbevölkerung sorgt für ein stetiges Volumenwachstum bei Gelenkersatz-Operationen. Die technologische Plattformbindung erhöht die Kundenloyalität signifikant.",
+      "bearCase": "Preisdruck durch staatliche Gesundheitssysteme und Versicherer könnte die Margen belasten. Der Markt für OP-Robotik ist zudem hart umkämpft durch spezialisierte Player.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Stetige Nachfrage durch demografischen Wandel",
+        "Hohe Wechselkosten durch Plattform-Ökosystem",
+        "Fokus auf robotergestützte Präzisionschirurgie"
+      ],
+      "sources": [
+        "Wall Street Journal",
+        "Financial Times"
+      ],
+      "verificationStatus": "Verifiziert",
+      "sparkline": [
+        110,
+        112,
+        115,
+        114,
+        118,
+        120,
+        122,
+        125
+      ]
+    },
+    {
+      "id": "card-3",
+      "category": "commodities",
+      "sectorLabel": "Strategische Metalle",
+      "ticker": "TVC:NI1!",
+      "company": "Nickel Spot",
+      "direction": "Struktureller Trend",
+      "isPositive": true,
+      "moatScore": 70,
+      "headline": "Nickel als kritischer Pfad für die Batterietechnologie",
+      "contextExplanation": "Während der Fokus oft auf Lithium liegt, bleibt Nickel ein entscheidender, aber oft unterschätzter Rohstoff für die Energiewende und die Produktion von Hochleistungsbatterien. Die geopolitische Fragmentierung und die Abhängigkeit von wenigen Förderländern machen Nickel zu einem strategischen Asset. Da die Nachfrage nach Batterien für stationäre Speicher und E-Mobilität trotz kurzfristiger Schwankungen langfristig steigt, bleibt das Angebot aufgrund langer Genehmigungsverfahren für neue Minen strukturell verknappt. Dies schafft einen Boden für den Preis, unabhängig von kurzfristigen spekulativen Bewegungen.",
+      "thesis": "Die strukturelle Unterversorgung durch mangelnde Investitionen in neue Minen trifft auf eine stetig wachsende Nachfrage aus der Batterietechnologie. Nickel bleibt ein unverzichtbarer Baustein der Dekarbonisierung.",
+      "bearCase": "Technologische Sprünge in der Batterieforschung (z.B. LFP-Batterien ohne Nickel) könnten die langfristige Nachfrage dämpfen. Zudem ist der Markt anfällig für politische Interventionen in Förderländern.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Kritische Komponente für Hochleistungsbatterien",
+        "Lange Vorlaufzeiten für neue Minenprojekte",
+        "Geopolitische Angebotsrisiken"
+      ],
+      "sources": [
+        "Wall Street Journal",
+        "Nikkei Asia"
+      ],
+      "verificationStatus": "Verifiziert",
+      "sparkline": [
+        18000,
+        17500,
+        17200,
+        17800,
+        18500,
+        19000,
+        19500,
+        20000
+      ]
+    },
+    {
+      "id": "card-4",
+      "category": "commodities",
+      "sectorLabel": "Fracht & Logistik",
+      "ticker": "NYSE:ZIM",
+      "company": "ZIM Integrated Shipping Services",
+      "direction": "Watchlist-Kandidat",
+      "isPositive": true,
+      "moatScore": 65,
+      "headline": "Nischen-Logistik in einer volatilen Welt",
+      "contextExplanation": "Die Schifffahrtsbranche bleibt durch die instabile Lage im Roten Meer und die geopolitischen Spannungen in einem dauerhaften Ausnahmezustand. ZIM hat sich auf spezifische Handelsrouten spezialisiert, die weniger von den großen Konsortien dominiert werden. Trotz der allgemeinen Skepsis der großen Reedereien gegenüber dem Roten Meer, bietet die Flexibilität von ZIM in der Routenplanung und die Fokussierung auf margenstarke Nischen eine interessante Option. Das Unternehmen profitiert von der strukturellen Ineffizienz der globalen Lieferketten, die durch die aktuelle geopolitische Lage eher zunimmt als abnimmt.",
+      "thesis": "Die anhaltende geopolitische Instabilität zwingt zu längeren Routen und ineffizienteren Lieferketten, was die Frachtraten strukturell auf einem höheren Niveau stützt. ZIMs Nischenfokus ermöglicht eine bessere Margensteuerung.",
+      "bearCase": "Ein plötzliches Ende der regionalen Konflikte könnte zu einem massiven Überangebot an Kapazitäten führen. Die Aktie ist hochgradig volatil und stark von den Spot-Raten abhängig.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Strukturelle Ineffizienz durch geopolitische Spannungen",
+        "Nischenfokus auf margenstarke Handelsrouten",
+        "Hohe Volatilität als Chance und Risiko"
+      ],
+      "sources": [
+        "Wall Street Journal",
+        "Financial Times"
+      ],
+      "verificationStatus": "Verifiziert",
+      "sparkline": [
+        15,
+        17,
+        16,
+        18,
+        20,
+        19,
+        21,
+        23
+      ]
+    },
+    {
+      "id": "card-5",
+      "category": "equities",
+      "sectorLabel": "Finanzdienstleistungen",
+      "ticker": "NYSE:EXPN",
+      "company": "Experian plc",
+      "direction": "Burggraben wächst",
+      "isPositive": true,
+      "moatScore": 90,
+      "headline": "Datenmonopol als Währung der Kreditwirtschaft",
+      "contextExplanation": "In einer Welt, in der die Bonitätsprüfung durch KI-Modelle immer wichtiger wird, fungiert Experian als unverzichtbarer Daten-Gatekeeper. Das Unternehmen besitzt eines der weltweit größten Netzwerke an Kreditdaten, was einen massiven Burggraben darstellt, da neue Wettbewerber diese Datenhistorie nicht replizieren können. Mit dem Trend zur Digitalisierung von Finanzdienstleistungen und der Notwendigkeit für Banken, Betrugsrisiken in Echtzeit zu bewerten, ist Experian ein klassischer Profiteur der digitalen Transformation im Finanzsektor. Die Abhängigkeit der Banken von diesen Daten macht das Geschäftsmodell extrem resilient gegenüber konjunkturellen Schwankungen.",
+      "thesis": "Daten sind das neue Öl der Finanzwelt. Experians monopolartige Stellung bei Kreditinformationen sichert stabile Cashflows und eine hohe Preissetzungsmacht gegenüber Finanzinstituten.",
+      "bearCase": "Regulatorische Eingriffe in den Datenschutz könnten das Geschäftsmodell einschränken. Zudem besteht ein Risiko durch Cyberangriffe auf die sensiblen Datenbanken.",
+      "hasDivergingNarratives": false,
+      "narrativeComparison": "",
+      "bullets": [
+        "Monopolartige Stellung bei Kreditdaten",
+        "Unverzichtbar für KI-gestützte Risikobewertung",
+        "Hohe Eintrittsbarrieren durch Datenhistorie"
       ],
       "sources": [
         "Wall Street Journal",
@@ -192,143 +334,35 @@
       ],
       "verificationStatus": "Verifiziert",
       "sparkline": [
-        120,
-        124,
-        128,
-        135,
-        142,
-        148,
-        155,
-        162
+        32,
+        33,
+        35,
+        36,
+        38,
+        40,
+        42,
+        44
       ]
     },
     {
-      "id": "card-2",
-      "category": "equities",
-      "sectorLabel": "Medizintechnik",
-      "ticker": "NYSE:MDT",
-      "company": "Medtronic plc",
+      "id": "card-6",
+      "category": "crypto",
+      "sectorLabel": "Layer-1 Infrastruktur",
+      "ticker": "COINBASE:ETH",
+      "company": "Ethereum Network",
       "direction": "Struktureller Trend",
       "isPositive": true,
-      "moatScore": 86,
-      "headline": "Demografischer Rückenwind trifft auf margenstarke Medizintechnik",
-      "contextExplanation": "Medtronic bedient als globaler Marktführer im Bereich der Medizintechnik einen unaufhaltsamen demografischen Trend: die alternde Weltbevölkerung in Industrienationen. Der Burggraben des Unternehmens stützt sich auf langfristige Partnerschaften mit Kliniken, klinisch validierte Medizinprodukte und ein breites Portfolio von Herzschrittmachern bis hin zu chirurgischen Navigationssystemen. Im Gegensatz zu spekulativen Biotech-Start-ups liefert Medtronic verlässliche Cashflows und verfügt über eine hohe Preissetzungsmacht gegenüber Krankenkassen und Krankenhäusern.",
-      "thesis": "Die kontinuierliche Zunahme chronischer Erkrankungen und der steigende medizinische Standard in Schwellenländern garantieren über die nächsten fünf Jahre ein stetiges, konjunkturunabhängiges Umsatzwachstum. Effizienzprogramme stärken zudem die operative Marge.",
-      "bearCase": "Strengere regulatorische Vorgaben für Medizinprodukte in den USA und Europa (wie die MDR) sowie Preisdruck durch staatliche Gesundheitssysteme belasten die Margen. Der Markt preist diese defensiven Qualitäten oft schon mit einer konstanten Prämie ein.",
+      "moatScore": 82,
+      "headline": "Das Betriebssystem für dezentrale Finanzen",
+      "contextExplanation": "Ethereum hat sich als das dominierende Netzwerk für Smart Contracts und dezentrale Anwendungen (dApps) etabliert. Im Gegensatz zu spekulativen Assets bietet Ethereum durch das Staking-Modell eine reale ökonomische Basis. Die Integration in institutionelle Finanzprodukte und die Nutzung als Settlement-Layer für tokenisierte Assets machen es zu einem strukturellen Bestandteil der modernen Finanzinfrastruktur. Der Netzwerkeffekt ist mittlerweile so groß, dass die Entwickler-Community und die Liquidität auf Ethereum einen Burggraben bilden, der von anderen Layer-1-Protokollen nur schwer zu durchbrechen ist.",
+      "thesis": "Ethereum fungiert als das globale Settlement-Layer für die Tokenisierung von Real-World-Assets. Die wachsende Nutzung in institutionellen Finanzanwendungen sichert langfristigen Wert.",
+      "bearCase": "Skalierbarkeitsprobleme und hohe Transaktionskosten könnten Nutzer zu günstigeren Alternativen treiben. Regulatorische Unsicherheiten in den USA bleiben ein latentes Risiko.",
       "hasDivergingNarratives": false,
       "narrativeComparison": "",
       "bullets": [
-        "Strukturell wachsender Zielmarkt durch demografischen Wandel",
-        "Hohe Kundentreue durch tief integrierte Klinik-Infrastruktur",
-        "Kontinuierliche Reinvestitionen in robotergestützte Chirurgie"
-      ],
-      "sources": [
-        "Financial Times",
-        "CNBC World"
-      ],
-      "verificationStatus": "Verifiziert",
-      "sparkline": [
-        82,
-        84,
-        83,
-        86,
-        88,
-        87,
-        90,
-        92
-      ]
-    },
-    {
-      "id": "card-3",
-      "category": "commodities",
-      "sectorLabel": "Strategischer Rohstoff",
-      "ticker": "TVC:USAgri",
-      "company": "US Wheat Futures",
-      "direction": "Watchlist-Kandidat",
-      "isPositive": true,
-      "moatScore": 74,
-      "headline": "Klimawandel und Exportverschiebungen stützen globale Agrarpreise",
-      "contextExplanation": "Der globale Weizenmarkt steht vor strukturellen Veränderungen, da extreme Wetterereignisse in traditionellen Anbauregionen die Ertragssicherheit massiv gefährden. Gleichzeitig steigen die Transport- und Düngemittelkosten, was die Untergrenze für die Erzeugerpreise anhebt. Als grundlegendes Nahrungsmittel besitzt Weizen eine unelastische Nachfrage, wodurch Kostensteigerungen direkt an die Endmärkte weitergegeben werden können. Langfristig rücken effiziente Logistikketten und klimaresistente Anbaumethoden in den Fokus.",
-      "thesis": "Anhaltende klimatische Anomalien und geopolitische Handelsbeschränkungen werden die globalen Lagerbestände in den kommenden Jahren verknappen. Dies schafft einen dauerhaften Preissockel für globale Getreidemärkte.",
-      "bearCase": "Unvorhersehbare staatliche Subventionsprogramme, plötzliche Handelskorsette oder unerwartet günstige Erntebedingungen in alternativen Exportnationen wie Russland oder Australien könnten plötzliche Preiskorrekturen auslösen.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
-      "bullets": [
-        "Strukturell sinkende Hektarerträge in wichtigen Anbauzonen",
-        "Hohe Bedeutung für die globale Ernährungssicherheit",
-        "Anfälligkeit für geopolitische Störungen der Schwarzmeer-Routen"
-      ],
-      "sources": [
-        "Wall Street Journal",
-        "NZZ International"
-      ],
-      "verificationStatus": "Verifiziert",
-      "sparkline": [
-        55,
-        58,
-        53,
-        59,
-        62,
-        60,
-        64,
-        67
-      ]
-    },
-    {
-      "id": "card-4",
-      "category": "commodities",
-      "sectorLabel": "Industriemetall",
-      "ticker": "TVC:ALU",
-      "company": "Aluminium Spot / Futures",
-      "direction": "Struktureller Trend",
-      "isPositive": true,
-      "moatScore": 80,
-      "headline": "Der unverzichtbare Leichtbau-Rohstoff für die globale Dekarbonisierung",
-      "contextExplanation": "Aluminium gilt als strategisches Metall der Energiewende, da es in der E-Mobilität, im modernen Leichtbau und für die Infrastruktur von Photovoltaikanlagen in enormen Mengen benötigt wird. Die energieintensive Primärproduktion steht jedoch im Widerspruch zu strengeren CO2-Vorgaben, weshalb Kapazitäten in Europa und China reguliert oder gedrosselt werden. Dies führt zu einem langfristigen strukturellen Defizit, das durch Recycling allein nicht kurzfristig gedeckt werden kann.",
-      "thesis": "Die Kombination aus steigender Nachfrage für grüne Technologien und strikten Umweltauflagen für Schmelzen treibt die fundamentale Verknappung voran. Recycling-Pioniere und CO2-arm produzierende Hütten werden langfristig Übergewinne erzielen.",
-      "bearCase": "Eine globale Wirtschaftskrise könnte die industrielle Nachfrage abrupt abkühlen und zu temporären Überkapazitäten führen. Zudem drohen substitutionsbedingte Risiken durch alternative Verbundstoffe.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
-      "bullets": [
-        "Energieintensivität schränkt die primäre Neugewinnung ein",
-        "Wachsender Bedarf in der Automobil- und Luftfahrtindustrie",
-        "Zunehmende Bedeutung von CO2-arm erzeugtem Primäraluminium"
-      ],
-      "sources": [
-        "Tagesschau Wirtschaft",
-        "Financial Times"
-      ],
-      "verificationStatus": "Verifiziert",
-      "sparkline": [
-        2100,
-        2150,
-        2180,
-        2240,
-        2300,
-        2290,
-        2350,
-        2410
-      ]
-    },
-    {
-      "id": "card-5",
-      "category": "equities",
-      "sectorLabel": "Finanzen & Zahlungsverkehr",
-      "ticker": "NYSE:MA",
-      "company": "Mastercard Incorporated",
-      "direction": "Burggraben wächst",
-      "isPositive": true,
-      "moatScore": 95,
-      "headline": "Das digitale Duopol profitiert von der schleichenden Bargeldabschaffung",
-      "contextExplanation": "Mastercard kontrolliert zusammen mit wenigen Wettbewerbern eines der weltweit wichtigsten Netzwerke für den elektronischen Zahlungsverkehr. Der unaufhaltsame Trend zur Digitalisierung des Handels und zu grenzüberschreitenden B2B-Zahlungen treibt das Transaktionsvolumen stetig nach oben. Der Burggraben ist gigantisch: Ein solches globales, ausfallsicheres Netzwerk mit Millionen angeschlossener Händlern und Banken lässt sich weder kurzfristig noch mit enormem Kapitaleinsatz kopieren. Zudem partizipiert das Geschäftsmodell direkt am nominalen Wachstum ohne eigene Kreditrisiken zu tragen.",
-      "thesis": "Die Verschiebung von physischem Bargeld zu digitalen Bezahlmethoden in Schwellenländern und der Ausbau von Mehrwert- und Cybersicherheitsdiensten sichern auf Sicht von fünf Jahren zweistellige Gewinnsteigerungen.",
-      "bearCase": "Regulatorische Eingriffe in die Interbanken- und Kreditkarten-Gebühren sowie der mögliche Aufstieg staatlich kontrollierter Sofortbezahlsysteme (CBDCs) könnten langfristig den prozentualen Gebührenkuchen verkleinern.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
-      "bullets": [
-        "Weltweites Oligopol mit extrem hohen Eintrittsbarrieren",
-        "Skalierbares Asset-Light-Modell ohne direkte Kreditverlustrisiken",
-        "Stark wachsendes Segment für Betrugserkennung und Cyber-Services"
+        "Dominantes Netzwerk für Smart Contracts",
+        "Wachsende institutionelle Akzeptanz",
+        "Starke Entwickler-Community und Liquidität"
       ],
       "sources": [
         "Financial Times",
@@ -336,60 +370,18 @@
       ],
       "verificationStatus": "Verifiziert",
       "sparkline": [
-        380,
-        395,
-        410,
-        425,
-        440,
-        455,
-        470,
-        488
-      ]
-    },
-    {
-      "id": "card-6",
-      "category": "crypto",
-      "sectorLabel": "Digitales Asset / Settlement",
-      "ticker": "COIN:SOL",
-      "company": "Solana Network",
-      "direction": "Struktureller Trend",
-      "isPositive": true,
-      "moatScore": 71,
-      "headline": "Hochgeschwindigkeits-Blockchain als institutionelle Transaktionsinfrastruktur",
-      "contextExplanation": "Solana hat sich als performante Layer-1-Blockchain etabliert, die im Gegensatz zu älteren Netzwerken auf extrem hohe Transaktionsgeschwindigkeiten und niedrige Gebühren setzt. Dies macht das Netzwerk zunehmend attraktiv für die Tokenisierung realer Vermögenswerte (RWA) und institutionelle Zahlungsabwicklungen. Der technologische Ansatz zielt darauf ab, die Lücke zwischen traditionellen Finanzmärkten und dezentraler Infrastruktur zu schließen, auch wenn die historische Stabilität des Netzwerks in der Vergangenheit gelegentlich Kompromisse erforderte.",
-      "thesis": "Sollte sich die Tokenisierung von Aktien, Anleihen und Immobilien im globalen Finanzwesen durchsetzen, bietet Solana eine technologisch skalierbare Basis für die effiziente Abwicklung im Millisekundenbereich.",
-      "bearCase": "Anhaltende regulatorische Unsicherheiten im Kryptosektor, potenziell ungelöste Stabilitätsprobleme bei extremer Netzwerkauslastung sowie harte Konkurrenz durch Ethereum-Layer-2-Netzwerke stellen fundamentale Risiken dar.",
-      "hasDivergingNarratives": false,
-      "narrativeComparison": "",
-      "bullets": [
-        "Sehr hohe Transaktionsdurchsatzrate bei minimalen Gebühren",
-        "Wachsende Akzeptanz bei Entwicklern und FinTech-Projekten",
-        "Kritische Abhängigkeit von der Stabilität der Validator-Infrastruktur"
-      ],
-      "sources": [
-        "CNBC World",
-        "Financial Times"
-      ],
-      "verificationStatus": "Verifiziert",
-      "sparkline": [
-        85,
-        92,
-        88,
-        105,
-        112,
-        104,
-        118,
-        125
+        2400,
+        2600,
+        2500,
+        2800,
+        3000,
+        3200,
+        3100,
+        3300
       ]
     }
   ],
   "recentHistory": [
-    "Kupfer Spot / Futures",
-    "US Henry Hub Natural Gas",
-    "Allianz SE",
-    "Bitcoin (BTC)",
-    "Daimler Truck Holding AG",
-    "Intuitive Surgical Inc.",
     "ICE Cocoa Futures",
     "Argus / Drewry World Container Index",
     "Visa Inc.",
@@ -408,15 +400,15 @@
     "US Wheat Futures",
     "Aluminium Spot / Futures",
     "Mastercard Incorporated",
-    "Solana Network"
+    "Solana Network",
+    "ABB Ltd",
+    "Zimmer Biomet Holdings",
+    "Nickel Spot",
+    "ZIM Integrated Shipping Services",
+    "Experian plc",
+    "Ethereum Network"
   ],
   "recentWorldTopics": [
-    "Das Ende des Personenkults: Nvidia nach dem Rücktritt von Jensen Huang",
-    "Digitale Souveränität auf dem Prüfstand: Globale IT-Ausfälle und Sabotage",
-    "Chinesische Immobilientragödie: Vanke-Milliardenverlust erschüttert den Sektor",
-    "Diplomatische Frontenverschiebung: Der geplante Dreiergipfel in Shenzhen",
-    "Rückkehr ins Nichts: Öffnung des nördlichen Gazastreifens",
-    "Veraltete Systeme, reale Kosten: Der US-Flugstopp als Weckruf",
     "Der Schock aus Hangzhou: Wie DeepSeek die fundamentale Neubewertung von Rechenzentren erzwingt",
     "Die offene Flanke am Persischen Golf: Eskalation in der Straße von Hormus",
     "Unterseeische Verwundbarkeit: Die NATO reagiert auf Sabotage im Ostseeraum",
@@ -434,6 +426,12 @@
     "Eskalation am Golf: Iran droht nach US-Flottverstärkung",
     "Neuer Kurs in der Asylpolitik: Fünf EU-Staaten planen Externalisierung",
     "Kanada und China: Strategische Annäherung trotz US-Drucks",
-    "Kasachstan: Verhaftungen von Top-Managern offenbaren elitäre Machtkämpfe"
+    "Kasachstan: Verhaftungen von Top-Managern offenbaren elitäre Machtkämpfe",
+    "Die demokratische Konsolidierung: Alaska als Wendepunkt",
+    "Die Billionen-Wette: EU forciert Stromnetz-Integration",
+    "Das Quad-Manöver: Asiens Sicherheitsarchitektur unter Druck",
+    "Eskalation am Golf: Iran weitet Angriffe auf Kuwait aus",
+    "Goma unter Beschuss: Die Destabilisierung des Ost-Kongo",
+    "Kaffee-Rekordpreise: Die Folgen des Handelsstreits"
   ]
 }
